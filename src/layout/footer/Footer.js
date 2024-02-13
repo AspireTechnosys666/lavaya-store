@@ -299,7 +299,7 @@ const Footer = () => {
                   height={70}
                   src={
                     storeCustomizationSetting?.footer?.block4_logo ||
-                    "/logo/logo-color.svg"
+                    "/logo/logo-color.png"
                   }
                   alt="logo"
                 />
