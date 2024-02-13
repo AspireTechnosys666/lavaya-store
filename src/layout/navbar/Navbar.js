@@ -62,7 +62,7 @@ const Navbar = () => {
         <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
 
-      <div className="bg-emerald-500 sticky top-0 z-20">
+      <div className="bg-[#fff] sticky top-0 z-20">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
           <div className="top-bar h-16 lg:h-auto flex items-center justify-between py-4 mx-auto">
             <Link
@@ -74,7 +74,7 @@ const Navbar = () => {
                 height={43}
                 src={
                   storeCustomizationSetting?.navbar?.header_logo ||
-                  "/logo/logo-light.svg"
+                  "/logo/logo.png"
                 }
                 alt="logo"
                 className="object-contain"
@@ -85,20 +85,20 @@ const Navbar = () => {
                 <div className="flex flex-col mx-auto w-full">
                   <form
                     onSubmit={handleSubmit}
-                    className="relative pr-12 md:pr-14 bg-white overflow-hidden shadow-sm rounded-md w-full"
+                    className="relative pr-12 md:pr-14 bg-[#e0015e]  overflow-hidden shadow-sm rounded-md w-full"
                   >
                     <label className="flex items-center py-0.5">
                       <input
                         onChange={(e) => setSearchText(e.target.value)}
                         value={searchText}
-                        className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-white focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
-                        placeholder={t(`common:search-placeholder`)}
+                        className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-[#fff]  focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
+                        placeholder={t(`common:search-placeholder`)} style={{marginLeft:"2px"}}
                       />
                     </label>
                     <button
                       aria-label="Search"
                       type="submit"
-                      className="outline-none text-xl text-gray-400 absolute top-0 right-0 end-0 w-12 md:w-14 h-full flex items-center justify-center transition duration-200 ease-in-out hover:text-heading focus:outline-none"
+                      className="outline-none text-xl text-[#fff] absolute top-0 right-0 end-0 w-12 md:w-14 h-full flex items-center justify-center transition duration-200 ease-in-out hover:text-heading focus:outline-none"
                     >
                       <IoSearchOutline />
                     </button>
@@ -108,7 +108,7 @@ const Navbar = () => {
             </div>
             <div className="hidden md:hidden md:items-center lg:flex xl:block absolute inset-y-0 right-0 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
-                className="pr-5 text-white text-2xl font-bold"
+                className="pr-5 text-[#e0015e]  text-2xl font-bold"
                 aria-label="Alert"
               >
                 <FiBell className="w-6 h-6 drop-shadow-xl" />
@@ -116,9 +116,9 @@ const Navbar = () => {
               <button
                 aria-label="Total"
                 onClick={toggleCartDrawer}
-                className="relative px-5 text-white text-2xl font-bold"
+                className="relative px-5 text-[#e0015e] text-2xl font-bold"
               >
-                <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-medium leading-none text-red-100 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
+                <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-medium leading-none text-red-100 transform -translate-x-1/2 -translate-y-1/2 bg-[#20b7dc] rounded-full">
                   {totalItems}
                 </span>
                 <FiShoppingCart className="w-6 h-6 drop-shadow-xl" />
@@ -126,7 +126,7 @@ const Navbar = () => {
               {/* Profile dropdown */}
 
               <button
-                className="pl-5 text-white text-2xl font-bold"
+                className="pl-5 text-[#e0015e]  text-2xl font-bold"
                 aria-label="Login"
               >
                 {imageUrl || userInfo?.image ? (

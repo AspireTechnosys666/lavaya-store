@@ -14,7 +14,7 @@ const Stock = ({ stock, card }) => {
           <span
             className={`${
               card
-                ? "bg-gray-100 absolute z-10 text-green-500 rounded-full text-xs px-2 py-0 font-medium"
+                ? "bg-gray-100 absolute z-10 text-[#e0015e] rounded-full text-xs px-2 py-0 font-medium"
                 : "bg-green-100 text-green-500 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-semibold font-serif"
             }`}
           >

@@ -295,8 +295,8 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 <Image
-                  width={110}
-                  height={40}
+                  width={150}
+                  height={70}
                   src={
                     storeCustomizationSetting?.footer?.block4_logo ||
                     "/logo/logo-color.svg"
@@ -422,7 +422,7 @@ const Footer = () => {
                   <p className="text-base leading-7 font-medium block">
                     {t("common:footer-call-us")}
                   </p>
-                  <h5 className="text-2xl font-bold text-emerald-500 leading-7">
+                  <h5 className="text-2xl font-bold text-[#e0015e] leading-7">
                     {/* +012345-67900 */}
                     {storeCustomizationSetting?.footer?.bottom_contact}
                   </h5>
@@ -455,12 +455,11 @@ const Footer = () => {
         <p className="text-sm text-gray-500 leading-6">
           Copyright 2023 @{" "}
           <Link
-            href="https://themeforest.net/user/htmllover"
-            target="_blank"
+            href="/"
             rel="noopener noreferrer"
-            className="text-emerald-500"
+            className="text-[#e0015e] hover:text-[#000]"
           >
-            HtmlLover
+            Lavaya 
           </Link>
           , All rights reserved.
         </p>

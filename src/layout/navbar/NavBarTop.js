@@ -45,10 +45,10 @@ const NavBarTop = () => {
         <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
 
-      <div className="hidden lg:block bg-gray-100">
+      <div className="hidden lg:block bg-[#e0015e]">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
-          <div className="text-gray-700 py-2 font-sans text-xs font-medium border-b flex justify-between items-center">
-            <span className="flex items-center">
+          <div className="text-gray-700 py-2 font-sans text-xs font-medium flex justify-between items-center">
+            <span className="flex items-center text-[#fff]">
               <FiPhoneCall className="mr-2" />
               {showingTranslateValue(
                 storeCustomizationSetting?.navbar?.help_text
@@ -58,19 +58,19 @@ const NavBarTop = () => {
                   storeCustomizationSetting?.navbar?.phone_number ||
                   "+099949343"
                 }`}
-                className="font-bold text-emerald-500 ml-1"
+                className="font-bold text-[#fff] hover:text-[#000] ml-1"
               >
                 {storeCustomizationSetting?.navbar?.phone_number ||
                   "+099949343"}
               </a>
             </span>
 
-            <div className="lg:text-right flex items-center navBar">
+            <div className="lg:text-right flex items-center navBar text-[#fff]">
               {storeCustomizationSetting?.navbar?.about_menu_status && (
                 <div>
                   <Link
                     href="/about-us"
-                    className="font-medium hover:text-emerald-600"
+                    className="font-medium hover:text-[#000]"
                   >
                     {showingTranslateValue(
                       storeCustomizationSetting?.navbar?.about_us
@@ -83,7 +83,7 @@ const NavBarTop = () => {
                 <div>
                   <Link
                     href="/contact-us"
-                    className="font-medium hover:text-emerald-600"
+                    className="font-medium hover:text-[#000]"
                   >
                     {showingTranslateValue(
                       storeCustomizationSetting?.navbar?.contact_us
@@ -94,7 +94,7 @@ const NavBarTop = () => {
               )}
               <button
                 onClick={handleModal}
-                className="font-medium hover:text-emerald-600"
+                className="font-medium hover:text-[#000]"
               >
                 {showingTranslateValue(
                   storeCustomizationSetting?.navbar?.my_account
@@ -104,7 +104,7 @@ const NavBarTop = () => {
               {userInfo?.email ? (
                 <button
                   onClick={handleLogOut}
-                  className="flex items-center font-medium hover:text-emerald-600"
+                  className="flex items-center font-medium hover:text-[#000]"
                 >
                   <span className="mr-1">
                     <IoLockOpenOutline />
@@ -116,7 +116,7 @@ const NavBarTop = () => {
               ) : (
                 <button
                   onClick={() => setModalOpen(!modalOpen)}
-                  className="flex items-center font-medium hover:text-emerald-600"
+                  className="flex items-center font-medium hover:text-[#000]"
                 >
                   <span className="mr-1">
                     <FiUser />

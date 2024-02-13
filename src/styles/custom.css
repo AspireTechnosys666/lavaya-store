@@ -320,7 +320,7 @@ p:not(:last-of-type) {
 .category-slider button.prev,
 .category-slider button.next {
   text-align: center;
-  background-color: #34d399;
+  background-color: #e0015e;
   color: #ffffff;
   margin: 15px 2px 0 2px;
   position: absolute;
@@ -338,7 +338,7 @@ p:not(:last-of-type) {
 }
 .category-slider button.next:hover,
 .category-slider button.prev {
-  background-color: #10b981;
+  background-color: #e0015e;
 }
 .category-slider button.prev svg,
 .category-slider button.next svg {
@@ -422,7 +422,7 @@ p:not(:last-of-type) {
   cursor: pointer;
   margin-right: 20px;
   font-size: 14px;
-  color: #162542;
+  color: #fff;
   text-transform: uppercase;
   font-weight: 400;
 }

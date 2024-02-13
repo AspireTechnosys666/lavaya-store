@@ -280,7 +280,7 @@ const Checkout = () => {
                       <button
                         type="submit"
                         disabled={isEmpty || !stripe || isCheckoutSubmit}
-                        className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
+                        className="bg-[#e0015e] hover:bg-[#20b7dc] border border-[#e0015e] transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
                       >
                         {isCheckoutSubmit ? (
                           <span className="flex justify-center text-center">

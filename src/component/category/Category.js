@@ -79,13 +79,13 @@ const Category = () => {
                 <a
                   key={item.title}
                   href={item.href}
-                  className="p-2 flex font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-emerald-600"
+                  className="p-2 flex font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]"
                 >
                   <item.icon
                     className="flex-shrink-0 h-4 w-4"
                     aria-hidden="true"
                   />
-                  <p className="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-emerald-600">
+                  <p className="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-[#e0015e]">
                     {item.title}
                   </p>
                 </a>
