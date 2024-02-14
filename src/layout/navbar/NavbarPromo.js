@@ -317,7 +317,7 @@ const NavbarPromo = () => {
           </div>
           <div className="flex">
             {/* flag */}
-            <div className="dropdown">
+            {/* <div className="dropdown">
               <div
                 className={`flot-l flag ${currentLang?.flag?.toLowerCase()}`}
               ></div>
@@ -343,7 +343,7 @@ const NavbarPromo = () => {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
 
             {storeCustomizationSetting?.navbar?.privacy_policy_status && (
               <Link

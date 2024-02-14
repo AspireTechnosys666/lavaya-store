@@ -45,7 +45,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block1_sub_link1}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -61,7 +61,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block1_sub_link2}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -77,7 +77,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block1_sub_link3}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     {showingTranslateValue(
                       storeCustomizationSetting?.footer_block_one_link_three_title
@@ -96,7 +96,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block1_sub_link4}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -127,7 +127,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block2_sub_link1}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -144,7 +144,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block2_sub_link2}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -160,7 +160,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block2_sub_link3}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -176,7 +176,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${storeCustomizationSetting?.footer?.block2_sub_link4}`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -211,7 +211,7 @@ const Footer = () => {
                         ? storeCustomizationSetting?.footer?.block3_sub_link1
                         : "#"
                     }`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -231,7 +231,7 @@ const Footer = () => {
                         ? storeCustomizationSetting?.footer?.block3_sub_link2
                         : "#"
                     }`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -251,7 +251,7 @@ const Footer = () => {
                         ? storeCustomizationSetting?.footer?.block3_sub_link3
                         : "#"
                     }`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -271,7 +271,7 @@ const Footer = () => {
                         ? storeCustomizationSetting?.footer?.block3_sub_link4
                         : "#"
                     }`}
-                    className="text-gray-600 inline-block w-full hover:text-emerald-500"
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
                   >
                     <CMSkeleton
                       count={1}
@@ -316,15 +316,19 @@ const Footer = () => {
                   data={storeCustomizationSetting?.footer?.block4_address}
                 />
                 <br />
+                <a href="tel:+918440003030">
                 <span>
                   {" "}
-                  Tel : {storeCustomizationSetting?.footer?.block4_phone}
+                  Tel :{storeCustomizationSetting?.footer?.block4_phone}
                 </span>
+                </a>
                 <br />
+                <a href="mailto:info@lavaya.store">
                 <span>
                   {" "}
                   Email : {storeCustomizationSetting?.footer?.block4_email}
                 </span>
+                </a>
               </p>
             </div>
           )}
@@ -339,7 +343,7 @@ const Footer = () => {
                 <div>
                   {(storeCustomizationSetting?.footer?.social_facebook ||
                     storeCustomizationSetting?.footer?.social_twitter ||
-                    storeCustomizationSetting?.footer?.social_pinterest ||
+                   // storeCustomizationSetting?.footer?.social_pinterest ||
                     storeCustomizationSetting?.footer?.social_linkedin ||
                     storeCustomizationSetting?.footer?.social_whatsapp) && (
                     <span className="text-base leading-7 font-medium block mb-2 pb-0.5">
@@ -373,7 +377,7 @@ const Footer = () => {
                         </Link>
                       </li>
                     )}
-                    {storeCustomizationSetting?.footer?.social_pinterest && (
+                    {/* {storeCustomizationSetting?.footer?.social_pinterest && (
                       <li className="flex items-center mr-3 transition ease-in-out duration-500">
                         <Link
                           href={`${storeCustomizationSetting?.footer?.social_pinterest}`}
@@ -385,7 +389,7 @@ const Footer = () => {
                           <PinterestIcon size={34} round />
                         </Link>
                       </li>
-                    )}
+                    )} */}
                     {storeCustomizationSetting?.footer?.social_linkedin && (
                       <li className="flex items-center  mr-3 transition ease-in-out duration-500">
                         <Link
@@ -422,10 +426,12 @@ const Footer = () => {
                   <p className="text-base leading-7 font-medium block">
                     {t("common:footer-call-us")}
                   </p>
+                  <a href="tel:+918440003030">
                   <h5 className="text-2xl font-bold text-[#e0015e] leading-7">
                     {/* +012345-67900 */}
                     {storeCustomizationSetting?.footer?.bottom_contact}
                   </h5>
+                  </a>
                 </div>
               )}
             </div>

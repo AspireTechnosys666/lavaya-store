@@ -97,7 +97,7 @@ const ContactUs = () => {
                 </h5>
                 <p className="mb-0 text-base opacity-90 leading-7">
                   <a
-                    href={`mailto:${storeCustomizationSetting?.contact_us?.call_box_phone}`}
+                    href={`tel:${storeCustomizationSetting?.contact_us?.call_box_phone}`}
                     className="text-[#e0015e]"
                   >
                     {showingTranslateValue(
