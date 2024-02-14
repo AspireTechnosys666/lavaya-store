@@ -1,1 +1,0 @@
-{"version":1,"functions":{"/_app":{},"/":{},"/order/[id]":{},"/product/[slug]":{},"/user/email-verification/[token]":{},"/search":{},"/user/forget-password/[token]":{}}}
