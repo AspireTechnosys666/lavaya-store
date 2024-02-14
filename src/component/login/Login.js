@@ -4,14 +4,42 @@ import { FiLock, FiMail } from "react-icons/fi";
 import Error from "@component/form/Error";
 import useLoginSubmit from "@hooks/useLoginSubmit";
 import InputArea from "@component/form/InputArea";
+import { useEffect } from "react";
+
+export const initOTPless = (callback) => {
+  const otplessInit = Reflect.get(window, "otplessInit");
+
+  const loadScript = () => {
+    const isScriptLoaded = document.getElementById("otplessIdScript");
+    if(isScriptLoaded) return;
+
+    const script = document.createElement("script");
+    script.src = "https://otpless.com/auth.js";
+    script.id = "otplessIdScript";
+    script.setAttribute("cid","FSREKE6NJ8LLPFPAEF6HKEIFSQ5NRTX8");
+    document.body.appendChild(script);
+  };
+
+  otplessInit ? otplessInit() : loadScript();
+
+  Reflect.set(window, "otpless", callback);
+};
+
 
 const Login = ({ setShowResetPassword, setModalOpen }) => {
   const { handleSubmit, submitHandler, register, errors, loading } =
     useLoginSubmit(setModalOpen);
 
+  useEffect(() => initOTPless(callback), []);
+
+  const callback = (otplessUser) => {
+    alert({ otplessUser });
+    // your code here
+  };
+
   return (
     <>
-      <div className="text-center mb-6">
+      {/* <div className="text-center mb-6">
         <h2 className="text-3xl font-bold font-serif">Login</h2>
         <p className="text-sm md:text-base text-gray-500 mt-2 mb-8 sm:mb-10">
           Login with your email and password
@@ -83,7 +111,10 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
             </button>
           )}
         </div>
-      </form>
+      </form> */}
+      <div>
+        <div id="otpless-login-page"></div>
+      </div>
     </>
   );
 };
