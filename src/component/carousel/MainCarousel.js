@@ -146,7 +146,7 @@ const MainCarousel = () => {
                 <h1 className="mb-2 font-serif text-xl sm:text-lg md:text-2xl line-clamp-1 md:line-clamp-none  lg:line-clamp-none  lg:text-3xl font-bold text-gray-800">
                   {item.title}
                 </h1>
-                <p className="text-base leading-6 text-gray-600 font-sans line-clamp-1  md:line-clamp-none lg:line-clamp-none">
+                <p className="text-base leading-6 text-[#000] font-sans line-clamp-1  md:line-clamp-none lg:line-clamp-none">
                   {item.info}
                 </p>
                 <Link
