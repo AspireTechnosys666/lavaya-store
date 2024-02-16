@@ -24,7 +24,7 @@ const Common = ({ setModalOpen }) => {
 
   return (
     <>
-      <div className="overflow-hidden bg-white mx-auto">
+      <div>
         {showResetPassword ? (
           <ResetPassword
             setShowResetPassword={setShowResetPassword}
@@ -42,11 +42,11 @@ const Common = ({ setModalOpen }) => {
           />
         )}
 
-        <div className="my-8 after:bg-gray-100 before:bg-gray-100 fo10t-sans text-center font-medium">
+        {/* <div className="my-8 after:bg-gray-100 before:bg-gray-100 fo10t-sans text-center font-medium">
           OR
-        </div>
+        </div> */}
 
-        <div className="flex justify-between flex-col lg:flex-row">
+        {/* <div className="flex justify-between flex-col lg:flex-row">
           <button className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-600 bg-gray-100 shadow-sm md:px-2 my-1 sm:my-1 md:my-1 lg:my-0 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2">
             <ImFacebook /> <span className="ml-2">Login With Facebook</span>
           </button>
@@ -72,8 +72,8 @@ const Common = ({ setModalOpen }) => {
               cookiePolicy={"single_host_origin"}
             />
           )}
-        </div>
-        <div className="text-center text-sm text-gray-900 mt-4">
+        </div> */}
+        {/* <div className="text-center text-sm text-gray-900 mt-4">
           <div className="text-gray-500 mt-2.5">
             {showRegister ? "Already have a account ?" : "Not have a account ?"}
             <button
@@ -83,7 +83,7 @@ const Common = ({ setModalOpen }) => {
               {showRegister ? "Login" : "Register"}
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
