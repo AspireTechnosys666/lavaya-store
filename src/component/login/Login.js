@@ -1,11 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { FiLock, FiMail } from "react-icons/fi";
 
-//internal  import
-import Error from "@component/form/Error";
-import useLoginSubmit from "@hooks/useLoginSubmit";
-import InputArea from "@component/form/InputArea";
 import CustomerServices from "@services/CustomerServices";
 import { UserContext } from "@context/UserContext";
 import { notifyError, notifySuccess } from "@utils/toast";
@@ -42,28 +37,22 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
   const callback = (otplessUser) => {
     const { mobile, email } = otplessUser
     CustomerServices.customerLogin({
-      phone: mobile?.number || '',
-      email: email?.email || ''
+      phone: mobile.number
     })
     .then((res) => {
       setLoading(false);
       setModalOpen(false);
       router.push(redirect || "/");
-      notifySuccess("Login Success!");
+      notifySuccess(res?.message || "Login Success!");
       dispatch({ type: "USER_LOGIN", payload: res });
       Cookies.set("userInfo", JSON.stringify(res), {
         expires: cookieTimeOut,
-      }); 
+      });
     })
     .catch((err) => {
       notifyError(err ? err?.response?.data?.message : err.message);
-      console.log(err ? err?.response?.data?.message : err.message)
       setLoading(false);
     });
-  
-    // const { email }
-    // alert({ otplessUser });
-    // your code here
   };
 
   return (

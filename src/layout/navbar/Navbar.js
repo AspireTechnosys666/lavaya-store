@@ -92,7 +92,8 @@ const Navbar = () => {
                         onChange={(e) => setSearchText(e.target.value)}
                         value={searchText}
                         className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-[#fff]  focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
-                        placeholder={t(`common:search-placeholder`)} style={{marginLeft:"2px"}}
+                        placeholder={t(`common:search-placeholder`)}
+                        style={{ marginLeft: "2px" }}
                       />
                     </label>
                     <button
@@ -142,12 +143,13 @@ const Navbar = () => {
                       className="bg-white rounded-full"
                     />
                   </Link>
-                ) : userInfo?.name ? (
+                ) : userInfo?.phone ? (
                   <Link
                     href="/user/dashboard"
                     className="leading-none font-bold font-serif block"
                   >
-                    {userInfo?.name[0]}
+                    
+                    {userInfo?.name?.[0] || <FiUser className="w-6 h-6 drop-shadow-xl" />}    
                   </Link>
                 ) : (
                   <span onClick={() => setModalOpen(!modalOpen)}>
