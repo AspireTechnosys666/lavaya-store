@@ -2,7 +2,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const notifySuccess = (message) =>
-  toast.success(message, {
+  toast.info(message, {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
@@ -10,6 +10,7 @@ const notifySuccess = (message) =>
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    color:"#e0015e",
   });
 
 const notifyError = (message) =>
