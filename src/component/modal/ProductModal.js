@@ -221,7 +221,7 @@ const ProductModal = ({
     <>
       <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
         <div className="inline-block overflow-y-auto h-full align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-          <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden">
+          <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden items-center">
             <Link href={`/product/${product.slug}`} passHref>
               <div
                 onClick={() => setModalOpen(false)}
