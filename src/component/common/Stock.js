@@ -11,7 +11,7 @@ const Stock = ({ stock, card }) => {
         </span>
       ) : (
         <>
-          <span
+          {/* <span
             className={`${
               card
                 ? "bg-gray-100 absolute z-10 text-[#e0015e] rounded-full text-xs px-2 py-0 font-medium"
@@ -20,7 +20,7 @@ const Stock = ({ stock, card }) => {
           >
             {t("common:stock")} :
             <span className="text-orange-700 pl-1 font-bold">{stock} </span>
-          </span>
+          </span> */}
         </>
       )}
     </>
