@@ -331,12 +331,12 @@ const storeCustomization = {
         de: "Cecilia Chapman",
       },
       address_box_address_two: {
-        //en: "561-4535 Nulla LA ",
-        de: "561-4535 Nulla LA",
+        //en: "28/C/48, JHELAM APARTMENT, RHB PRATAP NAGAR, SANGANER, Jaipur, India, Rajasthan ",
+        //de: "28/C/48, JHELAM APARTMENT, RHB PRATAP NAGAR, SANGANER, Jaipur, India, Rajasthan",
       },
       address_box_address_three: {
        // en: "United States 96522. ",
-        de: "United States 96522",
+        //de: "United States 96522",
       },
       form_title: {
         en: "For any suppoort just send your query ",
