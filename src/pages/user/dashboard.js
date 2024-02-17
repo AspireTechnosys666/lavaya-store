@@ -92,13 +92,13 @@ const Dashboard = ({ title, description, children }) => {
       href: "/user/update-profile",
       icon: FiSettings,
     },
-    {
-      title: showingTranslateValue(
-        storeCustomizationSetting?.dashboard?.change_password
-      ),
-      href: "/user/change-password",
-      icon: FiFileText,
-    },
+    // {
+    //   title: showingTranslateValue(
+    //     storeCustomizationSetting?.dashboard?.change_password
+    //   ),
+    //   href: "/user/change-password",
+    //   icon: FiFileText,
+    // },
   ];
 
   return (

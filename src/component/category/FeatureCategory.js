@@ -36,18 +36,23 @@ const FeatureCategory = () => {
       {loading ? (
         <CMSkeleton count={10} height={20} error={error} loading={loading} />
       ) : (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
+        <ul className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2 md:gap-0">
           {data[0]?.children?.map((category, i) => (
             <li className="group" key={i + 1}>
               <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg justify-center">
                 <div className="flex flex-col items-center justify-center">
-                  <div>
+                  <div  onClick={() =>
+                        handleCategoryClick(
+                          category._id,
+                          showingTranslateValue(category?.name)
+                        )
+                      }>
                     {category.icon ? (
                       <Image
                         src={category?.icon}
                         alt="category"
-                        width={100}
-                        height={100}
+                        width={70}
+                        height={70}
                       />
                     ) : (
                       <Image
