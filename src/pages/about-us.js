@@ -38,7 +38,7 @@ const AboutUs = () => {
                   data={storeCustomizationSetting?.about_us?.top_title}
                 />
               </h3>
-              <div className="mt-3 text-base opacity-90 leading-7">
+              <div className="mt-3 text-base opacity-90 leading-7 text-justify">
                 <p>
                   <CMSkeleton
                     count={5}
@@ -123,7 +123,7 @@ const AboutUs = () => {
               />
             </div>
           </div>
-          <div className="mt-10 lg:mt-16 text-base opacity-90 leading-7">
+          <div className="mt-10 lg:mt-16 text-base opacity-90 leading-7 text-justify">
             <p>
               <CMSkeleton
                 count={5}

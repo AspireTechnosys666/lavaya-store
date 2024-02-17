@@ -52,7 +52,7 @@ const Invoice = ({ data, printRef, globalSetting, currency }) => {
             </h2>
             <p className="text-sm text-gray-500">
               {globalSetting?.address ||
-                "Cecilia Chapman, 561-4535 Nulla LA, <br /> United States 96522"}
+                "28/C/48, JHELAM APARTMENT, RHB PRATAP NAGAR, SANGANER, Jaipur, India, Rajasthan"}
             </p>
           </div>
         </div>
