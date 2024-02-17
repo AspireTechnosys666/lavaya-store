@@ -295,7 +295,7 @@ const InvoiceForDownload = ({
               </Text>
               <Text style={styles.topAddress}>
                 {globalSetting?.address ||
-                  "Cecilia Chapman, 561-4535 Nulla LA, United States 96522"}
+                  "28/C/48, JHELAM APARTMENT, RHB PRATAP NAGAR, SANGANER, Jaipur, India, Rajasthan"}
               </Text>
               {/* <Text style={styles.info}> United States 96522</Text> */}
             </View>

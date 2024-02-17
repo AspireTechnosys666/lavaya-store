@@ -134,7 +134,7 @@ const ContactUs = () => {
                         ?.address_box_address_one
                     )}
                   </span>{" "}
-                  <br />
+                  {/* <br />
                   {showingTranslateValue(
                     storeCustomizationSetting?.contact_us
                       ?.address_box_address_two
@@ -143,7 +143,7 @@ const ContactUs = () => {
                   {showingTranslateValue(
                     storeCustomizationSetting?.contact_us
                       ?.address_box_address_three
-                  )}
+                  )} */}
                 </p>
               </div>
             )}
