@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useCart } from "react-use-cart";
 
