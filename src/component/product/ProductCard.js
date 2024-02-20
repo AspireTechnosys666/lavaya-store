@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
+import { HiArrowsExpand  } from "react-icons/hi";
 import { useCart } from "react-use-cart";
 
 //internal import
@@ -168,10 +169,15 @@ const ProductCard = ({ product, attributes }) => {
                 aria-label="cart"
                 className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-[#e0015e] hover:border-[#e0015e] hover:bg-[#e0015e] hover:text-white transition-all"
               >
-                {" "}
-                <span className="text-xl">
-                  <IoBagAddSharp />
-                </span>{" "}
+                {product?.variants?.length > 0 ? (
+                  <span className="text-xl">
+                    <HiArrowsExpand />
+                  </span>
+                ) : (
+                  <span className="text-xl">
+                    <IoBagAddSharp />
+                  </span>
+                )}
               </button>
             )}
           </div>

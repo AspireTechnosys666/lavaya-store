@@ -1,2 +1,2 @@
-KachaBazar Frontend Documentation
+lavaya Frontend Documentation
 
