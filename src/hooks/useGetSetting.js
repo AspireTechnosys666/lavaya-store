@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 //internal import
 // import useAsync from "./useAsync";
 import SettingServices from "@services/SettingServices";
-import { addSetting } from "@redux/slice/settingSlice";
+import { addSetting, changeLoading } from "@redux/slice/settingSlice";
 import { storeCustomization } from "@utils/storeCustomizationSetting";
 
 const useGetSetting = () => {
@@ -22,6 +22,7 @@ const useGetSetting = () => {
   const [loading, setLoading] = useState(false);
 
   const settings = useSelector((state) => state.setting.settingItem);
+  const isSettingLoading = useSelector((state) => state.setting.isLoading);
 
   const globalSetting = settings.find(
     (value) => value.name === "globalSetting"
@@ -36,75 +37,71 @@ const useGetSetting = () => {
   //   // setSocket(io("http://localhost:5065"));
   // }, []);
 
-  useEffect(() => {
-    // Function to fetch and add the setting
-    const fetchAndAddSetting = async () => {
-      try {
-        setLoading(true);
-        // console.log("storeCustomizationSetting setting not available");
-        const res = await SettingServices.getStoreCustomizationSetting();
-        // console.log("res", res);
-        const storeCustomizationSettingData = {
-          ...res,
+  // Function to fetch and add the setting
+  const fetchAndAddSetting = async () => {
+    try {
+      setLoading(true);
+      const res = await SettingServices.getStoreCustomizationSetting();
+      const storeCustomizationSettingData = {
+        ...res,
+        name: "storeCustomizationSetting",
+      };
+
+      if (Object.keys(res).length > 0) {
+        dispatch(addSetting(storeCustomizationSettingData));
+      } else {
+        const storeCustomizationData = {
+          ...storeCustomization?.setting,
           name: "storeCustomizationSetting",
         };
-
-        if (Object.keys(res).length > 0) {
-          dispatch(addSetting(storeCustomizationSettingData));
-        } else {
-          // console.log(
-          //   "store customization setting not available in db! use local one"
-          // );
-          const storeCustomizationData = {
-            ...storeCustomization?.setting,
-            name: "storeCustomizationSetting",
-          };
-          dispatch(addSetting(storeCustomizationData));
-        }
-
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        console.log("Error on getting storeCustomizationSetting setting", err);
+        dispatch(addSetting(storeCustomizationData));
       }
-    };
 
-    const fetchGlobalSetting = async () => {
-      try {
-        // setLoading(true);
-        // console.log("globalSetting setting not available");
-        const res = await SettingServices.getGlobalSetting();
-        const globalSettingData = {
-          ...res,
-          name: "globalSetting",
-        };
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      console.log("Error on getting storeCustomizationSetting setting", err);
+    }
+  };
 
-        dispatch(addSetting(globalSettingData));
+  const fetchGlobalSetting = async () => {
+    try {
+      const res = await SettingServices.getGlobalSetting();
+      const globalSettingData = {
+        ...res,
+        name: "globalSetting",
+      };
 
-        // setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        console.log("Error on getting globalSetting setting", err);
+      dispatch(addSetting(globalSettingData));
+    } catch (err) {
+      setError(err.message);
+      console.log("Error on getting globalSetting setting", err);
+    }
+  };
+
+  useEffect(() => {
+    if (!isSettingLoading) {
+      dispatch(changeLoading(true));
+      if (!storeCustomizationSetting) {
+        fetchAndAddSetting();
       }
-    };
 
-    // Check if the setting is not in the store and fetch it
-    if (!storeCustomizationSetting) {
-      fetchAndAddSetting();
+      if (!globalSetting) {
+        fetchGlobalSetting();
+      }
     }
-
-    if (!globalSetting) {
-      fetchGlobalSetting();
-    }
-
-    // Check if the "lang" value is not set and set a default value
+    
     if (!lang) {
       Cookies.set("_lang", "en", {
         sameSite: "None",
         secure: true,
       });
     }
-  }, [lang]);
+
+    setTimeout(() => {
+      dispatch(changeLoading(false));
+    }, 100000)
+  }, []);
 
   return {
     lang,
