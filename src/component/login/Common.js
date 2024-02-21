@@ -1,26 +1,12 @@
 import React, { useState } from "react";
-import { ImFacebook, ImGoogle } from "react-icons/im";
 
-//internal import
-import useAsync from "@hooks/useAsync";
 import Login from "@component/login/Login";
-import { notifyError } from "@utils/toast";
-import useLoginSubmit from "@hooks/useLoginSubmit";
 import Register from "@component/login/Register";
 import ResetPassword from "@component/login/ResetPassword";
-import SettingServices from "@services/SettingServices";
 
 const Common = ({ setModalOpen }) => {
   const [showRegister, setShowRegister] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
-
-  const { handleGoogleSignIn, GoogleLogin } = useLoginSubmit(setModalOpen);
-  const { data: storeSetting } = useAsync(SettingServices.getStoreSetting);
-
-  const handleModal = () => {
-    setShowRegister(!showRegister);
-    setShowResetPassword(false);
-  };
 
   return (
     <>

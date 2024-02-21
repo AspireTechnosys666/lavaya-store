@@ -4,7 +4,6 @@ const settingSlice = createSlice({
   name: "setting",
   initialState: {
     settingItem: [],
-    isLoading: false
   },
   reducers: {
     addSetting: (state, action) => {
@@ -34,12 +33,6 @@ const settingSlice = createSlice({
         settingItem: state.settingItem.filter((x) => x.name !== action.payload),
       };
     },
-    changeLoading: (state, action) => {
-      return {
-        ...state,
-        isLoading: action.payload
-      };
-    },
     clearSetting: (state) => {
       return {
         ...state,
@@ -50,6 +43,6 @@ const settingSlice = createSlice({
   },
 });
 
-export const { addSetting, removeSetting, clearSetting, changeLoading } = settingSlice.actions;
+export const { addSetting, removeSetting, clearSetting } = settingSlice.actions;
 
 export default settingSlice.reducer;

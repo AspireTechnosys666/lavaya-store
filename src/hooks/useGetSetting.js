@@ -22,7 +22,6 @@ const useGetSetting = () => {
   const [loading, setLoading] = useState(false);
 
   const settings = useSelector((state) => state.setting.settingItem);
-  const isSettingLoading = useSelector((state) => state.setting.isLoading);
 
   const globalSetting = settings.find(
     (value) => value.name === "globalSetting"
@@ -80,8 +79,9 @@ const useGetSetting = () => {
   };
 
   useEffect(() => {
-    if (!isSettingLoading) {
-      dispatch(changeLoading(true));
+    const isReqLoading = Cookies.get('isReqLoading')
+    if (!isReqLoading) {
+      Cookies.set('isReqLoading', true)
       if (!storeCustomizationSetting) {
         fetchAndAddSetting();
       }
@@ -97,10 +97,9 @@ const useGetSetting = () => {
         secure: true,
       });
     }
-
-    setTimeout(() => {
-      dispatch(changeLoading(false));
-    }, 100000)
+      setTimeout(() => {
+        Cookies.set('isReqLoading', false)
+      }, 100000)
   }, []);
 
   return {
