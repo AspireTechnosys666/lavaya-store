@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 //internal import
 // import useAsync from "./useAsync";
 import SettingServices from "@services/SettingServices";
-import { addSetting, changeLoading } from "@redux/slice/settingSlice";
+import { addSetting } from "@redux/slice/settingSlice";
 import { storeCustomization } from "@utils/storeCustomizationSetting";
 
 const useGetSetting = () => {
@@ -57,8 +57,10 @@ const useGetSetting = () => {
       }
 
       setLoading(false);
+      Cookies.set("isReqLoading", false);
     } catch (err) {
       setError(err.message);
+      Cookies.set("isReqLoading", false);
       console.log("Error on getting storeCustomizationSetting setting", err);
     }
   };
@@ -72,17 +74,19 @@ const useGetSetting = () => {
       };
 
       dispatch(addSetting(globalSettingData));
+      Cookies.set("isReqLoading", false);
     } catch (err) {
       setError(err.message);
+      Cookies.set("isReqLoading", false);
       console.log("Error on getting globalSetting setting", err);
     }
   };
 
   useEffect(() => {
-    const isReqLoading = Cookies.get('isReqLoading')
+    const isReqLoading = Cookies.get("isReqLoading") === "true"
     if (!isReqLoading) {
-      Cookies.set('isReqLoading', true)
-      if (!storeCustomizationSetting) {
+            Cookies.set("isReqLoading", true);
+            if (!storeCustomizationSetting) {
         fetchAndAddSetting();
       }
 
@@ -90,17 +94,17 @@ const useGetSetting = () => {
         fetchGlobalSetting();
       }
     }
-    
+
     if (!lang) {
       Cookies.set("_lang", "en", {
         sameSite: "None",
         secure: true,
       });
     }
-      setTimeout(() => {
-        Cookies.set('isReqLoading', false)
-      }, 100000)
-  }, []);
+    setTimeout(() => {
+      Cookies.set("isReqLoading", false);
+    }, 100000);
+  }, [lang]);
 
   return {
     lang,
