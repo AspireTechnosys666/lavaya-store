@@ -1,16 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+// import Cookies from "js-cookie";
 
 import CustomerServices from "@services/CustomerServices";
 import { UserContext } from "@context/UserContext";
 import { notifyError, notifySuccess } from "@utils/toast";
+import Cookies from "js-cookie";
 
 export const initOTPless = (callback) => {
   const otplessInit = Reflect.get(window, "otplessInit");
 
   const loadScript = () => {
     const isScriptLoaded = document.getElementById("otplessIdScript");
-    if(isScriptLoaded) return;
+    if (isScriptLoaded) return;
 
     const script = document.createElement("script");
     script.src = "https://otpless.com/auth.js";
@@ -24,35 +26,31 @@ export const initOTPless = (callback) => {
   Reflect.set(window, "otpless", callback);
 };
 
-
-const Login = ({ setShowResetPassword, setModalOpen }) => {
+const Login = ({ setModalOpen }) => {
   // const { handleSubmit, submitHandler, register, errors, loading } = useLoginSubmit(setModalOpen);
   const router = useRouter();
   const { redirect } = router.query;
   const { dispatch } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => initOTPless(callback), []);
 
   const callback = (otplessUser) => {
-    const { mobile, email } = otplessUser
+    const { mobile } = otplessUser;
     CustomerServices.customerLogin({
-      phone: mobile.number
+      phone: mobile.number,
     })
-    .then((res) => {
-      setLoading(false);
-      setModalOpen(false);
-      router.push(redirect || "/");
-      notifySuccess(res?.message || "Login Success!");
-      dispatch({ type: "USER_LOGIN", payload: res });
-      Cookies.set("userInfo", JSON.stringify(res), {
-        expires: cookieTimeOut,
+      .then((res) => {
+        setModalOpen(false);
+        router.push(redirect || "/");
+        notifySuccess(res?.message || "Login Success!");
+        dispatch({ type: "USER_LOGIN", payload: res });
+        Cookies.set("userInfo", JSON.stringify(res), {
+          expires: 0.5,
+        });
+      })
+      .catch((err) => {
+        notifyError(err ? err?.response?.data?.message : err.message);
       });
-    })
-    .catch((err) => {
-      notifyError(err ? err?.response?.data?.message : err.message);
-      setLoading(false);
-    });
   };
 
   return (

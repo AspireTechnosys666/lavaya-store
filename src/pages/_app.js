@@ -13,7 +13,7 @@ import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 //internal import
 import store from "@redux/store";
 import getStripe from "@utils/stripe";
-import useAsync from "@hooks/useAsync";
+// import useAsync from "@hooks/useAsync";
 import { UserProvider } from "@context/UserContext";
 import DefaultSeo from "@component/common/DefaultSeo";
 import { SidebarProvider } from "@context/SidebarContext";
@@ -24,18 +24,18 @@ let persistor = persistStore(store);
 
 let stripePromise = getStripe();
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, storeSetting }) {
   const router = useRouter();
 
-  const {
-    data: storeSetting,
-    loading,
-    error,
-  } = useAsync(SettingServices.getStoreSetting);
+  // const {
+  //   data,
+  //   loading,
+  //   error,
+  // } = useAsync(SettingServices.getStoreSetting);
 
   useEffect(() => {
     // Initialize Google Analytics
-    if (!loading && !error && storeSetting?.google_analytic_status) {
+    if (storeSetting?.google_analytic_status) {
       ReactGA.initialize(storeSetting?.google_analytic_key || "");
 
       // Initial page load
@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }) {
 
       // Track page view on route change
       const handleRouteChange = (url) => {
-        handlePageView(`/${router.pathname}`, "Kachabazar");
+        handlePageView(`/${router.pathname}`, "lavaya");
       };
 
       // Set up event listeners
@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      {!loading && !error && storeSetting?.tawk_chat_status && (
+      {storeSetting?.tawk_chat_status && (
         <TawkMessengerReact
           propertyId={storeSetting?.tawk_chat_property_id || ""}
           widgetId={storeSetting?.tawk_chat_widget_id || ""}

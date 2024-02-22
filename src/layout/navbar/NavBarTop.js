@@ -25,7 +25,7 @@ const NavBarTop = () => {
   const { showingTranslateValue } = useUtilsFunction();
 
   const handleModal = () => {
-    if (userInfo?.email) {
+    if (userInfo?.phone) {
       router.push("/user/dashboard");
     } else {
       setModalOpen(!modalOpen);
@@ -101,7 +101,7 @@ const NavBarTop = () => {
                 )}
               </button>
               <span className="mx-2">|</span>
-              {userInfo?.email ? (
+              {userInfo?.phone ? (
                 <button
                   onClick={handleLogOut}
                   className="flex items-center font-medium hover:text-[#000]"

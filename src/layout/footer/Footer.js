@@ -207,7 +207,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${
-                      userInfo?.email
+                      userInfo?.phone
                         ? storeCustomizationSetting?.footer?.block3_sub_link1
                         : "#"
                     }`}
@@ -227,7 +227,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${
-                      userInfo?.email
+                      userInfo?.phone
                         ? storeCustomizationSetting?.footer?.block3_sub_link2
                         : "#"
                     }`}
@@ -247,7 +247,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${
-                      userInfo?.email
+                      userInfo?.phone
                         ? storeCustomizationSetting?.footer?.block3_sub_link3
                         : "#"
                     }`}
@@ -267,7 +267,7 @@ const Footer = () => {
                 <li className="flex items-baseline">
                   <Link
                     href={`${
-                      userInfo?.email
+                      userInfo?.phone
                         ? storeCustomizationSetting?.footer?.block3_sub_link4
                         : "#"
                     }`}

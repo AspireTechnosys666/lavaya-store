@@ -33,11 +33,11 @@ const settingSlice = createSlice({
         settingItem: state.settingItem.filter((x) => x.name !== action.payload),
       };
     },
-
     clearSetting: (state) => {
       return {
         ...state,
         settingItem: [],
+        isLoading: false
       };
     },
   },

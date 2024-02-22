@@ -68,12 +68,12 @@ const MobileFooter = () => {
                 className="rounded-full"
               />
             </Link>
-          ) : userInfo?.name ? (
+          ) : userInfo?.phone ? (
             <Link
               href="/user/dashboard"
               className="leading-none font-bold font-serif block"
             >
-              {userInfo?.name[0]}
+              {userInfo?.name?.[0] || <FiUser className="w-6 h-6 drop-shadow-xl" />} 
             </Link>
           ) : (
             <span onClick={() => setModalOpen(!modalOpen)}>
