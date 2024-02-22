@@ -1367,3 +1367,17 @@ p:not(:last-of-type) {
   background: #10b981 !important;
   color: #e2e8f0;
 }
+.phone-view{
+  display: none;
+}
+.web-view{
+  display: block;
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .phone-view{
+    display: block;
+  }
+  .web-view{
+    display: none;
+  }
+}

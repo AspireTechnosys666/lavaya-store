@@ -51,8 +51,8 @@ const FeatureCategory = () => {
                       <Image
                         src={category?.icon}
                         alt="category"
-                        width={70}
-                        height={70}
+                        width={150}
+                        height={150}
                       />
                     ) : (
                       <Image
