@@ -8,7 +8,6 @@ import { useCart } from "react-use-cart";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
 import useTranslation from "next-translate/useTranslation";
-import io from 'socket.io-client';
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -54,22 +53,6 @@ const Navbar = () => {
       const user = JSON.parse(Cookies.get("userInfo"));
       setImageUrl(user.image);
     }
-  }, []);
-
-  const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    const socket = io('http://localhost:5055');
-
-    socket.on('notification', (notification) => {
-      setNotifications((prevNotifications) => [...prevNotifications, notification]);
-      console.log(notifications, notification, "notificationsnotifications")
-    });
-
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   return (
