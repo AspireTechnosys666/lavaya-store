@@ -103,7 +103,7 @@ const useGetSetting = () => {
     }
     setTimeout(() => {
       Cookies.set("isReqLoading", false);
-    }, 100000);
+    }, 1000);
   }, [lang]);
 
   return {
