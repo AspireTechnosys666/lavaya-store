@@ -53,7 +53,7 @@ const storeCustomization = {
         de: "Anmeldung",
       },
       logout: {
-        en: "Pages",
+        en: "Logout",
         de: "Ausloggen",
       },
       checkout: {

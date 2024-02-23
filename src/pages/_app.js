@@ -13,7 +13,7 @@ import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 //internal import
 import store from "@redux/store";
 import getStripe from "@utils/stripe";
-// import useAsync from "@hooks/useAsync";
+import useAsync from "@hooks/useAsync";
 import { UserProvider } from "@context/UserContext";
 import DefaultSeo from "@component/common/DefaultSeo";
 import { SidebarProvider } from "@context/SidebarContext";
@@ -24,18 +24,18 @@ let persistor = persistStore(store);
 
 let stripePromise = getStripe();
 
-function MyApp({ Component, pageProps, storeSetting }) {
+function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  // const {
-  //   data,
-  //   loading,
-  //   error,
-  // } = useAsync(SettingServices.getStoreSetting);
+  const {
+    data: storeSetting,
+    loading,
+    error,
+  } = useAsync(SettingServices.getStoreSetting);
 
   useEffect(() => {
     // Initialize Google Analytics
-    if (storeSetting?.google_analytic_status) {
+    if (!loading && !error && storeSetting?.google_analytic_status) {
       ReactGA.initialize(storeSetting?.google_analytic_key || "");
 
       // Initial page load
@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps, storeSetting }) {
 
   return (
     <>
-      {storeSetting?.tawk_chat_status && (
+      {!loading && !error && storeSetting?.tawk_chat_status && (
         <TawkMessengerReact
           propertyId={storeSetting?.tawk_chat_property_id || ""}
           widgetId={storeSetting?.tawk_chat_widget_id || ""}
@@ -84,15 +84,5 @@ function MyApp({ Component, pageProps, storeSetting }) {
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const storeSetting = await SettingServices.getStoreSeoSetting();
-
-  return {
-    props: {
-      storeSetting,
-    },
-  };
-};
 
 export default MyApp;
