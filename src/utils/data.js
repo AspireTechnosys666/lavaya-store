@@ -95,21 +95,21 @@ const sliderData = [
     title: "Slider1Title",
     info: "Slider1description",
     url: "/search?Category=biscuits--cakes",
-    image: "/slider/slider-1.jpg",
+    image: "/slider/slider-1.webp",
   },
   {
     id: 2,
     title: "Slider2Title",
     info: "Slider2description",
     url: "/search?Category=fish--meat",
-    image: "/slider/slider-2.jpg",
+    image: "/slider/slider-2.webp",
   },
   {
     id: 3,
     title: "Slider3Title",
     info: "Slider3description",
     url: "/search?category=fresh-vegetable",
-    image: "/slider/slider-3.jpg",
+    image: "/slider/slider-3.webp",
   },
 ];
 
