@@ -17,7 +17,7 @@ const MainCarousel = () => {
   const { showingTranslateValue, showingUrl, showingImage } =
     useUtilsFunction();
 
-  const sliderData = [
+    const sliderData = [
     {
       id: 1,
 

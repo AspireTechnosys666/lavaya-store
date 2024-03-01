@@ -60,8 +60,8 @@ const pages = [
     icon: FiFileText,
   },
   {
-    title: "not-found-page",
-    href: "/404",
+    title: "customer-support",
+    href: "https://tawk.to/chat/659bc16d8d261e1b5f50a8a9/1hjk6n611",
     icon: FiAlertCircle,
   },
 ];
