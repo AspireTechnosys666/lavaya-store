@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import ReactGA from "react-ga4";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+// import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 
 //internal import
 import store from "@redux/store";
@@ -59,12 +59,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      {!loading && !error && storeSetting?.tawk_chat_status && (
+      {/* {!loading && !error && storeSetting?.tawk_chat_status && (
         <TawkMessengerReact
+          style={{bottom:"20%"}}
           propertyId={storeSetting?.tawk_chat_property_id || ""}
           widgetId={storeSetting?.tawk_chat_widget_id || ""}
         />
-      )}
+      )} */}
       <GoogleOAuthProvider clientId={storeSetting?.google_client_id || ""}>
         <UserProvider>
           <Provider store={store}>
