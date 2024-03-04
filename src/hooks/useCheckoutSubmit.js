@@ -47,7 +47,7 @@ const useCheckoutSubmit = () => {
 
   const { data } = useAsync(CouponServices.getAllCoupons);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "₹";
 
   useEffect(() => {
     if (Cookies.get("couponInfo")) {
