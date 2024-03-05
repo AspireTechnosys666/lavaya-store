@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "react-use-cart";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 //internal import
 import useAsync from "@hooks/useAsync";
@@ -13,9 +12,14 @@ import OrderServices from "@services/OrderServices";
 import CouponServices from "@services/CouponServices";
 import { notifyError, notifySuccess } from "@utils/toast";
 import SettingServices from "@services/SettingServices";
-import NotificationServices from "@services/NotificaitonServices";
 
 const useCheckoutSubmit = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const {
     state: { userInfo, shippingAddress },
     dispatch,
@@ -31,28 +35,20 @@ const useCheckoutSubmit = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
+  const [ccAvenueForm, setccAvenueForm] = useState(null);
 
   const router = useRouter();
-  const stripe = useStripe();
-  const elements = useElements();
   const couponRef = useRef("");
+  const ccRevenueRef = useRef(null);
   const { isEmpty, emptyCart, items, cartTotal } = useCart();
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
 
   const { data } = useAsync(CouponServices.getAllCoupons);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "₹";
 
   useEffect(() => {
     if (Cookies.get("couponInfo")) {
       const coupon = JSON.parse(Cookies.get("couponInfo"));
-      // console.log('coupon information',coupon)
       setCouponInfo(coupon);
       setDiscountPercentage(coupon.discountType);
       setMinimumAmount(coupon.minimumAmount);
@@ -136,103 +132,19 @@ const useCheckoutSubmit = () => {
         total: total,
       };
 
-      if (data.paymentMethod === "Card") {
-        if (!stripe || !elements) {
-          return;
-        }
-
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-          type: "card",
-          card: elements.getElement(CardElement),
-        });
-
-        // console.log('error', error);
-
-        if (error && !paymentMethod) {
-          setError(error.message);
-          setIsCheckoutSubmit(false);
-        } else {
-          setError("");
-          const orderData = {
-            ...orderInfo,
-            cardInfo: paymentMethod,
-          };
-
-          handlePaymentWithStripe(orderData);
-
-          // console.log('cardInfo', orderData);
-          return;
-        }
+      const res = await OrderServices.addOrder(orderInfo);
+      
+      if (res._id) {
+        setccAvenueForm(res)
       }
-      if (data.paymentMethod === "Cash") {
-        const res = await OrderServices.addOrder(orderInfo);
-
-        // notification info
-        const notificationInfo = {
-          orderId: res._id,
-          message: `${res.user_info.name}, Placed ${currency}${parseFloat(
-            res.total
-          ).toFixed(2)} order!`,
-          image:
-            "https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png",
-        };
-        // notification api call
-        await NotificationServices.addNotification(notificationInfo);
-
-        router.push(`/order/${res._id}`);
-        notifySuccess("Your Order Confirmed!");
-        Cookies.remove("couponInfo");
-        sessionStorage.removeItem("products");
-        emptyCart();
-        setIsCheckoutSubmit(false);
-      }
-    } catch (err) {
-      notifyError(err.message);
-      setIsCheckoutSubmit(false);
-    }
-  };
-
-  const handlePaymentWithStripe = async (order) => {
-    try {
-      // console.log('try goes here!', order);
-      // const updatedOrder = {
-      //   ...order,
-      //   currency: 'usd',
-      // };
-      const res = await OrderServices.createPaymentIntent(order);
-      // console.log("res", res);
-      stripe.confirmCardPayment(res.client_secret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      });
-
-      const orderData = {
-        ...order,
-        cardInfo: res,
-      };
-      const resOrder = await OrderServices.addOrder(orderData);
-      // notification info
-      const notificationInfo = {
-        orderId: resOrder._id,
-        message: `${resOrder.user_info.name}, Placed ${currency}${parseFloat(
-          resOrder.total
-        ).toFixed(2)} order!`,
-        image:
-          "https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png",
-      };
-      // notification api call
-      await NotificationServices.addNotification(notificationInfo);
-
-      router.push(`/order/${resOrder._id}`);
+      // router.push(`/order/${res._id}`);
       notifySuccess("Your Order Confirmed!");
       Cookies.remove("couponInfo");
-      emptyCart();
       sessionStorage.removeItem("products");
+      emptyCart();
       setIsCheckoutSubmit(false);
     } catch (err) {
-      // console.log("err", err?.message);
-      notifyError(err?.response?.data?.message || err?.message);
+      notifyError(err.message);
       setIsCheckoutSubmit(false);
     }
   };
@@ -288,9 +200,9 @@ const useCheckoutSubmit = () => {
     showCard,
     setShowCard,
     error,
-    stripe,
     couponInfo,
     couponRef,
+    ccRevenueRef,
     handleCouponCode,
     discountPercentage,
     discountAmount,
@@ -302,6 +214,7 @@ const useCheckoutSubmit = () => {
     currency,
     isCheckoutSubmit,
     isCouponApplied,
+    ccAvenueForm
   };
 };
 

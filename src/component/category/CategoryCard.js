@@ -30,7 +30,7 @@ const CategoryCard = ({ title, icon, nested, id }) => {
 
     setShow(!show);
     router.push(`/search?category=${name}&_id=${id}`);
-    closeCategoryDrawer;
+    closeCategoryDrawer();
     setIsLoading(!isLoading);
   };
 
@@ -40,7 +40,7 @@ const CategoryCard = ({ title, icon, nested, id }) => {
 
     setShowSubCategory({ id: id, show: showSubCategory.show ? false : true });
     router.push(`/search?category=${name}&_id=${id}`);
-    closeCategoryDrawer;
+    closeCategoryDrawer();
     setIsLoading(!isLoading);
   };
 
@@ -48,7 +48,7 @@ const CategoryCard = ({ title, icon, nested, id }) => {
     const name = categoryName.toLowerCase().replace(/[^A-Z0-9]+/gi, "-");
 
     router.push(`/search?category=${name}&_id=${id}`);
-    closeCategoryDrawer;
+    closeCategoryDrawer();
     setIsLoading(!isLoading);
   };
 

@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { IoChevronForwardSharp } from "react-icons/io5";
-
 //internal import
 
 import useAsync from "@hooks/useAsync";

@@ -53,7 +53,7 @@ const storeCustomization = {
         de: "Anmeldung",
       },
       logout: {
-        en: "Pages",
+        en: "Logout",
         de: "Ausloggen",
       },
       checkout: {
@@ -463,7 +463,7 @@ const storeCustomization = {
       bottom_dots: true,
       both_slider: false,
       first_img:
-        "https://res.cloudinary.com/ahossain/image/upload/v1697688491/settings/slider-1_rl8qdc.jpg",
+        "https://res.cloudinary.com/dwujlnajx/image/upload/v1709279754/undefined/1_lsgceu.webp",
       first_title: {
         en: "The Best Quality Products Guaranteed!",
         de: "Die besten Qualitätsprodukte garantiert!",
@@ -478,7 +478,7 @@ const storeCustomization = {
       },
       first_link: "/search?category=milk-dairy",
       second_img:
-        "https://res.cloudinary.com/ahossain/image/upload/v1697688491/settings/slider-2_o6aezc.jpg",
+        "https://res.cloudinary.com/dwujlnajx/image/upload/v1709279760/undefined/2_xn4s6x.webp",
       second_title: {
         en: "Best Different Type of Grocery Store",
         de: "Bestes anderes Lebensmittelgeschäft",
@@ -493,7 +493,7 @@ const storeCustomization = {
       },
       second_link: "/search?category=fish-meat",
       third_img:
-        "https://res.cloudinary.com/ahossain/image/upload/v1697688492/settings/slider-3_iw4nnf.jpg",
+        "https://res.cloudinary.com/dwujlnajx/image/upload/v1709279767/undefined/3_xi2ffs.webp",
       third_title: {
         en: "Quality Freshness Guaranteed!",
         de: "Qualitätsfrische garantiert!",
@@ -507,7 +507,7 @@ const storeCustomization = {
         de: "Jetzt einkaufen",
       },
       third_link: "/search?category=fruits-vegetable",
-      four_img: "https://i.postimg.cc/rscqZJNz/slider-1.webp",
+      four_img: "https://res.cloudinary.com/dwujlnajx/image/upload/v1709279754/undefined/1_lsgceu.webp",
       four_title: {
         en: "The Best Quality Products Guaranteed!",
         de: "Die besten Qualitätsprodukte garantiert!",
@@ -522,7 +522,7 @@ const storeCustomization = {
       },
       four_link: "/search?category=fruits-vegetable",
       five_img:
-        "https://res.cloudinary.com/ahossain/image/upload/v1697688491/settings/slider-2_o6aezc.jpg",
+        "https://res.cloudinary.com/dwujlnajx/image/upload/v1709279760/undefined/2_xn4s6x.webp",
       five_title: {
         en: "Best Different Type of Grocery Store",
         de: "Bestes anderes Lebensmittelgeschäft",

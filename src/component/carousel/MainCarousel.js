@@ -17,7 +17,7 @@ const MainCarousel = () => {
   const { showingTranslateValue, showingUrl, showingImage } =
     useUtilsFunction();
 
-  const sliderData = [
+    const sliderData = [
     {
       id: 1,
 
@@ -33,7 +33,7 @@ const MainCarousel = () => {
       url: showingUrl(storeCustomizationSetting?.slider?.first_link),
       image:
         showingImage(storeCustomizationSetting?.slider?.first_img) ||
-        "/slider/slider-1.jpg",
+        "/slider/slider-1.webp",
     },
     {
       id: 2,
@@ -49,7 +49,7 @@ const MainCarousel = () => {
       url: showingUrl(storeCustomizationSetting?.slider?.second_link),
       image:
         showingImage(storeCustomizationSetting?.slider?.second_img) ||
-        "/slider/slider-2.jpg",
+        "/slider/slider-2.webp",
     },
     {
       id: 3,
@@ -65,7 +65,7 @@ const MainCarousel = () => {
       url: showingUrl(storeCustomizationSetting?.slider?.third_link),
       image:
         showingImage(storeCustomizationSetting?.slider?.third_img) ||
-        "/slider/slider-3.jpg",
+        "/slider/slider-3.webp",
     },
     {
       id: 4,
@@ -81,7 +81,7 @@ const MainCarousel = () => {
       url: showingUrl(storeCustomizationSetting?.slider?.four_link),
       image:
         showingImage(storeCustomizationSetting?.slider?.four_img) ||
-        "/slider/slider-1.jpg",
+        "/slider/slider-1.webp",
     },
     {
       id: 5,
@@ -97,7 +97,7 @@ const MainCarousel = () => {
       url: showingUrl(storeCustomizationSetting?.slider?.five_link),
       image:
         showingImage(storeCustomizationSetting?.slider?.five_img) ||
-        "/slider/slider-2.jpg",
+        "/slider/slider-2.webp",
     },
   ];
 
@@ -132,16 +132,20 @@ const MainCarousel = () => {
             key={i + 1}
           >
             <div className="text-sm text-gray-600 hover:text-emerald-dark">
-              <Image
-                width={950}
-                height={400}
-                src={item.image}
-                alt={item.title}
-                className="object-cover"
-                priority
-              />
+              <Link
+                href={item.url}
+              >
+                <Image
+                  width={950}
+                  height={400}
+                  src={item.image}
+                  alt={item.title}
+                  className="object-cover"
+                  priority
+                />
+              </Link>
             </div>
-            <div className="absolute top-0 left-0 z-10 p-r-16 flex-col flex w-full h-full place-items-start justify-center">
+            {/* <div className="absolute top-0 left-0 z-10 p-r-16 flex-col flex w-full h-full place-items-start justify-center">
               <div className="pl-4 pr-12 sm:pl-10 sm:pr-16 w-10/12 lg:w-8/12 xl:w-7/12">
                 <h1 className="mb-2 font-serif text-xl sm:text-lg md:text-2xl line-clamp-1 md:line-clamp-none  lg:line-clamp-none  lg:text-3xl font-bold text-gray-800">
                   {item.title}
@@ -150,13 +154,13 @@ const MainCarousel = () => {
                   {item.info}
                 </p>
                 <Link
-                  href={item.url}
+                  
                   className="hidden sm:inline-block lg:inline-block text-sm leading-6 font-serif font-medium mt-6 px-6 py-2 bg-[#e0015e] text-center rounded-md text-white hover:bg-[#20b7dc]"
                 >
                   {item.buttonName}
                 </Link>
               </div>
-            </div>
+            </div> */}
           </SwiperSlide>
         ))}
       </Swiper>

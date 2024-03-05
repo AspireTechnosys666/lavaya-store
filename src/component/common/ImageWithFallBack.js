@@ -26,6 +26,7 @@ const ImageWithFallback = ({
       style={{
         objectFit: "contain",
       }}
+      loading="eager"
       sizes="100%"
       className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2"
     />

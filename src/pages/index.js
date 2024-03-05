@@ -52,7 +52,7 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
                   </div>
                 </div>
                 {storeCustomizationSetting?.home?.promotion_banner_status && (
-                  <div className="bg-orange-100 px-10 py-6 rounded-lg mt-6">
+                  <div className="hidden md:block bg-orange-100 px-10 py-6 rounded-lg mt-6">
                     <Banner />
                   </div>
                 )}
@@ -153,7 +153,7 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
 
             {/* promotional banner card */}
             {storeCustomizationSetting?.home?.delivery_status && (
-              <div className="block mx-auto max-w-screen-2xl">
+              <div className="hidden md:block mx-auto max-w-screen-2xl">
                 <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
                   <div className="lg:p-16 p-6 bg-[#e0015e] shadow-sm border rounded-lg">
                     <CardTwo />
