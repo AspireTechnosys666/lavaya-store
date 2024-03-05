@@ -1,6 +1,5 @@
 import "@styles/custom.css";
 import { CartProvider } from "react-use-cart";
-import { Elements } from "@stripe/react-stripe-js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
@@ -12,7 +11,6 @@ import { useRouter } from "next/router";
 
 //internal import
 import store from "@redux/store";
-import getStripe from "@utils/stripe";
 import useAsync from "@hooks/useAsync";
 import { UserProvider } from "@context/UserContext";
 import DefaultSeo from "@component/common/DefaultSeo";
@@ -21,8 +19,6 @@ import SettingServices from "@services/SettingServices";
 import { handlePageView } from "@utils/analytics";
 
 let persistor = persistStore(store);
-
-let stripePromise = getStripe();
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -42,7 +38,7 @@ function MyApp({ Component, pageProps }) {
       handlePageView();
 
       // Track page view on route change
-      const handleRouteChange = (url) => {
+      const handleRouteChange = () => {
         handlePageView(`/${router.pathname}`, "lavaya");
       };
 
@@ -54,8 +50,6 @@ function MyApp({ Component, pageProps }) {
       };
     }
   }, [storeSetting]);
-
-  // console.log("storeSetting", storeSetting, "stripePromise", stripePromise);
 
   return (
     <>
@@ -71,12 +65,10 @@ function MyApp({ Component, pageProps }) {
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
               <SidebarProvider>
-                <Elements stripe={stripePromise}>
                   <CartProvider>
                     <DefaultSeo />
                     <Component {...pageProps} />
                   </CartProvider>
-                </Elements>
               </SidebarProvider>
             </PersistGate>
           </Provider>

@@ -1,44 +1,32 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { CardElement } from "@stripe/react-stripe-js";
 import Link from "next/link";
 import {
   IoReturnUpBackOutline,
   IoArrowForward,
   IoBagHandle,
-  IoWalletSharp,
 } from "react-icons/io5";
-import { ImCreditCard } from "react-icons/im";
 import useTranslation from "next-translate/useTranslation";
 
 //internal import
-
 import Layout from "@layout/Layout";
-import useAsync from "@hooks/useAsync";
-import Label from "@component/form/Label";
 import Error from "@component/form/Error";
 import CartItem from "@component/cart/CartItem";
 import InputArea from "@component/form/InputArea";
 import useGetSetting from "@hooks/useGetSetting";
-import InputShipping from "@component/form/InputShipping";
-import InputPayment from "@component/form/InputPayment";
 import useCheckoutSubmit from "@hooks/useCheckoutSubmit";
 import useUtilsFunction from "@hooks/useUtilsFunction";
-import SettingServices from "@services/SettingServices";
+import CCAvenuePayment from "@component/payment/CCAvenuePayment";
 
 const Checkout = () => {
   const {
     handleSubmit,
     submitHandler,
-    handleShippingCost,
     register,
     errors,
-    showCard,
-    setShowCard,
-    error,
-    stripe,
     couponInfo,
     couponRef,
+    ccRevenueRef,
     handleCouponCode,
     discountAmount,
     shippingCost,
@@ -48,19 +36,22 @@ const Checkout = () => {
     cartTotal,
     currency,
     isCheckoutSubmit,
+    ccAvenueForm
   } = useCheckoutSubmit();
 
   const { t } = useTranslation();
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
-  const { data: storeSetting } = useAsync(SettingServices.getStoreSetting);
-
+  
   return (
     <>
       <Layout title="Checkout" description="this is checkout page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
             <div className="md:w-full lg:w-3/5 flex h-full flex-col order-2 sm:order-1 lg:order-1">
+              <div className="hidden">
+                <CCAvenuePayment formRef={ccRevenueRef} ccAvenueForm={ccAvenueForm} />
+              </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <form onSubmit={handleSubmit(submitHandler)}>
                   <div className="form-group">
@@ -188,78 +179,6 @@ const Checkout = () => {
                       </div>
                     </div>
 
-                    <Label
-                      label={showingTranslateValue(
-                        storeCustomizationSetting?.checkout?.shipping_cost
-                      )}
-                    />
-                    <div className="grid grid-cols-6 gap-6">
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputShipping
-                          currency={currency}
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="FedEx"
-                          time="Today"
-                          cost={60}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputShipping
-                          currency={currency}
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="UPS"
-                          time="7 Days"
-                          cost={20}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group mt-12">
-                    <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
-                      03.{" "}
-                      {showingTranslateValue(
-                        storeCustomizationSetting?.checkout?.payment_method
-                      )}
-                    </h2>
-                    {showCard && (
-                      <div className="mb-3">
-                        <CardElement />{" "}
-                        <p className="text-red-400 text-sm mt-1">{error}</p>
-                      </div>
-                    )}
-                    <div className="grid grid-cols-6 gap-6">
-                      {storeSetting?.cod_status && (
-                        <div className="col-span-6 sm:col-span-3">
-                          <InputPayment
-                            setShowCard={setShowCard}
-                            register={register}
-                            name={t("common:cashOnDelivery")}
-                            value="Cash"
-                            Icon={IoWalletSharp}
-                          />
-                          <Error errorName={errors.paymentMethod} />
-                        </div>
-                      )}
-
-                      {storeSetting?.stripe_status && (
-                        <div className="col-span-6 sm:col-span-3">
-                          <InputPayment
-                            setShowCard={setShowCard}
-                            register={register}
-                            name={t("common:creditCard")}
-                            value="Card"
-                            Icon={ImCreditCard}
-                          />
-                          <Error errorName={errors.paymentMethod} />
-                        </div>
-                      )}
-                    </div>
                   </div>
 
                   <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">
@@ -279,7 +198,7 @@ const Checkout = () => {
                     <div className="col-span-6 sm:col-span-3">
                       <button
                         type="submit"
-                        disabled={isEmpty || !stripe || isCheckoutSubmit}
+                        disabled={isEmpty || isCheckoutSubmit}
                         className="bg-[#e0015e] hover:bg-[#20b7dc] border border-[#e0015e] transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
                       >
                         {isCheckoutSubmit ? (
