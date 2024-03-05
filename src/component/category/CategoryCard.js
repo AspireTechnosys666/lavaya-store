@@ -60,7 +60,7 @@ const CategoryCard = ({ title, icon, nested, id }) => {
         role="button"
       >
         {icon ? (
-          <Image src={icon} width={18} height={18} alt="Category" />
+          <Image src={icon} width={30} height={30} alt="Category" />
         ) : (
           <Image
             src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"

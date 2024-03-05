@@ -53,7 +53,6 @@ const ProductCard = ({ product, attributes }) => {
   const handleModalOpen = (event, id) => {
     setModalOpen(event);
   };
-
   return (
     <>
       {modalOpen && (

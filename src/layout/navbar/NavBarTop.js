@@ -66,7 +66,7 @@ const NavBarTop = () => {
             </span>
 
             <div className="lg:text-right flex items-center navBar text-[#fff]">
-              {storeCustomizationSetting?.navbar?.about_menu_status && (
+              {/* {storeCustomizationSetting?.navbar?.about_menu_status && (
                 <div>
                   <Link
                     href="/about-us"
@@ -78,8 +78,8 @@ const NavBarTop = () => {
                   </Link>
                   <span className="mx-2">|</span>
                 </div>
-              )}
-              {storeCustomizationSetting?.navbar?.contact_menu_status && (
+              )} */}
+              {/* {storeCustomizationSetting?.navbar?.contact_menu_status && (
                 <div>
                   <Link
                     href="/contact-us"
@@ -91,7 +91,7 @@ const NavBarTop = () => {
                   </Link>
                   <span className="mx-2">|</span>
                 </div>
-              )}
+              )} */}
               <button
                 onClick={handleModal}
                 className="font-medium hover:text-[#000]"
