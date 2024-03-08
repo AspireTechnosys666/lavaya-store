@@ -32,6 +32,16 @@ const CustomerServices = {
   updateCustomer: async (id, body) => {
     return requests.put(`/customer/${id}`, body);
   },
+
+  // login routes
+  loginWithOtp: async ({ phone }) => {
+    return requests.get(`/login/login-with-otp?phone=${phone}`);
+  },
+
+  verifyLoginOtp: async ({ phone, otp }) => {
+    return requests.get(`/login/verify-login-otp?phone=${phone}&otp=${otp}`);
+  },
+  
 };
 
 export default CustomerServices;

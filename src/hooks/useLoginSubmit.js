@@ -1,115 +1,119 @@
+import React, { useContext, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { GoogleLogin } from "@react-oauth/google";
 
-//internal import
-
+import CustomerServices from "@services/CustomerServices";
 import { UserContext } from "@context/UserContext";
 import { notifyError, notifySuccess } from "@utils/toast";
-import CustomerServices from "@services/CustomerServices";
 
 const useLoginSubmit = (setModalOpen) => {
-  const router = useRouter();
-  const { redirect } = router.query;
-  const { dispatch } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
+  const { redirect } = router.query;
+  const { dispatch } = useContext(UserContext);
 
-  const submitHandler = ({
-    name,
-    email,
-    registerEmail,
-    verifyEmail,
-    password,
-  }) => {
-    setLoading(true);
-    const cookieTimeOut = 0.5;
+  const [loading, setLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [otpMobile, setOtpMobile] = useState('');
+  const [otpInput, setOtpInput] = useState(["", "", "", ""]);
+  const [otpLoading, setOtpLoading] = useState(false);
 
-    if (registerEmail && password) {
-      CustomerServices.customerLogin({
-        registerEmail,
-        password,
-      })
-        .then((res) => {
-          setLoading(false);
-          setModalOpen(false);
-          router.push(redirect || "/");
-          notifySuccess("Login Success!");
-          dispatch({ type: "USER_LOGIN", payload: res });
-          Cookies.set("userInfo", JSON.stringify(res), {
-            expires: cookieTimeOut,
-          });
-        })
-        .catch((err) => {
-          notifyError(err ? err.response.data.message : err.message);
-          setLoading(false);
-        });
-    }
-    if (name && email && password) {
-      CustomerServices.verifyEmailAddress({ name, email, password })
-        .then((res) => {
-          setLoading(false);
-          setModalOpen(false);
-          notifySuccess(res.message);
-        })
-        .catch((err) => {
-          setLoading(false);
-          notifyError(err.response.data.message);
-        });
-    }
-    if (verifyEmail) {
-      CustomerServices.forgetPassword({ verifyEmail })
-        .then((res) => {
-          setLoading(false);
-          notifySuccess(res.message);
-          setValue("verifyEmail");
-        })
-        .catch((err) => {
-          setLoading(false);
-          notifyError(err ? err.response.data.message : err.message);
-        });
+  const otpRefs = useRef([
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+  ]);
+
+  const submitHandler = async ({ phone }) => {
+    try {
+      setLoading(true);
+      
+      const loginRes = await CustomerServices.loginWithOtp({ phone });
+      if (loginRes) {
+        setIsOtpSent(true);
+        setOtpMobile(phone)
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = (user) => {
-    // console.log("google sign in", user?.credential);
-    const cookieTimeOut = 0.5;
+  const handleOtpChange = (index, e) => {
+    const newOtp = [...otpInput];
+    newOtp[index] = e.target.value;
+    setOtpInput(newOtp);
+    if (e.target.value !== "" && index < otpInput.length - 1) {
+      otpRefs.current[index + 1].current.focus();
+    }
+  };
 
-    if (user) {
-      CustomerServices.signUpWithProvider(user?.credential)
-        .then((res) => {
-          setModalOpen(false);
-          notifySuccess("Login success!");
-          router.push(redirect || "/");
-          dispatch({ type: "USER_LOGIN", payload: res });
-          Cookies.set("userInfo", JSON.stringify(res), {
-            expires: cookieTimeOut,
-          });
-        })
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text/plain").trim();
+    const otpArray = pastedData.split("").slice(0, 4);
+    const newOtp = [...otpInput];
+    otpArray.forEach((digit, index) => {
+      if (index < otpInput.length) {
+        newOtp[index] = digit;
+      }
+    });
+    setOtpInput(newOtp);
+  };
 
-        .catch((err) => {
-          notifyError(err.message);
-          setModalOpen(false);
-        });
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === "Backspace" && index > 0 && otpInput[index] === "") {
+      otpRefs.current[index - 1].current.focus();
+    }
+  };
+
+  const submitOtpHandler = async () => {
+    try {
+      const expirationDate = new Date(
+        new Date().setMonth(new Date().getMonth() + 1)
+      );
+      const res = await CustomerServices.verifyLoginOtp({
+        phone: otpMobile,
+        otp: otpInput.join(""),
+      });
+      setOtpLoading(false);
+      setModalOpen(false);
+      router.push(redirect || "/");
+      notifySuccess("Login Success!");
+      dispatch({ type: "USER_LOGIN", payload: res });
+      Cookies.set("userInfo", JSON.stringify(res), {
+        expires: expirationDate,
+      });
+    } catch (err) {
+      setLoading(false);
+      notifyError(err.response.data.message);
     }
   };
 
   return {
     handleSubmit,
     submitHandler,
-    handleGoogleSignIn,
     register,
     errors,
-    GoogleLogin,
     loading,
+    isOtpSent,
+    setIsOtpSent,
+    otpRefs,
+    otpMobile,
+    setOtpMobile,
+    otpInput,
+    otpLoading,
+    setOtpLoading,
+    handleOtpChange,
+    handleOtpPaste,
+    handleOtpKeyDown,
+    submitOtpHandler
   };
 };
 
