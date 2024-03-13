@@ -110,7 +110,7 @@ const CCAvenuePayment = ({ formRef, ccAvenueForm }) => {
           <tr>
             <td>Billing State:</td>
             <td>
-              <input type="text" name="billing_state" value="" />
+              <input type="text" name="billing_state" value={ccAvenueForm?.user_info?.state} />
             </td>
           </tr>
           <tr>

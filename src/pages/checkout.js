@@ -36,13 +36,13 @@ const Checkout = () => {
     cartTotal,
     currency,
     isCheckoutSubmit,
-    ccAvenueForm
+    ccAvenueForm,
   } = useCheckoutSubmit();
 
   const { t } = useTranslation();
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
-  
+
   return (
     <>
       <Layout title="Checkout" description="this is checkout page">
@@ -50,7 +50,10 @@ const Checkout = () => {
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
             <div className="md:w-full lg:w-3/5 flex h-full flex-col order-2 sm:order-1 lg:order-1">
               <div className="hidden">
-                <CCAvenuePayment formRef={ccRevenueRef} ccAvenueForm={ccAvenueForm} />
+                <CCAvenuePayment
+                  formRef={ccRevenueRef}
+                  ccAvenueForm={ccAvenueForm}
+                />
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <form onSubmit={handleSubmit(submitHandler)}>
@@ -70,22 +73,9 @@ const Checkout = () => {
                           )}
                           name="firstName"
                           type="text"
-                          placeholder="John"
+                          placeholder="Enter your name"
                         />
                         <Error errorName={errors.firstName} />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputArea
-                          register={register}
-                          label={showingTranslateValue(
-                            storeCustomizationSetting?.checkout?.last_name
-                          )}
-                          name="lastName"
-                          type="text"
-                          placeholder="Doe"
-                        />
-                        <Error errorName={errors.lastName} />
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -109,7 +99,7 @@ const Checkout = () => {
                           )}
                           name="contact"
                           type="tel"
-                          placeholder="+062-6532956"
+                          placeholder="9876543210"
                         />
 
                         <Error errorName={errors.contact} />
@@ -134,7 +124,7 @@ const Checkout = () => {
                           )}
                           name="address"
                           type="text"
-                          placeholder="123 Boulevard Rd, Beverley Hills"
+                          placeholder="Street Address"
                         />
                         <Error errorName={errors.address} />
                       </div>
@@ -147,7 +137,7 @@ const Checkout = () => {
                           )}
                           name="city"
                           type="text"
-                          placeholder="Los Angeles"
+                          placeholder="City"
                         />
                         <Error errorName={errors.city} />
                       </div>
@@ -155,14 +145,18 @@ const Checkout = () => {
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                         <InputArea
                           register={register}
-                          label={showingTranslateValue(
-                            storeCustomizationSetting?.checkout?.country
-                          )}
-                          name="country"
+                          label={
+                            storeCustomizationSetting?.checkout?.state
+                              ? showingTranslateValue(
+                                  storeCustomizationSetting?.checkout?.state
+                                )
+                              : "State"
+                          }
+                          name="state"
                           type="text"
-                          placeholder="United States"
+                          placeholder="State"
                         />
-                        <Error errorName={errors.country} />
+                        <Error errorName={errors.state} />
                       </div>
 
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -173,12 +167,11 @@ const Checkout = () => {
                           )}
                           name="zipCode"
                           type="text"
-                          placeholder="2345"
+                          placeholder="111111"
                         />
                         <Error errorName={errors.zipCode} />
                       </div>
                     </div>
-
                   </div>
 
                   <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">

@@ -1367,3 +1367,25 @@ p:not(:last-of-type) {
   background: #10b981 !important;
   color: #e2e8f0;
 }
+
+.border-invoice{
+  border: 1px solid #000;
+}
+.border-right-invoice {
+  border-right: 1px solid #000;
+}
+.border-bottom-invoice {
+  border-bottom: 1px solid #000;
+}
+.border-top-invoice{
+  border-top: 1px solid #000;
+}
+.border-left-invoice{
+  border-left: 1px solid #000;
+}
+
+.html2canvas-container { 
+  width: 3000px; 
+  height: 3000px; 
+}
+
