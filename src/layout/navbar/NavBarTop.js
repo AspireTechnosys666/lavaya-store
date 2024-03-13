@@ -109,9 +109,10 @@ const NavBarTop = () => {
                   <span className="mr-1">
                     <IoLockOpenOutline />
                   </span>
-                  {showingTranslateValue(
+                  Logout
+                  {/* {showingTranslateValue(
                     storeCustomizationSetting?.navbar?.logout
-                  )}
+                  )} */}
                 </button>
               ) : (
                 <button

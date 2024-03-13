@@ -1,61 +1,95 @@
-import { useContext, useEffect } from "react";
-import { useRouter } from "next/router";
-// import Cookies from "js-cookie";
+import Image from "next/image";
+import { FaArrowLeft } from "react-icons/fa6";
 
-import CustomerServices from "@services/CustomerServices";
-import { UserContext } from "@context/UserContext";
-import { notifyError, notifySuccess } from "@utils/toast";
-import Cookies from "js-cookie";
-
-export const initOTPless = (callback) => {
-  const otplessInit = Reflect.get(window, "otplessInit");
-
-  const loadScript = () => {
-    const isScriptLoaded = document.getElementById("otplessIdScript");
-    if (isScriptLoaded) return;
-
-    const script = document.createElement("script");
-    script.src = "https://otpless.com/auth.js";
-    script.id = "otplessIdScript";
-    script.setAttribute("cid", process.env.NEXT_PUBLIC_OTPLESS_CID);
-    document.body.appendChild(script);
-  };
-
-  otplessInit ? otplessInit() : loadScript();
-
-  Reflect.set(window, "otpless", callback);
-};
+import InputArea from "@component/form/InputArea";
+import useLoginSubmit from "@hooks/useLoginSubmit";
+import Error from "@component/form/Error";
+import OtpForm from "./OtpForm";
 
 const Login = ({ setModalOpen }) => {
-  // const { handleSubmit, submitHandler, register, errors, loading } = useLoginSubmit(setModalOpen);
-  const router = useRouter();
-  const { redirect } = router.query;
-  const { dispatch } = useContext(UserContext);
-
-  useEffect(() => initOTPless(callback), []);
-
-  const callback = (otplessUser) => {
-    const { mobile } = otplessUser;
-    CustomerServices.customerLogin({
-      phone: mobile.number,
-    })
-      .then((res) => {
-        setModalOpen(false);
-        router.push(redirect || "/");
-        notifySuccess(res?.message || "Login Success!");
-        dispatch({ type: "USER_LOGIN", payload: res });
-        Cookies.set("userInfo", JSON.stringify(res), {
-          expires: 0.5,
-        });
-      })
-      .catch((err) => {
-        notifyError(err ? err?.response?.data?.message : err.message);
-      });
-  };
+  const {
+    handleSubmit,
+    submitHandler,
+    register,
+    errors,
+    loading,
+    isOtpSent,
+    setIsOtpSent,
+    otpMobile,
+  } = useLoginSubmit(setModalOpen);
 
   return (
     <>
-      <div id="otpless-login-page"></div>
+      <div className="relative h-[500px] w-full md:w-[390px] px-8 py-10 flex flex-col justify-center">
+        <div
+          className="absolute top-[25px] cursor-pointer"
+          onClick={() => {
+            isOtpSent ? setIsOtpSent(false) : setModalOpen(false);
+          }}
+        >
+          <FaArrowLeft size={20} />
+        </div>
+        <div className="mb-3 flex flex-col font-sans justify-center items-center gap-3">
+          <Image
+            src="https://res.cloudinary.com/dwujlnajx/image/upload/v1707828137/undefined/favicon_izikze.png"
+            alt="logo"
+            width={70}
+            height={100}
+          />
+          <h3 className="font-bold text-[1.5rem] text-center">Lavaya Store</h3>
+          {isOtpSent ? (
+            <>
+              <span>We have sent a verification code to</span>
+              <p className=" text-lg mb-5">+91 {otpMobile}</p>
+            </>
+          ) : (
+            <p className=" text-lg mb-5">{`Let's Sign In`}</p>
+          )}
+        </div>
+        {isOtpSent ? (
+          <OtpForm phone={otpMobile} setModalOpen={setModalOpen} />
+        ) : (
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <div className="mb-5">
+              <InputArea
+                register={register}
+                defaultValue=""
+                label=""
+                name="phone"
+                maxLength={10}
+                // type="number"
+                placeholder="Enter your phone number"
+                preText={"+91"}
+                className="!pl-12"
+              />
+              <Error errorName={errors.registerEmail} />
+            </div>
+            {loading ? (
+              <button
+                disabled={loading}
+                type="submit"
+                className="md:text-sm leading-5 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-[#e0015e] text-white px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-[#e0015e] h-12 mt-1 text-sm lg:text-sm w-full"
+              >
+                <Image
+                  src="/loader/spinner.gif"
+                  alt="Loading"
+                  width={20}
+                  height={10}
+                />
+                <span className="font-serif ml-2 font-light">Processing</span>
+              </button>
+            ) : (
+              <button
+                disabled={loading}
+                type="submit"
+                className="w-full text-center py-3 rounded-md bg-[#e0015e] text-white hover:bg-[#e0015e] transition-all focus:outline-none my-1"
+              >
+                Continue
+              </button>
+            )}
+          </form>
+        )}
+      </div>
     </>
   );
 };

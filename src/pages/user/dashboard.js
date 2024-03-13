@@ -139,9 +139,10 @@ const Dashboard = ({ title, description, children }) => {
                       onClick={handleLogOut}
                       className="inline-flex items-center justify-between text-sm font-medium w-full hover:text-[#e0015e]"
                     >
-                      {showingTranslateValue(
+                      Logout
+                      {/* {showingTranslateValue(
                         storeCustomizationSetting?.navbar?.logout
-                      )}
+                      )} */}
                     </button>
                   </span>
                 </div>

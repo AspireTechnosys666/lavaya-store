@@ -1,6 +1,5 @@
 import "@styles/custom.css";
 import { CartProvider } from "react-use-cart";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
@@ -60,20 +59,19 @@ function MyApp({ Component, pageProps }) {
           widgetId={storeSetting?.tawk_chat_widget_id || ""}
         />
       )} */}
-      <GoogleOAuthProvider clientId={storeSetting?.google_client_id || ""}>
-        <UserProvider>
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <SidebarProvider>
-                  <CartProvider>
-                    <DefaultSeo />
-                    <Component {...pageProps} />
-                  </CartProvider>
-              </SidebarProvider>
-            </PersistGate>
-          </Provider>
-        </UserProvider>
-      </GoogleOAuthProvider>
+
+      <UserProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <SidebarProvider>
+              <CartProvider>
+                <DefaultSeo />
+                <Component {...pageProps} />
+              </CartProvider>
+            </SidebarProvider>
+          </PersistGate>
+        </Provider>
+      </UserProvider>
     </>
   );
 }

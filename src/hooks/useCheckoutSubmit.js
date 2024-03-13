@@ -94,11 +94,11 @@ const useCheckoutSubmit = () => {
     }
 
     setValue("firstName", shippingAddress.firstName);
-    setValue("lastName", shippingAddress.lastName);
     setValue("address", shippingAddress.address);
     setValue("contact", shippingAddress.contact);
     setValue("email", shippingAddress.email);
     setValue("city", shippingAddress.city);
+    setValue("state", shippingAddress.state);
     setValue("country", shippingAddress.country);
     setValue("zipCode", shippingAddress.zipCode);
   }, []);
@@ -111,12 +111,13 @@ const useCheckoutSubmit = () => {
       setError("");
 
       const userDetails = {
-        name: `${data.firstName} ${data.lastName}`,
+        name: `${data.firstName}`,
         contact: data.contact,
         email: data.email,
         address: data.address,
-        country: data.country,
+        country: data?.country || "India",
         city: data.city,
+        state: data.state,
         zipCode: data.zipCode,
       };
 

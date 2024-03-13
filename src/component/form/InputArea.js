@@ -10,6 +10,9 @@ const InputArea = ({
   defaultValue,
   autocomplete,
   placeholder,
+  preText,
+  className,
+  maxLength
 }) => {
   return (
     <>
@@ -22,6 +25,13 @@ const InputArea = ({
             </span>
           </div>
         )}
+        {preText && (
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="mt-0.5 text-black sm:text-[0.875rem]">
+              {preText}
+            </span>
+          </div>
+        )}
         <input
           {...register(`${name}`, {
             required: `${label} is required!`,
@@ -31,10 +41,11 @@ const InputArea = ({
           defaultValue={defaultValue}
           placeholder={placeholder}
           autoComplete={autocomplete}
+          maxLength={maxLength}
           className={
             Icon
               ? "py-2 pl-10 w-full appearance-none border text-sm opacity-75 text-input rounded-md placeholder-body min-h-12 transition duration-200 focus:ring-0 ease-in-out bg-white border-gray-200 focus:outline-none focus:border-[#e0015e] h-11 md:h-12"
-              : "py-2 px-4 md:px-5 w-full appearance-none border text-sm opacity-75 text-input rounded-md placeholder-body min-h-12 transition duration-200 focus:ring-0 ease-in-out bg-white border-gray-200 focus:outline-none focus:border-[#e0015e] h-11 md:h-12"
+              : `py-2 px-4 md:px-5 w-full appearance-none border text-sm opacity-75 text-input rounded-md placeholder-body min-h-12 transition duration-200 focus:ring-0 ease-in-out bg-white border-gray-200 focus:outline-none focus:border-[#e0015e] h-11 md:h-12 ${className}`
           }
         />
       </div>
