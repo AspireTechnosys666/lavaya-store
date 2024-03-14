@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { IoChevronForwardSharp } from "react-icons/io5";
-
 //internal import
 
 import useAsync from "@hooks/useAsync";
@@ -51,9 +49,8 @@ const FeatureCategory = () => {
                       <Image
                         src={category?.icon}
                         alt="category"
-                        width={70}
-                        height={70}
-                        loading="eager"
+                        width={150}
+                        height={150}
                       />
                     ) : (
                       <Image

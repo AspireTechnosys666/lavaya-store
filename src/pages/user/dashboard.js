@@ -71,13 +71,13 @@ const Dashboard = ({ title, description, children }) => {
   }, [userInfo]);
 
   const userSidebar = [
-    {
-      title: showingTranslateValue(
-        storeCustomizationSetting?.dashboard?.dashboard_title
-      ),
-      href: "/user/dashboard",
-      icon: FiGrid,
-    },
+    // {
+    //   title: showingTranslateValue(
+    //     storeCustomizationSetting?.dashboard?.dashboard_title
+    //   ),
+    //   href: "/user/dashboard",
+    //   icon: FiGrid,
+    // },
     {
       title: showingTranslateValue(
         storeCustomizationSetting?.dashboard?.my_order
@@ -112,7 +112,7 @@ const Dashboard = ({ title, description, children }) => {
         >
           <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
             <div className="py-10 lg:py-12 flex flex-col lg:flex-row w-full">
-              <div className="flex-shrink-0 w-full lg:w-80 mr-7 lg:mr-10  xl:mr-10 ">
+              <div className="flex-shrink-0 w-full lg:w-80 mr-7 lg:mr-10  xl:mr-10 web-view">
                 <div className="bg-white p-4 sm:p-5 lg:p-8 rounded-md sticky top-32">
                   {userSidebar?.map((item) => (
                     <span
@@ -193,6 +193,40 @@ const Dashboard = ({ title, description, children }) => {
                   </div>
                 )}
                 {children}
+              </div>
+              <div className="flex-shrink-0 w-full lg:w-80 mr-7 lg:mr-10  xl:mr-10 phone-view">
+                <div className="bg-white p-4 sm:p-5 lg:p-8 rounded-md sticky top-32">
+                  {userSidebar?.map((item) => (
+                    <span
+                      key={item.title}
+                      className="p-2 my-2 flex font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]"
+                    >
+                      <item.icon
+                        className="flex-shrink-0 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      <Link
+                        href={item.href}
+                        className="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-[#e0015e]"
+                      >
+                        {item.title}
+                      </Link>
+                    </span>
+                  ))}
+                  <span className="p-2 flex font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                    <span className="mr-2">
+                      <IoLockOpenOutline />
+                    </span>{" "}
+                    <button
+                      onClick={handleLogOut}
+                      className="inline-flex items-center justify-between text-sm font-medium w-full hover:text-[#e0015e]"
+                    >
+                      {showingTranslateValue(
+                        storeCustomizationSetting?.navbar?.logout
+                      )}
+                    </button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>

@@ -57,7 +57,7 @@ const NavbarPromo = () => {
 
   return (
     <>
-      <div className="hidden lg:block xl:block bg-[#e0015e] border-b">
+      <div className="hidden lg:block xl:block bg-[#e0015e]">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10 h-12 flex justify-between items-center">
           <div className="inline-flex">
             <Popover className="relative">
@@ -113,7 +113,7 @@ const NavbarPromo = () => {
                       </Link>
                     )}
 
-                    {storeCustomizationSetting?.navbar?.contact_menu_status && (
+                    {/* {storeCustomizationSetting?.navbar?.contact_menu_status && (
                       <Link
                         onClick={() => setIsLoading(!isLoading)}
                         href="/contact-us"
@@ -123,7 +123,7 @@ const NavbarPromo = () => {
                           storeCustomizationSetting?.navbar?.contact_us
                         )}
                       </Link>
-                    )}
+                    )} */}
 
                     <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 text-sm font-medium text-[#fff] hover:text-[#000] focus:outline-none">
@@ -149,59 +149,7 @@ const NavbarPromo = () => {
                         <Popover.Panel className="absolute z-10 -ml-1 mt-1 transform w-screen max-w-xs bg-white">
                           <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-y-scroll flex-grow scrollbar-hide w-full h-full">
                             <div className="relative grid gap-2 px-6 py-6">
-                              {storeCustomizationSetting?.navbar
-                                ?.offers_menu_status && (
-                                <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
-                                  <div className="w-full flex">
-                                    <FiGift className="my-auto" />
-                                    <Link
-                                      href="/offer"
-                                      onClick={() => setIsLoading(!isLoading)}
-                                      className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium  hover:text-[#e0015e]"
-                                    >
-                                      {showingTranslateValue(
-                                        storeCustomizationSetting?.navbar
-                                          ?.offers
-                                      )}
-                                    </Link>
-                                  </div>
-                                </span>
-                              )}
-                              <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
-                                <div className="w-full flex">
-                                  <FiShoppingBag className="my-auto" />
-                                  <Link
-                                    href="/checkout"
-                                    onClick={() => setIsLoading(!isLoading)}
-                                    className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium  hover:text-[#e0015e]"
-                                  >
-                                    {showingTranslateValue(
-                                      storeCustomizationSetting?.navbar
-                                        ?.checkout
-                                    )}
-                                  </Link>
-                                </div>
-                              </span>
-
-                              {storeCustomizationSetting?.navbar
-                                ?.faq_status && (
-                                <span className="p-2 font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
-                                  <div className="w-full flex">
-                                    <FiHelpCircle className="my-auto" />
-                                    <Link
-                                      href="/faq"
-                                      onClick={() => setIsLoading(!isLoading)}
-                                      className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium hover:text-[#e0015e]"
-                                    >
-                                      {showingTranslateValue(
-                                        storeCustomizationSetting?.navbar?.faq
-                                      )}
-                                    </Link>
-                                  </div>
-                                </span>
-                              )}
-
-                              {storeCustomizationSetting?.navbar
+                            {storeCustomizationSetting?.navbar
                                 ?.about_menu_status && (
                                 <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                   <div className="w-full flex">
@@ -221,6 +169,60 @@ const NavbarPromo = () => {
                               )}
 
                               {storeCustomizationSetting?.navbar
+                                ?.offers_menu_status && (
+                                <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                                  <div className="w-full flex">
+                                    <FiGift className="my-auto" />
+                                    <Link
+                                      href="/offer"
+                                      onClick={() => setIsLoading(!isLoading)}
+                                      className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium  hover:text-[#e0015e]"
+                                    >
+                                      {showingTranslateValue(
+                                        storeCustomizationSetting?.navbar
+                                          ?.offers
+                                      )}
+                                    </Link>
+                                  </div>
+                                </span>
+                              )}
+                              {/* <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                                <div className="w-full flex">
+                                  <FiShoppingBag className="my-auto" />
+                                  <Link
+                                    href="/checkout"
+                                    onClick={() => setIsLoading(!isLoading)}
+                                    className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium  hover:text-[#e0015e]"
+                                  >
+                                    {showingTranslateValue(
+                                      storeCustomizationSetting?.navbar
+                                        ?.checkout
+                                    )}
+                                  </Link>
+                                </div>
+                              </span> */}
+
+                              {/* {storeCustomizationSetting?.navbar
+                                ?.faq_status && (
+                                <span className="p-2 font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                                  <div className="w-full flex">
+                                    <FiHelpCircle className="my-auto" />
+                                    <Link
+                                      href="/faq"
+                                      onClick={() => setIsLoading(!isLoading)}
+                                      className="relative inline-flex items-center font-serif ml-2 py-0 rounded text-sm font-medium hover:text-[#e0015e]"
+                                    >
+                                      {showingTranslateValue(
+                                        storeCustomizationSetting?.navbar?.faq
+                                      )}
+                                    </Link>
+                                  </div>
+                                </span>
+                              )} */}
+
+                             
+
+                              {/* {storeCustomizationSetting?.navbar
                                 ?.contact_menu_status && (
                                 <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                   <div className="w-full flex">
@@ -237,7 +239,7 @@ const NavbarPromo = () => {
                                     </Link>
                                   </div>
                                 </span>
-                              )}
+                              )} */}
 
                               {storeCustomizationSetting?.navbar
                                 ?.privacy_policy_status && (
@@ -277,7 +279,7 @@ const NavbarPromo = () => {
                                 </span>
                               )}
 
-                              <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                              {/* <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                 <div className="w-full flex">
                                   <FiAlertCircle className="my-auto" />
                                   <Link
@@ -288,7 +290,7 @@ const NavbarPromo = () => {
                                     404
                                   </Link>
                                 </div>
-                              </span>
+                              </span> */}
                             </div>
                           </div>
                         </Popover.Panel>
