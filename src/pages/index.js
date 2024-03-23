@@ -1,7 +1,6 @@
 import { SidebarContext } from "@context/SidebarContext";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import useTranslation from "next-translate/useTranslation";
 
 //internal import
 import Layout from "@layout/Layout";

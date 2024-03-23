@@ -50,7 +50,7 @@ const ProductCard = ({ product, attributes }) => {
     addItem(newItem);
   };
 
-  const handleModalOpen = (event, id) => {
+  const handleModalOpen = (event) => {
     setModalOpen(event);
   };
   return (
@@ -80,17 +80,14 @@ const ProductCard = ({ product, attributes }) => {
           }}
           className="relative flex justify-center cursor-pointer pt-2 w-full h-44"
         >
-          <div className="relative w-full h-full p-2">
+          <div className="relative w-full h-full p-2 flex items-center justify-center">
             {product.image[0] ? (
               <ImageWithFallback src={product.image[0]} alt="product" />
             ) : (
               <Image
                 src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
-                fill
-                style={{
-                  objectFit: "contain",
-                }}
-                sizes="100%"
+                width={150}
+                height={150}
                 alt="product"
                 className="object-contain transition duration-150 ease-linear transform group-hover:scale-105"
               />

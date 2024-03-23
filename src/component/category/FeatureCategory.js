@@ -37,8 +37,8 @@ const FeatureCategory = () => {
         <ul className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2 md:gap-0">
           {data[0]?.children?.map((category, i) => (
             <li className="group" key={i + 1}>
-              <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg justify-center">
-                <div className="flex flex-col items-center justify-center">
+              <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-3 md:p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg justify-center">
+                <div className="flex flex-col md:items-center justify-between md:justify-center">
                   <div  onClick={() =>
                         handleCategoryClick(
                           category._id,
@@ -49,8 +49,8 @@ const FeatureCategory = () => {
                       <Image
                         src={category?.icon}
                         alt="category"
-                        width={150}
-                        height={150}
+                        width={100}
+                        height={100}
                       />
                     ) : (
                       <Image
@@ -62,7 +62,7 @@ const FeatureCategory = () => {
                     )}
                   </div>
 
-                  <div className="pl-4">
+                  <div className="md:pl-4">
                     <h3
                       onClick={() =>
                         handleCategoryClick(
@@ -70,7 +70,7 @@ const FeatureCategory = () => {
                           showingTranslateValue(category?.name)
                         )
                       }
-                      className="text-sm text-gray-600 font-serif font-medium leading-tight mt-4 line-clamp-1  group-hover"
+                      className="text-sm text-gray-600 font-serif font-medium leading-tight mt-2 md:mt-4 line-clamp-1  group-hover"
                     >
                       {showingTranslateValue(category?.name)}
                     </h3>

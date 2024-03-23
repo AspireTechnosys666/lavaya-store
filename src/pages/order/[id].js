@@ -99,7 +99,7 @@ const Order = ({ params }) => {
           </div>
           <div className="py-5 bg-white flex flex-col items-center">
             <div className=" flex items-center justify-center">
-              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto">
+              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto md:overflow-x-hidden">
                 {
                   data?.user_info?.name && (
                     <InvoiceTable invoiceData={data} />
