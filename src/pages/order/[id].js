@@ -28,36 +28,31 @@ const Order = ({ params }) => {
 
   const printDocument = async () => {
     const input = divToPrintRef.current;
-    const pageHeight = input.clientHeight;
-    const pageWidth = input.clientWidth;
     const pageData = [];
-
-    let currentY = 0;
-    const scale = 0.9;
-
-    while (currentY < input.clientHeight) {
-      const canvas = await html2canvas(input, {
-        height: Math.min(pageHeight - currentY, pageHeight),
-        width: pageWidth,
-        y: -currentY,
-        scale: scale
-      });
-      pageData.push(canvas.toDataURL('image/png'));
-      currentY += pageHeight * scale;
-    }
-
-    const pdf = new jsPDF('p', 'px', [pageWidth, pageHeight]);
+    const options = {
+      scale: 1.2, // Adjust the scale factor as needed
+      scrollY: 0,
+      scrollX: 0,
+      windowWidth: document.documentElement.offsetWidth,
+      windowHeight: document.documentElement.offsetHeight,
+    };
+  
+    const canvas = await html2canvas(input, options);
+    const imageData = canvas.toDataURL('image/png');
+    pageData.push(imageData);
+  
+    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
     let currentPage = 0;
-
+  
     for (let i = 0; i < pageData.length; i++) {
       if (i > 0) {
-        pdf.addPage([pageWidth, pageHeight]);
+        pdf.addPage([canvas.width, canvas.height]);
       }
       pdf.setPage(currentPage + 1);
-      pdf.addImage(pageData[i], 'JPEG', 0, 0, pageWidth, pageHeight);
+      pdf.addImage(pageData[i], 'JPEG', 0, 0, canvas.width, canvas.height);
       currentPage++;
     }
-
+  
     pdf.save('download.pdf');
   };
 
@@ -99,7 +94,7 @@ const Order = ({ params }) => {
           </div>
           <div className="py-5 bg-white flex flex-col items-center">
             <div className=" flex items-center justify-center">
-              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto md:overflow-x-hidden">
+              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto md:overflow-clip">
                 {
                   data?.user_info?.name && (
                     <InvoiceTable invoiceData={data} />
