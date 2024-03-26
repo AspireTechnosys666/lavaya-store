@@ -51,6 +51,7 @@ const FeatureCategory = () => {
                         alt="category"
                         width={100}
                         height={100}
+                        loading="eager"
                       />
                     ) : (
                       <Image
