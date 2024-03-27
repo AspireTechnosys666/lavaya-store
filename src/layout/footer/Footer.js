@@ -315,7 +315,6 @@ const Footer = () => {
                   loading={loading}
                   data={storeCustomizationSetting?.footer?.block4_address}
                 />
-                <br />
                 <a href="tel:+918440003030">
                 <span>
                   {" "}
