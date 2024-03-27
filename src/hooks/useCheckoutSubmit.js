@@ -139,7 +139,7 @@ const useCheckoutSubmit = () => {
         setccAvenueForm(res)
       }
       // router.push(`/order/${res._id}`);
-      notifySuccess("Your Order Confirmed!");
+      // notifySuccess("Your Order Confirmed!");
       Cookies.remove("couponInfo");
       sessionStorage.removeItem("products");
       emptyCart();

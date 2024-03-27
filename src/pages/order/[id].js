@@ -28,37 +28,22 @@ const Order = ({ params }) => {
 
   const printDocument = async () => {
     const input = divToPrintRef.current;
-    const pageHeight = input.clientHeight;
-    const pageWidth = input.clientWidth;
-    const pageData = [];
+    const options = {
+      scale: 1.2, // Adjust the scale factor as needed
+      scrollY: 0,
+      scrollX: 0,
+      windowWidth: document.documentElement.offsetWidth,
+      windowHeight: document.documentElement.offsetHeight,
+    };
 
-    let currentY = 0;
-    const scale = 0.9;
+    const canvas = await html2canvas(input, options);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "px", [canvas.width, canvas.height]);
+    var width = pdf.internal.pageSize.getWidth();
+    var height = pdf.internal.pageSize.getHeight();
 
-    while (currentY < input.clientHeight) {
-      const canvas = await html2canvas(input, {
-        height: Math.min(pageHeight - currentY, pageHeight),
-        width: pageWidth,
-        y: -currentY,
-        scale: scale
-      });
-      pageData.push(canvas.toDataURL('image/png'));
-      currentY += pageHeight * scale;
-    }
-
-    const pdf = new jsPDF('p', 'px', [pageWidth, pageHeight]);
-    let currentPage = 0;
-
-    for (let i = 0; i < pageData.length; i++) {
-      if (i > 0) {
-        pdf.addPage([pageWidth, pageHeight]);
-      }
-      pdf.setPage(currentPage + 1);
-      pdf.addImage(pageData[i], 'JPEG', 0, 0, pageWidth, pageHeight);
-      currentPage++;
-    }
-
-    pdf.save('download.pdf');
+    pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+    pdf.save("test.pdf");
   };
 
   useEffect(() => {
@@ -99,12 +84,12 @@ const Order = ({ params }) => {
           </div>
           <div className="py-5 bg-white flex flex-col items-center">
             <div className=" flex items-center justify-center">
-              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto">
-                {
-                  data?.user_info?.name && (
-                    <InvoiceTable invoiceData={data} />
-                  )
-                }
+              <div
+                id="divToPrint"
+                ref={divToPrintRef}
+                className="w-[300px] md:w-full max-md:overflow-x-auto"
+              >
+                {data?.user_info?.name && <InvoiceTable invoiceData={data} />}
               </div>
             </div>
             <div className="w-full flex justify-end mx-10">

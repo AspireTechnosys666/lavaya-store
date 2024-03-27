@@ -86,7 +86,7 @@ const Checkout = () => {
                           )}
                           name="email"
                           type="email"
-                          placeholder="youremail@gmail.com"
+                          placeholder="Enter your email"
                         />
                         <Error errorName={errors.email} />
                       </div>
@@ -99,7 +99,7 @@ const Checkout = () => {
                           )}
                           name="contact"
                           type="tel"
-                          placeholder="9876543210"
+                          placeholder="Enter your mobile number"
                         />
 
                         <Error errorName={errors.contact} />
@@ -167,7 +167,7 @@ const Checkout = () => {
                           )}
                           name="zipCode"
                           type="text"
-                          placeholder="111111"
+                          placeholder="Zip Code"
                         />
                         <Error errorName={errors.zipCode} />
                       </div>
@@ -192,7 +192,7 @@ const Checkout = () => {
                       <button
                         type="submit"
                         disabled={isEmpty || isCheckoutSubmit}
-                        className="bg-[#e0015e] hover:bg-[#20b7dc] border border-[#e0015e] transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
+                        className="bg-[#e0015e] hover:bg-[#20b7dc] border border-[#e0015e] hover:border-[#20b7dc] transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
                       >
                         {isCheckoutSubmit ? (
                           <span className="flex justify-center text-center">

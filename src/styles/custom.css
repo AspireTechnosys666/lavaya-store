@@ -376,8 +376,8 @@ p:not(:last-of-type) {
   font-weight: 500;
 }
 .page-previous-link:hover {
-  border: 1px solid #10b981;
-  background-color: #10b981;
+  border: 1px solid #e0015e;
+  background-color: #e0015e;
   color: #fff;
 }
 .page-next-link {
@@ -387,8 +387,8 @@ p:not(:last-of-type) {
   font-weight: 500;
 }
 .page-next-link:hover {
-  border: 1px solid #10b981;
-  background-color: #10b981;
+  border: 1px solid #e0015e;
+  background-color: #e0015e;
   color: #fff;
 }
 .page--link:hover {
@@ -397,8 +397,8 @@ p:not(:last-of-type) {
 .activePagination {
   text-align: center;
   border-radius: 3px;
-  background: #10b981;
-  border: 1px solid #10b981;
+  background: #e0015e;
+  border: 1px solid #e0015e;
   color: #fff;
 }
 /*---=========================
@@ -600,8 +600,8 @@ p:not(:last-of-type) {
   font-weight: 500;
 }
 .page-previous-link:hover {
-  border: 1px solid #10b981;
-  background-color: #10b981;
+  border: 1px solid #e0015e;
+  background-color: #e0015e;
   color: #fff;
 }
 .page-next-link {
@@ -611,8 +611,8 @@ p:not(:last-of-type) {
   font-weight: 500;
 }
 .page-next-link:hover {
-  border: 1px solid #10b981;
-  background-color: #10b981;
+  border: 1px solid #e0015e;
+  background-color: #e0015e;
   color: #fff;
 }
 .page--link:hover {
@@ -621,8 +621,8 @@ p:not(:last-of-type) {
 .activePagination {
   text-align: center;
   border-radius: 3px;
-  background: #10b981;
-  border: 1px solid #10b981;
+  background: #e0015e;
+  border: 1px solid #e0015e;
   color: #fff;
 }
 

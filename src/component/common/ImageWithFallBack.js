@@ -20,15 +20,12 @@ const ImageWithFallback = ({
     <Image
       alt={alt}
       onError={setError}
-      src={error ? fallbackImage : src}
+      src={error ? fallback : src}
       {...props}
-      fill
-      style={{
-        objectFit: "contain",
-      }}
       loading="eager"
-      sizes="100%"
-      className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2"
+      width={150}
+      height={150}
+      className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 text-center"
     />
   );
 };

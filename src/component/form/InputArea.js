@@ -27,7 +27,7 @@ const InputArea = ({
         )}
         {preText && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span className="mt-0.5 text-black sm:text-[0.875rem]">
+            <span className="mt-0.5 text-black sm:text-[0.875rem] opacity-[0.65] z-10">
               {preText}
             </span>
           </div>
