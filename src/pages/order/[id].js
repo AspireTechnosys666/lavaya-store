@@ -28,7 +28,6 @@ const Order = ({ params }) => {
 
   const printDocument = async () => {
     const input = divToPrintRef.current;
-    const pageData = [];
     const options = {
       scale: 1.2, // Adjust the scale factor as needed
       scrollY: 0,
@@ -36,24 +35,15 @@ const Order = ({ params }) => {
       windowWidth: document.documentElement.offsetWidth,
       windowHeight: document.documentElement.offsetHeight,
     };
-  
+
     const canvas = await html2canvas(input, options);
-    const imageData = canvas.toDataURL('image/png');
-    pageData.push(imageData);
-  
-    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
-    let currentPage = 0;
-  
-    for (let i = 0; i < pageData.length; i++) {
-      if (i > 0) {
-        pdf.addPage([canvas.width, canvas.height]);
-      }
-      pdf.setPage(currentPage + 1);
-      pdf.addImage(pageData[i], 'JPEG', 0, 0, canvas.width, canvas.height);
-      currentPage++;
-    }
-  
-    pdf.save('download.pdf');
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "px", [canvas.width, canvas.height]);
+    var width = pdf.internal.pageSize.getWidth();
+    var height = pdf.internal.pageSize.getHeight();
+
+    pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+    pdf.save("test.pdf");
   };
 
   useEffect(() => {
@@ -94,12 +84,12 @@ const Order = ({ params }) => {
           </div>
           <div className="py-5 bg-white flex flex-col items-center">
             <div className=" flex items-center justify-center">
-              <div id="divToPrint" ref={divToPrintRef} className="w-[300px] md:w-full overflow-x-auto md:overflow-clip">
-                {
-                  data?.user_info?.name && (
-                    <InvoiceTable invoiceData={data} />
-                  )
-                }
+              <div
+                id="divToPrint"
+                ref={divToPrintRef}
+                className="w-[300px] md:w-full max-md:overflow-x-auto"
+              >
+                {data?.user_info?.name && <InvoiceTable invoiceData={data} />}
               </div>
             </div>
             <div className="w-full flex justify-end mx-10">
