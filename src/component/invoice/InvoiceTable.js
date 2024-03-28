@@ -177,7 +177,7 @@ const InvoiceTable = ({ invoiceData }) => {
                                                     valign="middle"
                                                   >
                                                     {" "}
-                                                    ORD-036025{" "}
+                                                    ORD-{invoiceData?._id?.substring(20, 24)}{" "}
                                                   </td>
                                                 </tr>
                                                 <tr>
@@ -247,7 +247,29 @@ const InvoiceTable = ({ invoiceData }) => {
                                                     align="left"
                                                     valign="middle"
                                                   >
-                                                    <b> SUCCESS</b>
+                                                    <b>{invoiceData.paymentStatus}</b>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td
+                                                    align="left"
+                                                    valign="middle"
+                                                  >
+                                                    {" "}
+                                                    Tracking Id{" "}
+                                                  </td>
+                                                  <td
+                                                    align="center"
+                                                    valign="middle"
+                                                  >
+                                                    {" "}
+                                                    :{" "}
+                                                  </td>
+                                                  <td
+                                                    align="left"
+                                                    valign="middle"
+                                                  >
+                                                    {invoiceData.paymentTrackingId}
                                                   </td>
                                                 </tr>
                                               </tbody>

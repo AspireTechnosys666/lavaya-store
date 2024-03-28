@@ -12,6 +12,7 @@ import { UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
+import { notifyError } from "@utils/toast";
 
 const Order = ({ params }) => {
   const orderId = params.id;
@@ -46,21 +47,28 @@ const Order = ({ params }) => {
     pdf.save("test.pdf");
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await OrderServices.getOrderById(orderId);
+  const fetchData = async () => {
+    try {
+      const res = await OrderServices.getOrderById(orderId);
+      setLoading(false);
+      if (res.paymentStatus !== "Success") {
+        router.push("/");
+        notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
+      } else {
         setData(res);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log("err", err.message);
       }
-    })();
+    } catch (err) {
+      setLoading(false);
+      console.log("err", err.message);
+    }
+  };
 
+  useEffect(() => {
     if (!userInfo) {
       router.push("/");
+      return;
     }
+    fetchData();
   }, []);
 
   return (
