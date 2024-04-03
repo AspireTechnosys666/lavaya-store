@@ -19,6 +19,7 @@
     "@rooks/use-sessionstorage": "^4.11.2",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tailwindcss/line-clamp": "^0.2.2",
+    "@windmill/react-ui": "^0.6.0",
     "axios": "^0.24.0",
     "browser-image-compression": "^2.0.2",
     "currency-symbol-map": "^5.0.1",

@@ -6,8 +6,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { IoLockOpenOutline } from "react-icons/io5";
 import {
   FiCheck,
-  FiFileText,
-  FiGrid,
   FiList,
   FiRefreshCw,
   FiSettings,

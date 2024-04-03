@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { IoBagHandle } from "react-icons/io5";
-import ReactPaginate from "react-paginate";
 import { SidebarContext } from "@context/SidebarContext";
 
 //internal import
@@ -8,14 +7,14 @@ import Loading from "@component/preloader/Loading";
 import OrderHistory from "@component/order/OrderHistory";
 import useGetSetting from "@hooks/useGetSetting";
 import useUtilsFunction from "@hooks/useUtilsFunction";
+import { Pagination, Windmill } from "@windmill/react-ui";
+import myTheme from "@styles/mytheme";
 
 const RecentOrder = ({ data, loading, error }) => {
   const { handleChangePage } = useContext(SidebarContext);
 
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
-
-  const pageCount = Math.ceil(data?.totalDoc / 8);
 
   return (
     <>
@@ -66,13 +65,13 @@ const RecentOrder = ({ data, loading, error }) => {
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Method
+                            Payment Detail
                           </th>
                           <th
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Status
+                            Order Status
                           </th>
                           <th
                             scope="col"
@@ -91,27 +90,14 @@ const RecentOrder = ({ data, loading, error }) => {
                       </tbody>
                     </table>
                     {data?.totalDoc > 10 && (
-                      <div className="paginationOrder">
-                        <ReactPaginate
-                          breakLabel="..."
-                          nextLabel="Next"
-                          onPageChange={(e) => handleChangePage(e.selected + 1)}
-                          pageRangeDisplayed={3}
-                          pageCount={pageCount}
-                          previousLabel="Previous"
-                          renderOnZeroPageCount={null}
-                          pageClassName="page--item"
-                          pageLinkClassName="page--link"
-                          previousClassName="page-item"
-                          previousLinkClassName="page-previous-link"
-                          nextClassName="page-item"
-                          nextLinkClassName="page-next-link"
-                          breakClassName="page--item"
-                          breakLinkClassName="page--link"
-                          containerClassName="pagination"
-                          activeClassName="activePagination"
+                      <Windmill usePreferences theme={myTheme}>
+                        <Pagination
+                          totalResults={data?.totalDoc}
+                          resultsPerPage={8}
+                          onChange={handleChangePage}
+                          label="Table navigation"
                         />
-                      </div>
+                      </Windmill>
                     )}
                   </div>
                 </div>
