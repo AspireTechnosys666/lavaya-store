@@ -150,7 +150,7 @@ const MyOrders = () => {
                       {data?.totalDoc > 10 && (
                         <div className="paginationOrder">
                           <ReactPaginate
-                            breakLabel="..."
+                            breakLabel=".."
                             nextLabel="Next"
                             onPageChange={(e) =>
                               handleChangePage(e.selected + 1)

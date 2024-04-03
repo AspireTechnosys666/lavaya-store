@@ -814,7 +814,7 @@ const storeCustomization = {
     slug: {
       right_box_status: true,
       card_description_one: {
-        en: "Free shipping applies to all orders over shipping €100",
+        en: "Free shipping applies to all orders over shipping",
         de: "Kostenloser Versand gilt für alle Bestellungen über 100 € Versandkosten",
       },
       card_description_two: {

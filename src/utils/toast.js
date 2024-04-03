@@ -10,11 +10,22 @@ const notifySuccess = (message) =>
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    color:"#e0015e",
+    color: "#e0015e",
   });
 
 const notifyError = (message) =>
   toast.error(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const notifyWarning = (message) =>
+  toast.warning(message, {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
@@ -36,4 +47,4 @@ const notifyError = (message) =>
   pauseOnHover
 />;
 
-export { ToastContainer, notifySuccess, notifyError };
+export { ToastContainer, notifySuccess, notifyError, notifyWarning };

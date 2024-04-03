@@ -40,7 +40,7 @@ const useCheckoutSubmit = () => {
   const router = useRouter();
   const couponRef = useRef("");
   const ccRevenueRef = useRef(null);
-  const { isEmpty, emptyCart, items, cartTotal } = useCart();
+  const { isEmpty, items, cartTotal } = useCart();
 
   const { data } = useAsync(CouponServices.getAllCoupons);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
@@ -105,6 +105,10 @@ const useCheckoutSubmit = () => {
 
   const submitHandler = async (data) => {
     try {
+      if (isEmpty) {
+        notifyError(`Cart is Empty!`);
+        return
+      }
       dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: data });
       Cookies.set("shippingAddress", JSON.stringify(data));
       setIsCheckoutSubmit(true);
@@ -142,7 +146,6 @@ const useCheckoutSubmit = () => {
       // notifySuccess("Your Order Confirmed!");
       Cookies.remove("couponInfo");
       sessionStorage.removeItem("products");
-      emptyCart();
       setIsCheckoutSubmit(false);
     } catch (err) {
       notifyError(err.message);

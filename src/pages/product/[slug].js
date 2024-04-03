@@ -437,14 +437,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                             <Tags product={product} />
                           </div>
 
-                          <div className="mt-8">
+                          {/* <div className="mt-8">
                             <p className="text-xs sm:text-sm text-gray-700 font-medium">
                               Call Us To Order By Mobile Number :{" "}
                               <span className="text-emerald-700 font-semibold">
                                 +0044235234
                               </span>{" "}
                             </p>
-                          </div>
+                          </div> */}
 
                           {/* social share */}
                           <div className="mt-2">
@@ -503,9 +503,9 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                       {/* shipping description card */}
 
                       <div className="w-full xl:w-5/12 lg:w-6/12 md:w-5/12">
-                        <div className="mt-6 md:mt-0 lg:mt-0 bg-gray-50 border border-gray-100 p-4 lg:p-8 rounded-lg">
+                        {/* <div className="mt-6 md:mt-0 lg:mt-0 bg-gray-50 border border-gray-100 p-4 lg:p-8 rounded-lg">
                           <Card />
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

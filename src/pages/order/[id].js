@@ -12,7 +12,6 @@ import { UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
-import { notifyError } from "@utils/toast";
 
 const Order = ({ params }) => {
   const orderId = params.id;
@@ -49,14 +48,10 @@ const Order = ({ params }) => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const res = await OrderServices.getOrderById(orderId);
+      setData(res);
       setLoading(false);
-      if (res.paymentStatus !== "Success") {
-        router.push("/");
-        notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
-      } else {
-        setData(res);
-      }
     } catch (err) {
       setLoading(false);
       console.log("err", err.message);
@@ -73,7 +68,7 @@ const Order = ({ params }) => {
 
   return (
     <Layout title="Invoice" description="order confirmation page">
-      {loading && !data ? (
+      {loading && !data?.user_info?.name ? (
         <Loading loading={loading} />
       ) : (
         <div className="max-w-screen-2xl mx-auto py-10 px-3 sm:px-6">
