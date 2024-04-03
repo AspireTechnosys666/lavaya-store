@@ -137,7 +137,7 @@ const MyOrders = () => {
                               <OrderHistory order={order} />
                               <td className="px-5 py-3 whitespace-nowrap text-right text-sm">
                                 <Link
-                                  className="px-3 py-1 bg-emerald-100 text-xs text-emerald-600 hover:bg-emerald-500 hover:text-white transition-all font-semibold rounded-full"
+                                  className="px-3 py-1 bg-[#e0015e36] text-xs text-[#e0015e] hover:bg-[#e0015e52] hover:text-white transition-all font-semibold rounded-full"
                                   href={`/order/${order._id}`}
                                 >
                                   Details
