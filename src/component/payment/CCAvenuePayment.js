@@ -66,7 +66,7 @@ const CCAvenuePayment = ({ formRef, ccAvenueForm }) => {
               <input
                 type="text"
                 name="redirect_url"
-                value={`${process.env.NEXT_PUBLIC_STORE_DOMAIN}order/${ccAvenueForm?._id}`}
+                value={`${process.env.NEXT_PUBLIC_API_BASE_URL}/ccavenue/ccavResponseHandler`}
               />
             </td>
           </tr>
@@ -76,7 +76,7 @@ const CCAvenuePayment = ({ formRef, ccAvenueForm }) => {
               <input
                 type="text"
                 name="cancel_url"
-                value={`${process.env.NEXT_PUBLIC_STORE_DOMAIN}`}
+                value={`${process.env.NEXT_PUBLIC_API_BASE_URL}/ccavenue/ccavResponseHandler`}
               />
             </td>
           </tr>
