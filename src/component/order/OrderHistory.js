@@ -2,6 +2,7 @@ import React from "react";
 import dayjs from "dayjs";
 
 const OrderHistory = ({ order, currency }) => {
+  console.log(order)
   return (
     <>
       <td className="px-5 py-3 leading-6 whitespace-nowrap">
@@ -16,7 +17,7 @@ const OrderHistory = ({ order, currency }) => {
       </td>
 
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
-        <span className="text-sm">{order.paymentMethod}</span>
+        <span className="text-sm">{order.paymentStatus}</span>
       </td>
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap font-medium text-sm">
         {order.status === "Delivered" && (

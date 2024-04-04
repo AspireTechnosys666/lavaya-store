@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -7,6 +7,10 @@ import {
   IoBagHandle,
 } from "react-icons/io5";
 import useTranslation from "next-translate/useTranslation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useCart } from "react-use-cart";
+import Cookies from "js-cookie";
 
 //internal import
 import Layout from "@layout/Layout";
@@ -17,8 +21,14 @@ import useGetSetting from "@hooks/useGetSetting";
 import useCheckoutSubmit from "@hooks/useCheckoutSubmit";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import CCAvenuePayment from "@component/payment/CCAvenuePayment";
+import OrderServices from "@services/OrderServices";
+import { notifyError } from "@utils/toast";
 
 const Checkout = () => {
+  const router = useRouter();
+  const { emptyCart } = useCart();
+  const [searchParams] = useSearchParams();
+
   const {
     handleSubmit,
     submitHandler,
@@ -42,6 +52,31 @@ const Checkout = () => {
   const { t } = useTranslation();
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
+
+  const fetchData = async (orderId) => {
+    try {
+      const res = await OrderServices.getOrderById(orderId);
+      if (res.paymentStatus !== "Success") {
+        notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
+        Cookies.set("isPaymentNotified", true);
+      } else {
+        emptyCart();
+        router.push(`/order/${orderId}`);
+      }
+    } catch (err) {
+      console.log("err", err.message);
+    }
+  };
+
+  useEffect(() => {
+    const isPaymentNotified = Cookies.get("isPaymentNotified") === "true";
+    if (searchParams?.length > 0 && !isPaymentNotified) {
+      const orderId = searchParams[1]
+      fetchData(orderId);
+    } else {
+      Cookies.set("isPaymentNotified", false);
+    }
+  }, []);
 
   return (
     <>
@@ -191,7 +226,7 @@ const Checkout = () => {
                     <div className="col-span-6 sm:col-span-3">
                       <button
                         type="submit"
-                        disabled={isEmpty || isCheckoutSubmit}
+                        disabled={isCheckoutSubmit}
                         className="bg-[#e0015e] hover:bg-[#20b7dc] border border-[#e0015e] hover:border-[#20b7dc] transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
                       >
                         {isCheckoutSubmit ? (

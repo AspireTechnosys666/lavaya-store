@@ -83,10 +83,10 @@ const useGetSetting = () => {
   };
 
   useEffect(() => {
-    const isReqLoading = Cookies.get("isReqLoading") === "true"
+    const isReqLoading = Cookies.get("isReqLoading") === "true";
     if (!isReqLoading) {
-            Cookies.set("isReqLoading", true);
-            if (!storeCustomizationSetting) {
+      Cookies.set("isReqLoading", true);
+      if (!storeCustomizationSetting) {
         fetchAndAddSetting();
       }
 

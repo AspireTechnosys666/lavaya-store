@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoBagHandle } from "react-icons/io5";
-import ReactPaginate from "react-paginate";
+// import ReactPaginate from "react-paginate";
+import { Pagination, Windmill } from "@windmill/react-ui";
 
 //internal import
 import Dashboard from "@pages/user/dashboard";
@@ -13,6 +14,7 @@ import OrderHistory from "@component/order/OrderHistory";
 import { SidebarContext } from "@context/SidebarContext";
 import useGetSetting from "@hooks/useGetSetting";
 import useUtilsFunction from "@hooks/useUtilsFunction";
+import myTheme from "@styles/mytheme";
 
 const MyOrders = () => {
   const router = useRouter();
@@ -44,7 +46,7 @@ const MyOrders = () => {
       });
   }, [currentPage]);
 
-  const pageCount = Math.ceil(data?.totalDoc / 8);
+  // const pageCount = Math.ceil(data?.totalDoc / 8);
 
   useEffect(() => {
     setIsLoading(false);
@@ -109,13 +111,13 @@ const MyOrders = () => {
                               scope="col"
                               className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                             >
-                              Method
+                              Payment Detail
                             </th>
                             <th
                               scope="col"
                               className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                             >
-                              Status
+                              Order Status
                             </th>
                             <th
                               scope="col"
@@ -148,29 +150,14 @@ const MyOrders = () => {
                         </tbody>
                       </table>
                       {data?.totalDoc > 10 && (
-                        <div className="paginationOrder">
-                          <ReactPaginate
-                            breakLabel="..."
-                            nextLabel="Next"
-                            onPageChange={(e) =>
-                              handleChangePage(e.selected + 1)
-                            }
-                            pageRangeDisplayed={3}
-                            pageCount={pageCount}
-                            previousLabel="Previous"
-                            renderOnZeroPageCount={null}
-                            pageClassName="page--item"
-                            pageLinkClassName="page--link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-previous-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-next-link"
-                            breakClassName="page--item"
-                            breakLinkClassName="page--link"
-                            containerClassName="pagination"
-                            activeClassName="activePagination"
+                        <Windmill usePreferences theme={myTheme}>
+                          <Pagination
+                            totalResults={data?.totalDoc}
+                            resultsPerPage={8}
+                            onChange={handleChangePage}
+                            label="Table navigation"
                           />
-                        </div>
+                        </Windmill>
                       )}
                     </div>
                   </div>
