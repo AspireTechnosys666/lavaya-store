@@ -7,27 +7,27 @@
   "start_url": "/",
   "id": "/",
   "short_name": "Lavaya - Online Shopping Store",
-  "name": "lavaya - React Grocery & Organic Food Store e-commerce Template",
-  "description": "React Grocery & Organic Food Store e-commerce Template",
+  "name": "Lavaya Store",
+  "description": "Lavaya Store",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/favicon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-256x256.png",
+      "src": "/favicon.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "/icon-384x384.png",
+      "src": "/favicon.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/favicon.png",
       "sizes": "512x512",
       "type": "image/png"
     }

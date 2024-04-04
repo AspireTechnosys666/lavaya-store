@@ -76,6 +76,9 @@ const Checkout = () => {
     } else {
       Cookies.set("isPaymentNotified", false);
     }
+    setTimeout(() => {
+      Cookies.set("isPaymentNotified", false);
+    }, 1000);
   }, []);
 
   return (
