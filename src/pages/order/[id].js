@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import Layout from "@layout/Layout";
 import useGetSetting from "@hooks/useGetSetting";
@@ -12,6 +13,7 @@ import { UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
+import InvoiceForDownload from "@component/invoice/InvoiceForDownload";
 
 const Order = ({ params }) => {
   const orderId = params.id;
@@ -25,26 +27,6 @@ const Order = ({ params }) => {
   } = useContext(UserContext);
   const { showingTranslateValue } = useUtilsFunction();
   const { storeCustomizationSetting } = useGetSetting();
-
-  const printDocument = async () => {
-    const input = divToPrintRef.current;
-    const options = {
-      scale: 1.2, // Adjust the scale factor as needed
-      scrollY: 0,
-      scrollX: 0,
-      windowWidth: document.documentElement.offsetWidth,
-      windowHeight: document.documentElement.offsetHeight,
-    };
-
-    const canvas = await html2canvas(input, options);
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "px", [canvas.width, canvas.height]);
-    var width = pdf.internal.pageSize.getWidth();
-    var height = pdf.internal.pageSize.getHeight();
-
-    pdf.addImage(imgData, "JPEG", 0, 0, width, height);
-    pdf.save("test.pdf");
-  };
 
   const fetchData = async () => {
     try {
@@ -96,19 +78,19 @@ const Order = ({ params }) => {
               </div>
             </div>
             <div className="w-full flex justify-end mx-10">
-              <button
-                className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-end bg-[#e0015e]  text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md"
-                onClick={() => {
-                  printDocument();
-                }}
+              <PDFDownloadLink
+                document={<InvoiceForDownload data={data} />}
+                fileName="Invoice"
               >
-                {showingTranslateValue(
-                  storeCustomizationSetting?.dashboard?.download_button
-                )}{" "}
-                <span className="ml-2 text-base">
-                  <IoCloudDownloadOutline />
-                </span>
-              </button>
+                <button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-end bg-[#e0015e]  text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md mr-5">
+                  {showingTranslateValue(
+                    storeCustomizationSetting?.dashboard?.download_button
+                  )}{" "}
+                  <span className="ml-2 text-base">
+                    <IoCloudDownloadOutline />
+                  </span>
+                </button>
+              </PDFDownloadLink>
             </div>
           </div>
         </div>

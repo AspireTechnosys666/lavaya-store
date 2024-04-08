@@ -1,6 +1,5 @@
 import {
   Document,
-  Font,
   Image,
   Page,
   StyleSheet,
@@ -9,29 +8,14 @@ import {
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 
-Font.register({
-  family: "Open Sans",
-  fonts: [
-    {
-      src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-regular.ttf",
-    },
-    {
-      src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-600.ttf",
-      fontWeight: 600,
-    },
-  ],
-});
-Font.register({
-  family: "DejaVu Sans",
-  fonts: [
-    {
-      src: "https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf",
-    },
-    {
-      src: "https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-    },
-  ],
-});
+const getRatePrice = ({ price, gst = 0 }) => {
+  return Math.round((100 / (100 + Number(gst))) * price * 100) / 100;
+};
+
+const getCsGstPrice = (originalPrice, ratePrice) => {
+  return Math.round(((originalPrice - ratePrice) * 100) / 2) / 100;
+};
+
 const styles = StyleSheet.create({
   page: {
     marginRight: 10,
@@ -50,56 +34,53 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 10,
     marginTop: 0,
-    borderRadius: "8px",
-    borderColor: "#e9e9e9",
-    borderStyle: "solid",
-    borderWidth: 0.5,
+    borderLeft: "1px solid black",
+    borderBottom: "1px solid black",
     padding: 0,
     textAlign: "left",
+  },
+  tableRowTop: {
+    // margin: 'auto',
+    flexDirection: "row",
+    textAlign: "left",
+    borderBottom: "1px solid black",
   },
   tableRow: {
     // margin: 'auto',
     flexDirection: "row",
-    paddingBottom: 2,
-    paddingTop: 2,
     textAlign: "left",
-    borderWidth: 0.8,
-    borderColor: "#E5E7EB",
-    borderBottom: "0",
   },
   tableRowHeder: {
     // margin: 'auto',
     flexDirection: "row",
     backgroundColor: "#f9fafb",
-    paddingBottom: 4,
-    paddingTop: 4,
     paddingLeft: 0,
-    borderBottomWidth: 0.8,
-    borderColor: "#E5E7EB",
-    borderStyle: "solid",
     textTransform: "uppercase",
     textAlign: "left",
   },
-  tableCol: {
-    width: "25%",
+  tableCol1: {
+    width: "15%",
     textAlign: "left",
-
-    // borderStyle: 'solid',
-    // borderWidth: 1,
-    // borderLeftWidth: 0.5,
-    // borderTopWidth: 0.5,
-    // borderBottomWidth: 0.5,
-    // borderColor: '#d1d5db',
+    borderRight: "0.8px solid black",
+  },
+  tableCol2: {
+    width: "90%",
+    textAlign: "left",
+    borderRight: "0.8px solid black",
+  },
+  tableCol: {
+    width: "20%",
+    textAlign: "left",
+    borderRight: "0.8px solid black",
   },
   tableCell: {
     margin: "auto",
     marginTop: 5,
     fontSize: 10,
-    // textAlign:'center',
     paddingLeft: "0",
     paddingRight: "0",
-    marginLeft: "13",
-    marginRight: "13",
+    marginLeft: "6",
+    marginRight: "6",
   },
 
   tableCellQuantity: {
@@ -115,7 +96,7 @@ const styles = StyleSheet.create({
 
   invoiceFirst: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     paddingBottom: 18,
@@ -128,13 +109,56 @@ const styles = StyleSheet.create({
   invoiceSecond: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
+    width: "100%",
     paddingTop: 20,
-    paddingBottom: 10,
-    // backgroundColor:'#EEF2FF',
+    paddingBottom: 0,
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  invoiceSecondUserCol: {
+    width: "50%",
+    padding: "5px",
+    border: "1px solid black",
+  },
+  userInfo: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  userInfoLabel: {
+    fontSize: 10,
+    marginRight: "5px",
+  },
+  userInfoValue: {
+    fontSize: 10,
+    color: "#4b5563",
+  },
+  invoiceSecondBillCol: {
+    width: "50%",
+    borderTop: "1px solid black",
+    borderRight: "1px solid black",
+    borderBottom: "1px solid black",
+  },
+  billInfoTop: {
+    padding: "5px",
+    borderBottom: "1px solid black",
+  },
+  billInfoBottom: {
+    padding: "5px",
+  },
+  billInfo: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+  },
+  billInfoLabel: {
+    fontSize: 10,
+    width: "50%",
+  },
+  billInfoValue: {
+    fontSize: 10,
+    width: "50%",
+    color: "#4b5563",
+    paddingLeft: "5px",
   },
   invoiceThird: {
     display: "flex",
@@ -162,7 +186,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "right",
     color: "#4b5563",
-    fontFamily: "Open Sans",
     fontWeight: "bold",
     fontSize: 10.3,
 
@@ -171,7 +194,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#2f3032",
-    fontFamily: "Open Sans",
     fontWeight: "bold",
     fontSize: 8.1,
     textTransform: "uppercase",
@@ -197,40 +219,41 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#6b7280",
     width: "100%",
-
-    // textAlign: "right",
-    // whiteSapce: "nowrap",
+    textAlign: "center"
   },
   amount: {
     fontSize: 10,
     color: "#ef4444",
   },
+  amountBorder: {
+    borderTop: "1px solid black",
+    borderRight: "1px solid black",
+    width: "100%",
+    padding: "10px 10px 0px",
+  },
   totalAmount: {
-    fontSize: 10,
-    color: "#ef4444",
-    fontFamily: "Open Sans",
+    fontSize: 16,
+    color: "black",
     fontWeight: "bold",
     textTransform: "uppercase",
-    textAlign: "right",
+    textAlign: "left",
   },
   status: {
     color: "#10b981",
   },
   quantity: {
     color: "#1f2937",
-    textAlign: "center",
   },
   itemPrice: {
     color: "#1f2937",
     textAlign: "left",
   },
   header: {
-    color: "#6b7280",
     fontSize: 9,
-    fontFamily: "Open Sans",
     fontWeight: "bold",
     textTransform: "uppercase",
     textAlign: "left",
+    color: "black",
   },
 
   thanks: {
@@ -242,12 +265,10 @@ const styles = StyleSheet.create({
     color: "#6b7280",
     width: "25%",
     marginRight: "39%",
-    fontFamily: "Open Sans",
     fontWeight: "bold",
   },
   titleRight: {
     textAlign: "right",
-    fontFamily: "Open Sans",
     fontWeight: "bold",
     fontSize: 8.1,
     width: "25%",
@@ -261,80 +282,131 @@ const styles = StyleSheet.create({
   invoiceDiv: {
     alignItems: "baseline",
   },
+  bold: {
+    fontWeight: "bold",
+    color: "black",
+  },
 });
 
-const InvoiceForDownload = ({
-  data,
-  currency,
-  globalSetting,
-  getNumberTwo,
-}) => {
+const InvoiceForDownload = ({ data }) => {
   return (
     <>
       <Document>
-        <Page size="A4" style={styles.page}>
-          <View style={styles.invoiceFirst}>
+        <Page size="A4" style={styles.page} className="grid grid-cols-2">
+          <View style={styles.invoiceFirst} className="col-span-1">
             <View>
-              <Text style={{ fontFamily: "Open Sans", fontWeight: "bold" }}>
-                INVOICE
-              </Text>
-              <Text style={styles.info}>Status : {data?.status}</Text>
-            </View>
-            <View style={styles.topBg}>
-              <Text
-                style={{
-                  width: "100%",
-                  marginRight: "40%",
-                }}
-              >
-                <Image
-                  src="https://res.cloudinary.com/ahossain/image/upload/v1681454665/logo/logo-color_qw1trc.png"
+              <Image
+                  src="/logo/logo.png"
                   alt="Invoice"
-                  style={{ width: 80, textAlign: "right" }}
+                  style={{ width: 100 }}
                 />
-              </Text>
-              <Text style={styles.topAddress}>
-                {globalSetting?.address ||
-                  "28/C/48, JHELAM APARTMENT, RHB PRATAP NAGAR, SANGANER, Jaipur, India, Rajasthan"}
-              </Text>
-              {/* <Text style={styles.info}> United States 96522</Text> */}
+            </View>
+            <View>
+              <Text>Lavaya World Private Limited</Text>
+            </View>
+            <View style={styles.topAddress}>
+              <Text>28/C/48, Jhelam Apartment, RHB Pratap Nagar, Sanganer, Jaipur, Rajasthan-303905</Text>
+            </View>
+            <View style={styles.topAddress}>
+              <Text>E-mail : info@lavaya.network</Text>
             </View>
           </View>
 
           <View style={styles.invoiceSecond}>
-            <View>
-              <Text style={styles.title}>DATE</Text>
-              <Text style={styles.info}>
-                {dayjs(data?.createdAt).format("MMMM D, YYYY")}
-              </Text>
+            <View style={styles.invoiceSecondUserCol}>
+              <View>
+                <Text style={styles.userInfoLabel}>Purchased by:-</Text>
+                <Text style={styles.userInfoValue}>
+                  {data?.user_info?.name}
+                </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text style={styles.userInfoValue}>
+                  {data?.user_info?.address}
+                </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text style={styles.userInfoLabel}>ZipCode:</Text>
+                <Text style={styles.userInfoValue}>
+                  {data?.user_info?.zipCode}
+                </Text>
+              </View>
+
+              <View style={styles.userInfo}>
+                <Text style={styles.userInfoLabel}>Contact No:</Text>
+                <Text style={styles.userInfoValue}>
+                  {data?.user_info?.contact}
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.title}>INVOICE NO</Text>
-              <Text style={styles.info}>#{data?.invoice}</Text>
-            </View>
-            <View>
-              <Text style={styles.title}>INVOICE TO</Text>
-              <Text style={styles.info}>{data?.user_info?.name}</Text>
-              <Text style={styles.info}>
-                {" "}
-                {data?.user_info?.address?.substring(0, 25)}
-              </Text>
-              <Text style={styles.info}>
-                {data?.user_info?.city}, {data?.user_info?.country},{" "}
-                {data?.user_info?.zipCode}
-              </Text>
+            <View style={styles.invoiceSecondBillCol}>
+              <View style={styles.billInfoTop}>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Bill No</Text>
+                  <Text style={styles.billInfoValue}>
+                    : ORD-{data?._id?.substring(20, 24)}{" "}
+                  </Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Date</Text>
+                  <Text style={styles.billInfoValue}>
+                    : {dayjs(data.createdAt).format("DD/MM/YYYY")}
+                  </Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Payment Mode</Text>
+                  <Text style={styles.billInfoValue}> : {"Online"}</Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Payment Status</Text>
+                  <Text style={styles.billInfoValue}>
+                    : <Text style={styles.bold}>{data?.paymentStatus}</Text>
+                  </Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Tracking Id</Text>
+                  <Text style={styles.billInfoValue}>
+                    : {data?.paymentTrackingId}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.billInfoBottom}>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>Distributor Code</Text>
+                  <Text style={styles.billInfoValue}>: LW129263</Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>TAN #:</Text>
+                  <Text style={styles.billInfoValue}>: JPRL03398D</Text>
+                </View>
+                <View style={styles.billInfo}>
+                  <Text style={styles.billInfoLabel}>GST #:</Text>
+                  <Text style={styles.billInfoValue}>: 08AAFCL3008H1ZQ</Text>
+                </View>
+              </View>
             </View>
           </View>
+
           <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <View style={styles.tableCol}>
+            <View style={styles.tableRowTop}>
+              <View style={styles.tableCol1}>
                 <Text style={styles.tableCell}>
-                  <Text style={styles.header}>Sr.</Text>
+                  <Text style={styles.header}>S.No</Text>
+                </Text>
+              </View>
+              <View style={styles.tableCol2}>
+                <Text style={styles.tableCell}>
+                  <Text style={styles.header}>Title</Text>
                 </Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  <Text style={styles.header}>Product Name</Text>
+                  <Text style={styles.header}>Rate</Text>
+                </Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>
+                  <Text style={styles.header}>GST%</Text>
                 </Text>
               </View>
               <View style={styles.tableCol}>
@@ -344,79 +416,95 @@ const InvoiceForDownload = ({
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  <Text style={styles.header}>Item Price</Text>
+                  <Text style={styles.header}>CGST</Text>
                 </Text>
               </View>
-
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  {" "}
-                  <Text style={styles.header}>Amount</Text>
+                  <Text style={styles.header}>SGST</Text>
+                </Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>
+                  <Text style={styles.header}>Total</Text>
                 </Text>
               </View>
             </View>
             {data?.cart?.map((item, i) => (
               <View key={i} style={styles.tableRow}>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{i + 1} </Text>
+                <View style={styles.tableCol1}>
+                  <Text style={styles.tableCell}>{i + 1}</Text>
                 </View>
-                <View style={styles.tableCol}>
+                <View style={styles.tableCol2}>
                   <Text style={styles.tableCell}>{item.title} </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {" "}
-                    <Text style={styles.quantity}>{item.quantity}</Text>{" "}
+                    <Text style={styles.quantity}>
+                      ₹
+                      {getRatePrice({
+                        price: item.price,
+                        gst: item.gst,
+                      })}{" "}
+                    </Text>
                   </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {" "}
-                    <Text style={styles.quantity}>
-                      {currency}
-                      {getNumberTwo(item.price)}
-                    </Text>{" "}
+                    <Text style={styles.quantity}>{item?.gst || 0}% </Text>
                   </Text>
                 </View>
 
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    <Text style={styles.amount}>
-                      {currency}
-                      {getNumberTwo(item.itemTotal)}
-                    </Text>{" "}
+                    <Text style={styles.quantity}>{item.quantity} </Text>
+                  </Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    <Text style={styles.quantity}>
+                      {getCsGstPrice(
+                        item.price * item.quantity,
+                        getRatePrice({
+                          price: item.price,
+                          gst: item.gst,
+                        }) * item.quantity
+                      )}{" "}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    <Text style={styles.quantity}>
+                      {getCsGstPrice(
+                        item.price * item.quantity,
+                        getRatePrice({
+                          price: item.price,
+                          gst: item.gst,
+                        }) * item.quantity
+                      )}{" "}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    <Text style={styles.quantity}>
+                      {Math.round(item.price * item.quantity * 100) / 100}{" "}
+                    </Text>
                   </Text>
                 </View>
               </View>
             ))}
-          </View>
-
-          <View style={styles.invoiceThird}>
-            <View>
-              <Text style={styles.title}> Payment Method</Text>
-              <Text style={styles.info}> {data.paymentMethod} </Text>
-            </View>
-            <View>
-              <Text style={styles.title}>Shipping Cost</Text>
-              <Text style={styles.info}>
-                {currency}
-                {getNumberTwo(data.shippingCost)}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.title}>Discount</Text>
-              <Text style={styles.info}>
-                {" "}
-                {currency}
-                {getNumberTwo(data.discount)}
-              </Text>
-            </View>
-
-            <View>
-              <Text style={styles.title}>Total Amount</Text>
-              <Text style={styles.amount}>
-                {currency}
-                {getNumberTwo(data.total)}
+            <View style={styles.tableRow}>
+              <Text style={styles.amountBorder}>
+                <Text style={styles.tableCell}>
+                  <Text style={styles.totalAmount}>
+                    Gross Bill Amount: ₹{Math.round(data.subTotal * 100) / 100}
+                  </Text>
+                </Text>
               </Text>
             </View>
           </View>
@@ -425,14 +513,9 @@ const InvoiceForDownload = ({
             style={{
               textAlign: "center",
               fontSize: 12,
-              paddingBottom: 50,
-              paddingTop: 50,
             }}
           >
-            <Text>
-              Thank you <Text style={styles.thanks}>{data.name},</Text> Your
-              order have been received !
-            </Text>
+            <Text>This is a Computer Generated Invoice</Text>
           </View>
         </Page>
       </Document>
