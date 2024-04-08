@@ -25,45 +25,46 @@ const pages = [
   //   icon: FiUser,
   // },
   {
-    title: "offer-page",
-    href: "/offer",
-    icon: FiGift,
-  },
-  {
-    title: "checkout-page",
-    href: "/checkout",
-    icon: FiShoppingBag,
-  },
-  {
-    title: "faq-page",
-    href: "/faq",
-    icon: FiHelpCircle,
-  },
-  {
-    title: "about-us-page",
+    title: "About Us",
     href: "/about-us",
     icon: FiUsers,
   },
   {
-    title: "contact-us-page",
-    href: "/contact-us",
-    icon: FiPhoneIncoming,
+    title: "Offer",
+    href: "/offer",
+    icon: FiGift,
   },
+  // {
+  //   title: "checkout-page",
+  //   href: "/checkout",
+  //   icon: FiShoppingBag,
+  // },
+  // {
+  //   title: "faq-page",
+  //   href: "/faq",
+  //   icon: FiHelpCircle,
+  // },
+ 
+  // {
+  //   title: "contact-us-page",
+  //   href: "/contact-us",
+  //   icon: FiPhoneIncoming,
+  // },
   {
-    title: "privacy-policy-page",
+    title: "Privacy Policy",
     href: "/privacy-policy",
     icon: FiPocket,
   },
   {
-    title: "terms-and-conditions-page",
+    title: "Terms and Conditions",
     href: "/terms-and-conditions",
     icon: FiFileText,
   },
-  {
-    title: "customer-support",
-    href: "https://tawk.to/chat/659bc16d8d261e1b5f50a8a9/1hjk6n611",
-    icon: FiAlertCircle,
-  },
+  // {
+  //   title: "customer-support",
+  //   href: "https://tawk.to/chat/659bc16d8d261e1b5f50a8a9/1hjk6n611",
+  //   icon: FiAlertCircle,
+  // },
 ];
 
 const userSidebar = [
