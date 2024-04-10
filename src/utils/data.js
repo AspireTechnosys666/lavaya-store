@@ -19,11 +19,6 @@ import {
 } from "react-icons/fi";
 
 const pages = [
-  // {
-  //   title: 'User',
-  //   href: '/user/dashboard',
-  //   icon: FiUser,
-  // },
   {
     title: "About Us",
     href: "/about-us",
@@ -34,6 +29,22 @@ const pages = [
     href: "/offer",
     icon: FiGift,
   },
+  {
+    title: "Privacy Policy",
+    href: "/privacy-policy",
+    icon: FiPocket,
+  },
+  {
+    title: "Terms and Conditions",
+    href: "/terms-and-conditions",
+    icon: FiFileText,
+  },
+  // {
+  //   title: 'User',
+  //   href: '/user/dashboard',
+  //   icon: FiUser,
+  // },
+
   // {
   //   title: "checkout-page",
   //   href: "/checkout",
@@ -50,16 +61,7 @@ const pages = [
   //   href: "/contact-us",
   //   icon: FiPhoneIncoming,
   // },
-  {
-    title: "Privacy Policy",
-    href: "/privacy-policy",
-    icon: FiPocket,
-  },
-  {
-    title: "Terms and Conditions",
-    href: "/terms-and-conditions",
-    icon: FiFileText,
-  },
+
   // {
   //   title: "customer-support",
   //   href: "https://tawk.to/chat/659bc16d8d261e1b5f50a8a9/1hjk6n611",
