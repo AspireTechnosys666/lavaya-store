@@ -1,7 +1,7 @@
 import ReactGA from "react-ga4";
 
 export const initGA = () => {
-  console.log("GA init");
+  // console.log("GA init");
   ReactGA.initialize("your GA measurement id");
 };
 
@@ -14,7 +14,7 @@ export const handlePageView = (pathname, title) => {
 };
 
 export const handleLogEvent = (category = "", action = "", label = "") => {
-  console.log("category", category, "action", action);
+  // console.log("category", category, "action", action);
   if (category && action) {
     ReactGA.event({ category, action, label });
   }

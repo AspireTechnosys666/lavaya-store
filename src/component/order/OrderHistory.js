@@ -2,7 +2,7 @@ import React from "react";
 import dayjs from "dayjs";
 
 const OrderHistory = ({ order, currency }) => {
-  console.log(order)
+  // console.log(order)
   return (
     <>
       <td className="px-5 py-3 leading-6 whitespace-nowrap">

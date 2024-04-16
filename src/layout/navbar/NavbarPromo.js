@@ -1,59 +1,19 @@
-import { Fragment, useState, useEffect, useContext } from "react";
+import { Fragment, useContext } from "react";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
-import SettingServices from "@services/SettingServices";
-import Cookies from "js-cookie";
-import {
-  FiGift,
-  FiAlertCircle,
-  FiHelpCircle,
-  FiShoppingBag,
-  FiFileText,
-  FiUsers,
-  FiPocket,
-  FiPhoneIncoming,
-} from "react-icons/fi";
 
-//internal import
-import { notifyError } from "@utils/toast";
 import useGetSetting from "@hooks/useGetSetting";
 import Category from "@component/category/Category";
 import { SidebarContext } from "@context/SidebarContext";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 
 const NavbarPromo = () => {
-  const [languages, setLanguages] = useState([]);
-  const [currentLang, setCurrentLang] = useState({});
-  const { lang, storeCustomizationSetting } = useGetSetting();
+  const { storeCustomizationSetting } = useGetSetting();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
 
   const { showingTranslateValue } = useUtilsFunction();
 
-  const handleLanguage = (lang) => {
-    setCurrentLang(lang);
-    Cookies.set("_lang", lang?.iso_code, {
-      sameSite: "None",
-      secure: true,
-    });
-  };
-
-  useEffect(() => {
-    (async () => {
-      {
-        try {
-          const res = await SettingServices.getShowingLanguage();
-          setLanguages(res);
-
-          const result = res?.find((language) => language?.iso_code === lang);
-          setCurrentLang(result);
-        } catch (err) {
-          notifyError(err);
-          console.log("error on getting lang", err);
-        }
-      }
-    })();
-  }, []);
 
   return (
     <>
@@ -125,7 +85,7 @@ const NavbarPromo = () => {
                       </Link>
                     )} */}
 
-                    <Popover className="relative font-serif">
+                    {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 text-sm font-medium text-[#fff] hover:text-[#000] focus:outline-none">
                         <span>
                           {showingTranslateValue(
@@ -186,7 +146,7 @@ const NavbarPromo = () => {
                                   </div>
                                 </span>
                               )}
-                              {/* <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                              <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                 <div className="w-full flex">
                                   <FiShoppingBag className="my-auto" />
                                   <Link
@@ -200,9 +160,9 @@ const NavbarPromo = () => {
                                     )}
                                   </Link>
                                 </div>
-                              </span> */}
+                              </span>
 
-                              {/* {storeCustomizationSetting?.navbar
+                              {storeCustomizationSetting?.navbar
                                 ?.faq_status && (
                                 <span className="p-2 font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                   <div className="w-full flex">
@@ -218,11 +178,11 @@ const NavbarPromo = () => {
                                     </Link>
                                   </div>
                                 </span>
-                              )} */}
+                              )}
 
                              
 
-                              {/* {storeCustomizationSetting?.navbar
+                              {storeCustomizationSetting?.navbar
                                 ?.contact_menu_status && (
                                 <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                   <div className="w-full flex">
@@ -239,7 +199,7 @@ const NavbarPromo = () => {
                                     </Link>
                                   </div>
                                 </span>
-                              )} */}
+                              )}
 
                               {storeCustomizationSetting?.navbar
                                 ?.privacy_policy_status && (
@@ -279,7 +239,7 @@ const NavbarPromo = () => {
                                 </span>
                               )}
 
-                              {/* <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
+                              <span className="p-2  font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]">
                                 <div className="w-full flex">
                                   <FiAlertCircle className="my-auto" />
                                   <Link
@@ -290,12 +250,12 @@ const NavbarPromo = () => {
                                     404
                                   </Link>
                                 </div>
-                              </span> */}
+                              </span>
                             </div>
                           </div>
                         </Popover.Panel>
                       </Transition>
-                    </Popover>
+                    </Popover> */}
 
                     {storeCustomizationSetting?.navbar?.offers_menu_status && (
                       <Link
