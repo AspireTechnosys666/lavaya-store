@@ -131,11 +131,6 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
                         {popularProducts
-                          ?.slice(
-                            0,
-                            storeCustomizationSetting?.home
-                              ?.popular_product_limit
-                          )
                           .map((product) => (
                             <ProductCard
                               key={product._id}
@@ -208,11 +203,6 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
                       ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
                           {discountProducts
-                            ?.slice(
-                              0,
-                              storeCustomizationSetting?.home
-                                ?.latest_discount_product_limit
-                            )
                             .map((product) => (
                               <ProductCard
                                 key={product._id}

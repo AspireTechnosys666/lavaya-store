@@ -36,6 +36,7 @@ const useCheckoutSubmit = () => {
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [ccAvenueForm, setccAvenueForm] = useState(null);
+  const [couponCode, setCouponCode] = useState(null);
 
   const router = useRouter();
   const couponRef = useRef("");
@@ -135,6 +136,7 @@ const useCheckoutSubmit = () => {
         shippingCost: shippingCost,
         discount: discountAmount,
         total: total,
+        couponCode
       };
 
       const res = await OrderServices.addOrder(orderInfo);
@@ -192,6 +194,7 @@ const useCheckoutSubmit = () => {
       setDiscountPercentage(result[0].discountType);
       dispatch({ type: "SAVE_COUPON", payload: result[0] });
       Cookies.set("couponInfo", JSON.stringify(result[0]));
+      setCouponCode(couponRef.current.value)
     }
   };
 
