@@ -37,9 +37,11 @@ const useCheckoutSubmit = () => {
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [ccAvenueForm, setccAvenueForm] = useState(null);
   const [couponCode, setCouponCode] = useState(null);
+  const [promoCode, setPromoCode] = useState(null)
 
   const router = useRouter();
   const couponRef = useRef("");
+  const promoRef = useRef("");
   const ccRevenueRef = useRef(null);
   const { isEmpty, items, cartTotal } = useCart();
 
@@ -136,7 +138,8 @@ const useCheckoutSubmit = () => {
         shippingCost: shippingCost,
         discount: discountAmount,
         total: total,
-        couponCode
+        couponCode,
+        promoCode
       };
 
       const res = await OrderServices.addOrder(orderInfo);
@@ -198,6 +201,17 @@ const useCheckoutSubmit = () => {
     }
   };
 
+  const handlePromoCode = (e) => {
+    e.preventDefault();
+
+    if (!promoRef.current.value) {
+      notifyError("Please Input a Promo Code!");
+      return;
+    }
+
+    setPromoCode(promoRef.current.value)
+  }
+
   return {
     handleSubmit,
     submitHandler,
@@ -211,6 +225,9 @@ const useCheckoutSubmit = () => {
     couponRef,
     ccRevenueRef,
     handleCouponCode,
+    promoRef,
+    promoCode,
+    handlePromoCode,
     discountPercentage,
     discountAmount,
     shippingCost,
