@@ -148,14 +148,14 @@ const Navbar = () => {
                 {imageUrl || userInfo?.image ? (
                   <Link
                     href="/user/dashboard"
-                    className="relative top-1 w-6 h-6"
+                    className="relative top-1 w-6 h-6 rounded-full"
                   >
                     <Image
-                      width={29}
-                      height={29}
+                      width={30}
+                      height={30}
                       src={imageUrl || userInfo?.image}
                       alt="user"
-                      className="bg-white rounded-full"
+                      className="bg-white rounded-full aspect-[4/4] object-cover"
                     />
                   </Link>
                 ) : userInfo?.phone ? (

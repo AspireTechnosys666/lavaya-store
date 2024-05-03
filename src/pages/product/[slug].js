@@ -9,9 +9,7 @@ import {
   FacebookShareButton,
   LinkedinIcon,
   LinkedinShareButton,
-  RedditIcon,
-  RedditShareButton,
-  TwitterIcon,
+  XIcon,
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
@@ -23,7 +21,6 @@ import Stock from "@component/common/Stock";
 import Tags from "@component/common/Tags";
 import Layout from "@layout/Layout";
 import { notifyError } from "@utils/toast";
-import Card from "@component/slug-card/Card";
 import useAddToCart from "@hooks/useAddToCart";
 import Loading from "@component/preloader/Loading";
 import ProductCard from "@component/product/ProductCard";
@@ -456,36 +453,28 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                             </p>
                             <ul className="flex mt-4">
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <FacebookShareButton
-                                  url={`https://lavaya.store/product/${router.query.slug}`}
-                                  quote=""
-                                >
-                                  <FacebookIcon size={32} round />
-                                </FacebookShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <TwitterShareButton
-                                  url={`https://lavaya.store/product/${router.query.slug}`}
-                                  quote=""
-                                >
-                                  <TwitterIcon size={32} round />
-                                </TwitterShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <RedditShareButton
-                                  url={`https://lavaya.store/product/${router.query.slug}`}
-                                  quote=""
-                                >
-                                  <RedditIcon size={32} round />
-                                </RedditShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <WhatsappShareButton
                                   url={`https://lavaya.store/product/${router.query.slug}`}
                                   quote=""
                                 >
                                   <WhatsappIcon size={32} round />
                                 </WhatsappShareButton>
+                              </li>
+                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                <TwitterShareButton
+                                  url={`https://lavaya.store/product/${router.query.slug}`}
+                                  quote=""
+                                >
+                                  <XIcon size={32} round />
+                                </TwitterShareButton>
+                              </li>
+                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                <FacebookShareButton
+                                  url={`https://lavaya.store/product/${router.query.slug}`}
+                                  quote=""
+                                >
+                                  <FacebookIcon size={32} round />
+                                </FacebookShareButton>
                               </li>
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <LinkedinShareButton
@@ -521,7 +510,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                   <div className="flex">
                     <div className="w-full">
                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                        {relatedProducts?.slice(1, 13).map((product, i) => (
+                        {relatedProducts?.slice(1, 13).map((product) => (
                           <ProductCard
                             key={product._id}
                             product={product}
