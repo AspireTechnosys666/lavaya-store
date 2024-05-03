@@ -8,6 +8,7 @@ import { useCart } from "react-use-cart";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
 import useTranslation from "next-translate/useTranslation";
+import { useDebouncedCallback } from 'use-debounce';
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -28,19 +29,17 @@ const Navbar = () => {
   const router = useRouter();
 
   const { storeCustomizationSetting } = useGetSetting();
-  // console.log("storeCustomizationSetting", storeCustomizationSetting);
 
   const {
     state: { userInfo },
   } = useContext(UserContext);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (searchText) => {
 
     // return;
     if (searchText) {
       router.push(`/search?query=${searchText}`, null, { scroll: false });
-      setSearchText("");
+      // setSearchText("");
       handleLogEvent("search", `searched ${searchText}`);
     } else {
       router.push(`/ `, null, { scroll: false });
@@ -48,12 +47,25 @@ const Navbar = () => {
     }
   };
 
+  const debounced = useDebouncedCallback(
+    (e) => {
+      console.log(e.target.value, "dfdff")
+      const searchValue = e.target.value
+      handleSubmit(searchValue)
+    },
+    1000
+  );
+
   useEffect(() => {
     if (Cookies.get("userInfo")) {
       const user = JSON.parse(Cookies.get("userInfo"));
       setImageUrl(user.image);
+    } if (router?.query?.query?.length > 0) {
+      setSearchText(router?.query?.query);
+    } else {
+      setSearchText("")
     }
-  }, []);
+  }, [router?.query?.query?.length > 0]);
 
   return (
     <>
@@ -84,16 +96,19 @@ const Navbar = () => {
               <div className="w-full flex flex-col justify-center flex-shrink-0 relative z-30">
                 <div className="flex flex-col mx-auto w-full">
                   <form
-                    onSubmit={handleSubmit}
+                    onSubmit={debounced}
                     className="relative pr-12 md:pr-14 bg-[#e0015e]  overflow-hidden shadow-sm rounded-md w-full"
                   >
                     <label className="flex items-center py-0.5">
                       <input
-                        onChange={(e) => setSearchText(e.target.value)}
                         value={searchText}
                         className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-[#fff]  focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
                         placeholder={t(`common:search-placeholder`)}
                         style={{ marginLeft: "2px" }}
+                        onChange={(e) => {
+                          setSearchText(e.target.value)
+                          debounced(e)
+                        }}
                       />
                     </label>
                     <button
