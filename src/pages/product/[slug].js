@@ -9,7 +9,6 @@ import {
   FacebookShareButton,
   LinkedinIcon,
   LinkedinShareButton,
-  XIcon,
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
@@ -452,7 +451,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                               {t("common:shareYourSocialText")}
                             </p>
                             <ul className="flex mt-4">
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                              <li className="flex items-center text-center border border-gray-100 rounded-full  mr-2 transition ease-in-out duration-500">
                                 <WhatsappShareButton
                                   url={`https://lavaya.store/product/${router.query.slug}`}
                                   quote=""
@@ -460,15 +459,15 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <WhatsappIcon size={32} round />
                                 </WhatsappShareButton>
                               </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                              <li className="flex items-center text-center border border-gray-100 rounded-full   mr-2 transition ease-in-out duration-500">
                                 <TwitterShareButton
                                   url={`https://lavaya.store/product/${router.query.slug}`}
                                   quote=""
                                 >
-                                  <XIcon size={32} round />
+                                  <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
                                 </TwitterShareButton>
                               </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                              <li className="flex items-center text-center border border-gray-100 rounded-full  mr-2 transition ease-in-out duration-500">
                                 <FacebookShareButton
                                   url={`https://lavaya.store/product/${router.query.slug}`}
                                   quote=""
@@ -476,7 +475,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <FacebookIcon size={32} round />
                                 </FacebookShareButton>
                               </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                              <li className="flex items-center text-center border border-gray-100 rounded-full  mr-2 transition ease-in-out duration-500">
                                 <LinkedinShareButton
                                   url={`https://lavaya.store/product/${router.query.slug}`}
                                   quote=""
