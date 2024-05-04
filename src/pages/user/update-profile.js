@@ -142,6 +142,7 @@ const UpdateProfile = () => {
                           )}
                           name="phone"
                           type="tel"
+                          disabled={true}
                           placeholder={showingTranslateValue(
                             storeCustomizationSetting?.dashboard?.user_phone
                           )}
