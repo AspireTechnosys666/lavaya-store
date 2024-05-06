@@ -40,7 +40,6 @@ const UpdateProfile = () => {
       name: data.name,
       email: data.email,
       address: data.address,
-      phone: data.phone,
       image: imageUrl,
     };
     CustomerServices.updateCustomer(userInfo._id, userData)
