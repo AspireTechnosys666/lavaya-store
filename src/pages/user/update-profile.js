@@ -145,6 +145,7 @@ const UpdateProfile = () => {
                           placeholder={showingTranslateValue(
                             storeCustomizationSetting?.dashboard?.user_phone
                           )}
+                          className="cursor-not-allowed"
                         />
                         <Error errorName={errors.phone} />
                       </div>
