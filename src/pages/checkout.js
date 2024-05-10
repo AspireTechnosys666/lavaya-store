@@ -141,6 +141,8 @@ const Checkout = () => {
                           name="contact"
                           type="tel"
                           placeholder="Enter your mobile number"
+                          maxLength={10}
+                          minLength={10}
                         />
 
                         <Error errorName={errors.contact} />
