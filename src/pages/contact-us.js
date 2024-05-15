@@ -42,7 +42,7 @@ const ContactUs = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="Contact Us" description="This is contact us page">
         <PageHeader
           headerBg={storeCustomizationSetting?.contact_us?.header_bg}

@@ -55,7 +55,7 @@ const MyOrders = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Dashboard
         title={showingTranslateValue(
           storeCustomizationSetting?.dashboard?.my_order

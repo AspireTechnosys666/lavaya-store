@@ -93,7 +93,7 @@ const Checkout = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="Checkout" description="this is checkout page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">

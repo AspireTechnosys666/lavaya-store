@@ -101,7 +101,7 @@ const Dashboard = ({ title, description, children }) => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
 
       <Layout
         title={title ? title : "Dashboard"}

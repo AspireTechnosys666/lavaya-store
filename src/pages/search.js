@@ -26,7 +26,7 @@ const Search = ({ products, attributes }) => {
 
   return (
     <div>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="Search" description="This is search page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="flex py-10 lg:py-12">

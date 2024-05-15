@@ -22,7 +22,7 @@ const Faq = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="FAQ" description="This is faq page">
         <PageHeader
           headerBg={storeCustomizationSetting?.faq?.header_bg}

@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="Privacy Policy" description="This is privacy policy page">
         <PageHeader
           headerBg={storeCustomizationSetting?.privacy_policy?.header_bg}

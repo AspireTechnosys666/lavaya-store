@@ -20,7 +20,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
       <Layout title="About Us" description="This is about us page">
         <PageHeader
           headerBg={storeCustomizationSetting?.about_us?.header_bg}
