@@ -13,10 +13,8 @@ const NavbarPromo = () => {
   const router = useRouter();
 
   const { storeCustomizationSetting } = useGetSetting();
-  const { isLoading, setIsLoading } = useContext(SidebarContext);
+  const { setIsLoading } = useContext(SidebarContext);
   const { showingTranslateValue } = useUtilsFunction();
-
-  console.log(router, "dfdff");
 
   return (
     <>
