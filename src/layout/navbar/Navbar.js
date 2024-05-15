@@ -46,9 +46,9 @@ const Navbar = () => {
   };
 
   const debounced = useDebouncedCallback((e) => {
-    console.log(e.target.value, "dfdff");
     const searchValue = e.target.value;
     handleSubmit(searchValue);
+    setIsLoading(true);
   }, 1000);
 
   useEffect(() => {
@@ -76,9 +76,6 @@ const Navbar = () => {
             <Link
               href="/"
               className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block"
-              onClick={() => {
-                setIsLoading(true);
-              }}
             >
               <Image
                 width={130}
@@ -89,6 +86,9 @@ const Navbar = () => {
                 }
                 alt="logo"
                 className="object-contain"
+                onClick={() => {
+                  setIsLoading(true);
+                }}
               />
             </Link>
             <div className="w-full transition-all duration-200 ease-in-out lg:flex lg:max-w-[520px] xl:max-w-[750px] 2xl:max-w-[900px] md:mx-12 lg:mx-4 xl:mx-0">
@@ -182,7 +182,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* second header */}
         <NavbarPromo />
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useCart } from "react-use-cart";
 import Cookies from "js-cookie";
+import LoadingBar from "react-top-loading-bar";
 
 //internal import
 import Layout from "@layout/Layout";
@@ -23,6 +24,7 @@ import useUtilsFunction from "@hooks/useUtilsFunction";
 import CCAvenuePayment from "@component/payment/CCAvenuePayment";
 import OrderServices from "@services/OrderServices";
 import { notifyError } from "@utils/toast";
+import { SidebarContext } from "@context/SidebarContext";
 
 const Checkout = () => {
   const router = useRouter();
@@ -55,6 +57,7 @@ const Checkout = () => {
   const { t } = useTranslation();
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
+  const { isLoading, setIsLoading } = useContext(SidebarContext);
 
   const fetchData = async (orderId) => {
     try {
@@ -74,7 +77,7 @@ const Checkout = () => {
   useEffect(() => {
     const isPaymentNotified = Cookies.get("isPaymentNotified") === "true";
     if (searchParams?.length > 0 && !isPaymentNotified) {
-      const orderId = searchParams[1]
+      const orderId = searchParams[1];
       fetchData(orderId);
     } else {
       Cookies.set("isPaymentNotified", false);
@@ -84,8 +87,13 @@ const Checkout = () => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <>
+      {isLoading && <LoadingBar color="#353886" progress={80} />}
       <Layout title="Checkout" description="this is checkout page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">

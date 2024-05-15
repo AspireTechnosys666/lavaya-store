@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 //internal import
 import Layout from "@layout/Layout";
@@ -6,35 +7,42 @@ import useGetSetting from "@hooks/useGetSetting";
 import PageHeader from "@component/header/PageHeader";
 import CMSkeleton from "@component/preloader/CMSkeleton";
 import useUtilsFunction from "@hooks/useUtilsFunction";
+import { SidebarContext } from "@context/SidebarContext";
 
 const PrivacyPolicy = () => {
   const { storeCustomizationSetting, loading, error } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
-  // console.log("data", storeCustomizationSetting);
+  const { isLoading, setIsLoading } = useContext(SidebarContext);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
-    <Layout title="Privacy Policy" description="This is privacy policy page">
-      <PageHeader
-        headerBg={storeCustomizationSetting?.privacy_policy?.header_bg}
-        title={showingTranslateValue(
-          storeCustomizationSetting?.privacy_policy?.title
-        )}
-      />
-      <div className="bg-white">
-        <div className="max-w-screen-2xl mx-auto lg:py-20 py-10 px-4 sm:px-10">
-          <CMSkeleton
-            html
-            count={15}
-            height={15}
-            error={error}
-            loading={loading}
-            data={storeCustomizationSetting?.privacy_policy?.description}
-          />
-          <br />
-          <CMSkeleton count={15} height={15} loading={loading} />
-          <br />
-          <CMSkeleton count={15} height={15} loading={loading} />
-          {/* <div className="mb-8 lg:mb-12 last:mb-0">
+    <>
+      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      <Layout title="Privacy Policy" description="This is privacy policy page">
+        <PageHeader
+          headerBg={storeCustomizationSetting?.privacy_policy?.header_bg}
+          title={showingTranslateValue(
+            storeCustomizationSetting?.privacy_policy?.title
+          )}
+        />
+        <div className="bg-white">
+          <div className="max-w-screen-2xl mx-auto lg:py-20 py-10 px-4 sm:px-10">
+            <CMSkeleton
+              html
+              count={15}
+              height={15}
+              error={error}
+              loading={loading}
+              data={storeCustomizationSetting?.privacy_policy?.description}
+            />
+            <br />
+            <CMSkeleton count={15} height={15} loading={loading} />
+            <br />
+            <CMSkeleton count={15} height={15} loading={loading} />
+            {/* <div className="mb-8 lg:mb-12 last:mb-0">
             <h2 className="text-xl xl:text-2xl xl:leading-7 font-semibold font-serif mb-2 lg:mb-4">
               {t("common:privacy-policy-consent")}
             </h2>
@@ -111,9 +119,10 @@ const PrivacyPolicy = () => {
               <p>{t("common:privacy-policy-children-information-docs2")}</p>
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

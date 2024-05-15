@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 //internal import
 import Layout from "@layout/Layout";
@@ -6,37 +7,45 @@ import useGetSetting from "@hooks/useGetSetting";
 import PageHeader from "@component/header/PageHeader";
 import CMSkeleton from "@component/preloader/CMSkeleton";
 import useUtilsFunction from "@hooks/useUtilsFunction";
+import { SidebarContext } from "@context/SidebarContext";
 
 const TermAndConditions = () => {
   const { storeCustomizationSetting, loading, error } = useGetSetting();
+  const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { showingTranslateValue } = useUtilsFunction();
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
-    <Layout
-      title="Terms & Conditions"
-      description="This is terms and conditions page"
-    >
-      <PageHeader
-        headerBg={storeCustomizationSetting?.term_and_condition?.header_bg}
-        title={showingTranslateValue(
-          storeCustomizationSetting?.term_and_condition?.title
-        )}
-      />
-      <div className="bg-white">
-        <div className="max-w-screen-2xl mx-auto lg:py-20 py-10 px-3 sm:px-10">
-          <CMSkeleton
-            html
-            count={15}
-            height={15}
-            error={error}
-            loading={loading}
-            data={storeCustomizationSetting?.term_and_condition?.description}
-          />
-          <br />
-          <CMSkeleton count={15} height={15} loading={loading} />
-          <br />
-          <CMSkeleton count={15} height={15} loading={loading} />
-          {/* <div className="mb-6 lg:mb-12 last:mb-0">
+    <>
+      {isLoading && <LoadingBar color="#353886" progress={80} />}
+      <Layout
+        title="Terms & Conditions"
+        description="This is terms and conditions page"
+      >
+        <PageHeader
+          headerBg={storeCustomizationSetting?.term_and_condition?.header_bg}
+          title={showingTranslateValue(
+            storeCustomizationSetting?.term_and_condition?.title
+          )}
+        />
+        <div className="bg-white">
+          <div className="max-w-screen-2xl mx-auto lg:py-20 py-10 px-3 sm:px-10">
+            <CMSkeleton
+              html
+              count={15}
+              height={15}
+              error={error}
+              loading={loading}
+              data={storeCustomizationSetting?.term_and_condition?.description}
+            />
+            <br />
+            <CMSkeleton count={15} height={15} loading={loading} />
+            <br />
+            <CMSkeleton count={15} height={15} loading={loading} />
+            {/* <div className="mb-6 lg:mb-12 last:mb-0">
             <h2 className="text-xl xl:text-2xl xl:leading-7 font-semibold font-serif mb-2 lg:mb-4">
               {t("common:terms-condition-cookies")}
             </h2>
@@ -121,9 +130,10 @@ const TermAndConditions = () => {
               </div>
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import LoadingBar from "react-top-loading-bar";
 import { SidebarContext } from "@context/SidebarContext";
@@ -12,14 +12,15 @@ import useUtilsFunction from "@hooks/useUtilsFunction";
 const AboutUs = () => {
   const { storeCustomizationSetting, loading, error } = useGetSetting();
   const { showingTranslateValue } = useUtilsFunction();
-  const { isLoading, setIsLoading} = useContext(SidebarContext);
+  const { isLoading, setIsLoading } = useContext(SidebarContext);
   // console.log("data", data, );
-  useEffect(()=>{
-    setIsLoading(false)
-  })
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <div>
-      {isLoading && <LoadingBar color="#000" progress={80} />}
+      {isLoading && <LoadingBar color="#353886" progress={80} />}
       <Layout title="About Us" description="This is about us page">
         <PageHeader
           headerBg={storeCustomizationSetting?.about_us?.header_bg}

@@ -1,7 +1,8 @@
 import { Fragment, useContext } from "react";
-import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 import useGetSetting from "@hooks/useGetSetting";
 import Category from "@component/category/Category";
@@ -9,11 +10,13 @@ import { SidebarContext } from "@context/SidebarContext";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 
 const NavbarPromo = () => {
+  const router = useRouter();
+
   const { storeCustomizationSetting } = useGetSetting();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
-
   const { showingTranslateValue } = useUtilsFunction();
 
+  console.log(router, "dfdff");
 
   return (
     <>
@@ -64,7 +67,9 @@ const NavbarPromo = () => {
                     {storeCustomizationSetting?.navbar?.about_menu_status && (
                       <Link
                         href="/about-us"
-                        onClick={() => setIsLoading(!isLoading)}
+                        onClick={() =>
+                          router.route !== "/about-us" && setIsLoading(true)
+                        }
                         className="font-serif mx-4 py-2 text-sm font-medium text-[#fff] hover:text-[#000]"
                       >
                         {showingTranslateValue(
@@ -260,7 +265,9 @@ const NavbarPromo = () => {
                     {storeCustomizationSetting?.navbar?.offers_menu_status && (
                       <Link
                         href="/offer"
-                        onClick={() => setIsLoading(!isLoading)}
+                        onClick={() =>
+                          router.route !== "/offer" && setIsLoading(true)
+                        }
                         className="relative inline-flex items-center  bg-red-100 font-serif ml-4 py-0 px-2 rounded text-sm font-medium text-red-500 hover:text-[#e0015e]"
                       >
                         {showingTranslateValue(
@@ -309,7 +316,9 @@ const NavbarPromo = () => {
 
             {storeCustomizationSetting?.navbar?.privacy_policy_status && (
               <Link
-                onClick={() => setIsLoading(!isLoading)}
+                onClick={() =>
+                  router.route !== "/privacy-policy" && setIsLoading(true)
+                }
                 href="/privacy-policy"
                 className="font-serif mx-4 py-2 text-sm font-medium hover:text-[#000] text-[#fff]"
               >
@@ -320,7 +329,9 @@ const NavbarPromo = () => {
             )}
             {storeCustomizationSetting?.navbar?.term_and_condition_status && (
               <Link
-                onClick={() => setIsLoading(!isLoading)}
+                onClick={() =>
+                  router.route !== "/terms-and-conditions" && setIsLoading(true)
+                }
                 href="/terms-and-conditions"
                 className="font-serif mx-4 py-2 text-sm font-medium hover:text-[#000] text-[#fff]"
               >
