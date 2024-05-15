@@ -55,7 +55,10 @@ const CategoryCard = ({ title, icon, nested, id }) => {
   return (
     <>
       <a
-        onClick={() => showCategory(id, title)}
+        onClick={() => {
+          showCategory(id, title);
+          setIsLoading(!isLoading);
+        }}
         className="p-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-[#e0015e]"
         role="button"
       >

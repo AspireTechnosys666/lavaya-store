@@ -3,16 +3,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper";
+import { useContext} from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
+import { SidebarContext } from "@context/SidebarContext";
 //internal import
 
 import useGetSetting from "@hooks/useGetSetting";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 
 const MainCarousel = () => {
+  const { setIsLoading, isLoading } = useContext(SidebarContext);
   const { storeCustomizationSetting } = useGetSetting();
   const { showingTranslateValue, showingUrl, showingImage } =
     useUtilsFunction();
@@ -134,6 +136,9 @@ const MainCarousel = () => {
             <div className="text-sm text-gray-600 hover:text-emerald-dark">
               <Link
                 href={item.url}
+                onClick={() => {
+                  setIsLoading(!isLoading);
+                }}
               >
                 <Image
                   width={950}

@@ -1,7 +1,7 @@
 import { SidebarContext } from "@context/SidebarContext";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import LoadingBar from "react-top-loading-bar";
 //internal import
 import Layout from "@layout/Layout";
 import Banner from "@component/banner/Banner";
@@ -15,7 +15,7 @@ import MainCarousel from "@component/carousel/MainCarousel";
 import FeatureCategory from "@component/category/FeatureCategory";
 import AttributeServices from "@services/AttributeServices";
 import CMSkeleton from "@component/preloader/CMSkeleton";
-import LoadingBar from "react-top-loading-bar";
+
 
 const Home = ({ popularProducts, discountProducts, attributes }) => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#e0015e" progress={80} />}
+      {isLoading && <LoadingBar color="#000" progress={80} />}
       <Layout>
         <div className="min-h-screen">
           <StickyCart />

@@ -8,7 +8,7 @@ import { useCart } from "react-use-cart";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
 import useTranslation from "next-translate/useTranslation";
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -24,18 +24,16 @@ const Navbar = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const { toggleCartDrawer } = useContext(SidebarContext);
+  const { toggleCartDrawer, setIsLoading } = useContext(SidebarContext);
   const { totalItems } = useCart();
   const router = useRouter();
 
   const { storeCustomizationSetting } = useGetSetting();
-
   const {
     state: { userInfo },
   } = useContext(UserContext);
 
   const handleSubmit = (searchText) => {
-
     // return;
     if (searchText) {
       router.push(`/search?query=${searchText}`, null, { scroll: false });
@@ -47,23 +45,21 @@ const Navbar = () => {
     }
   };
 
-  const debounced = useDebouncedCallback(
-    (e) => {
-      console.log(e.target.value, "dfdff")
-      const searchValue = e.target.value
-      handleSubmit(searchValue)
-    },
-    1000
-  );
+  const debounced = useDebouncedCallback((e) => {
+    console.log(e.target.value, "dfdff");
+    const searchValue = e.target.value;
+    handleSubmit(searchValue);
+  }, 1000);
 
   useEffect(() => {
     if (Cookies.get("userInfo")) {
       const user = JSON.parse(Cookies.get("userInfo"));
       setImageUrl(user.image);
-    } if (router?.query?.query?.length > 0) {
+    }
+    if (router?.query?.query?.length > 0) {
       setSearchText(router?.query?.query);
     } else {
-      setSearchText("")
+      setSearchText("");
     }
   }, [router?.query?.query?.length > 0]);
 
@@ -80,6 +76,9 @@ const Navbar = () => {
             <Link
               href="/"
               className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block"
+              onClick={() => {
+                setIsLoading(true);
+              }}
             >
               <Image
                 width={130}
@@ -106,8 +105,8 @@ const Navbar = () => {
                         placeholder={t(`common:search-placeholder`)}
                         style={{ marginLeft: "2px" }}
                         onChange={(e) => {
-                          setSearchText(e.target.value)
-                          debounced(e)
+                          setSearchText(e.target.value);
+                          debounced(e);
                         }}
                       />
                     </label>
@@ -149,6 +148,9 @@ const Navbar = () => {
                   <Link
                     href="/user/dashboard"
                     className="relative top-1 w-6 h-6 rounded-full"
+                    onClick={() => {
+                      setIsLoading(true);
+                    }}
                   >
                     <Image
                       width={30}
@@ -162,9 +164,13 @@ const Navbar = () => {
                   <Link
                     href="/user/dashboard"
                     className="leading-none font-bold font-serif block"
+                    onClick={() => {
+                      setIsLoading(true);
+                    }}
                   >
-                    
-                    {userInfo?.name?.[0] || <FiUser className="w-6 h-6 drop-shadow-xl" />}    
+                    {userInfo?.name?.[0] || (
+                      <FiUser className="w-6 h-6 drop-shadow-xl" />
+                    )}
                   </Link>
                 ) : (
                   <span onClick={() => setModalOpen(!modalOpen)}>
