@@ -224,7 +224,10 @@ const ProductModal = ({
           <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden items-center">
             <Link href={`/product/${product.slug}`} passHref>
               <div
-                onClick={() => setModalOpen(false)}
+                onClick={() => {
+                  setModalOpen(false)
+                  setIsLoading(!isLoading);
+                }}
                 className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer"
               >
                 <Discount product={product} discount={discount} modal />

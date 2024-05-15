@@ -39,12 +39,14 @@ const FeatureCategory = () => {
             <li className="group" key={i + 1}>
               <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-3 md:p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg justify-center">
                 <div className="flex flex-col md:items-center justify-between md:justify-center">
-                  <div  onClick={() =>
-                        handleCategoryClick(
-                          category._id,
-                          showingTranslateValue(category?.name)
-                        )
-                      }>
+                  <div
+                    onClick={() =>
+                      handleCategoryClick(
+                        category._id,
+                        showingTranslateValue(category?.name)
+                      )
+                    }
+                  >
                     {category.icon ? (
                       <Image
                         src={category?.icon}
