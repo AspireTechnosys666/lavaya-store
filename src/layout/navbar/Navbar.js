@@ -26,8 +26,8 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [addressModalOpen, setAddressModalOpen] = useState(false);
-  const [pinCode, setPinCode] = useState('');
-  const { toggleCartDrawer, setIsLoading } = useContext(SidebarContext);
+  
+  const { toggleCartDrawer, setIsLoading, address } = useContext(SidebarContext);
   const { totalItems } = useCart();
   const router = useRouter();
 
@@ -77,7 +77,6 @@ const Navbar = () => {
         <AddressModal
           modalOpen={addressModalOpen}
           setModalOpen={setAddressModalOpen}
-          setPinCode={setPinCode}
         />
       )}
 
@@ -106,8 +105,8 @@ const Navbar = () => {
               className="md:max-w-[210px] 2xl:max-w-[210px] flex flex-col items-center"
               onClick={() => setAddressModalOpen(!addressModalOpen)}
             >
-              <h3 className="w-full py-1 px-4 text-[14px] text-left font-medium  rounded-[150px] hover:bg-[#e0015e] hover:text-white">
-                Deliver to <span className="font-semibold">{pinCode}</span>
+              <h3 className="w-full py-1 px-4 text-[14px] text-left font-medium  rounded-[150px] hover:bg-[#e0015e] hover:text-white block">
+                Deliver to <span className="font-semibold">{address?.state} {address.pinCode}</span>
               </h3>
               {/* <div className="flex relative">
                 <p className="text-[13px] text-left line-clamp-1 pr-4">

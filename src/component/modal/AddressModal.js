@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 import MainModal from "@component/modal/MainModal";
+import { SidebarContext } from "@context/SidebarContext";
 
-const AddressModal = ({ modalOpen, setModalOpen, setPinCode }) => {
-  const [position, setPosition] = useState({ latitude: null, longitude: null });
+const AddressModal = ({ modalOpen, setModalOpen  }) => {
   const [locationError, setLocationError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const setCoordinates = (position) => {
-    setPosition({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
+  const { changeAddress } = useContext(SidebarContext);
+
+
+  const setCoordinates = async (position) => {
+    setIsLoading(true);
+    const getPinCode = await axios.get(
+      `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
+    );
+    changeAddress({
+      state: getPinCode?.data?.address?.city,
+      pinCode: getPinCode?.data?.address?.postcode,
     });
+    setModalOpen(false);
+    setIsLoading(false);
   };
 
   const getLocation = () => {
@@ -52,8 +63,6 @@ const AddressModal = ({ modalOpen, setModalOpen, setPinCode }) => {
     }
   }, [locationError?.length]);
 
-  console.log(position)
-
   return (
     <MainModal
       modalOpen={modalOpen}
@@ -64,10 +73,14 @@ const AddressModal = ({ modalOpen, setModalOpen, setPinCode }) => {
         <p className="text-[#333] mb-[15px]">Change Location</p>
         <div className="flex h-full gap-3">
           <button
-            className="px-3 text-[12px] rounded text-white bg-[#e0015e]"
+            className="w-[122px] text-[12px]  rounded text-white bg-[#e0015e] text-center"
             onClick={getLocation}
           >
-            Detect my location
+            {isLoading ? (
+              <span className="loading loading-dots loading-md"></span>
+            ) : (
+              <>Detect my location</>
+            )}
           </button>
           <div className="flex items-center relative">
             <div className="mx-[10px] flex items-center justify-center border border-[#ccc] h-7 w-7 rounded-[50%] ">
@@ -80,7 +93,7 @@ const AddressModal = ({ modalOpen, setModalOpen, setPinCode }) => {
           </div>
           <div style={{ width: "220px" }}>
             <input
-              type="text"
+              type="number"
               name="select-locality"
               placeholder="Enter pincode"
               autoComplete="off"
@@ -90,7 +103,10 @@ const AddressModal = ({ modalOpen, setModalOpen, setPinCode }) => {
               onChange={(e) => {
                 const value = e.target.value;
                 if (value.length === 6) {
-                  setPinCode(value);
+                  changeAddress({
+                    pinCode: value,
+                  });
+                  setModalOpen(false);
                 }
               }}
             />
