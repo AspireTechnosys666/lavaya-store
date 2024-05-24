@@ -24,7 +24,7 @@ const Order = ({ params }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await OrderServices.getOrderById(orderId);
+      const res = await OrderServices.getOrderInfoById(orderId);
       setData(res);
       setLoading(false);
     } catch (err) {
