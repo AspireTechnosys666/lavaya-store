@@ -8,8 +8,7 @@ const AddressModal = ({ modalOpen, setModalOpen  }) => {
   const [locationError, setLocationError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { changeAddress } = useContext(SidebarContext);
-
+  const { address, changeAddress } = useContext(SidebarContext);
 
   const setCoordinates = async (position) => {
     setIsLoading(true);
@@ -65,7 +64,7 @@ const AddressModal = ({ modalOpen, setModalOpen  }) => {
 
   return (
     <MainModal
-      modalOpen={modalOpen}
+      modalOpen={address?.pinCode?.length < 1 ? true : modalOpen}
       setModalOpen={setModalOpen}
       isCrossCloseReq={false}
     >
