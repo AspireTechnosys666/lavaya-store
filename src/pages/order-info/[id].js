@@ -38,7 +38,7 @@ const Order = ({ params }) => {
   }, []);
 
   return (
-    <Layout title="Invoice" description="order confirmation page">
+    <>
       {loading && !data?.user_info?.name && (
         <LoadingBar color="#530022" progress={80} />
       )}
@@ -56,12 +56,12 @@ const Order = ({ params }) => {
             )}
           </label>
         </div>
-        <div className="py-5 bg-white flex flex-col items-center">
-          <div className=" flex items-center justify-center">
+        <div className="py-5 px-0 bg-white flex flex-col items-center">
+          <div className="w-full flex items-center justify-center">
             <div
               id="divToPrint"
               ref={divToPrintRef}
-              className="w-[300px] md:w-full max-md:overflow-x-auto"
+              className="w-full md:w-full max-md:overflow-x-auto"
             >
               {data?.user_info?.name && <InvoiceTable invoiceData={data} />}
             </div>
@@ -83,7 +83,7 @@ const Order = ({ params }) => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
