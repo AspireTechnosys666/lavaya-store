@@ -38,6 +38,7 @@ const useCheckoutSubmit = () => {
   const [ccAvenueForm, setccAvenueForm] = useState(null);
   const [couponCode, setCouponCode] = useState(null);
   const [promoCode, setPromoCode] = useState(null)
+  const [orderId, setOrderId] = useState(null)
 
   const router = useRouter();
   const couponRef = useRef("");
@@ -139,7 +140,8 @@ const useCheckoutSubmit = () => {
         discount: discountAmount,
         total: total,
         couponCode,
-        promoCode
+        promoCode,
+        orderId
       };
 
       const res = await OrderServices.addOrder(orderInfo);
@@ -239,7 +241,8 @@ const useCheckoutSubmit = () => {
     isCheckoutSubmit,
     isCouponApplied,
     ccAvenueForm,
-    setValue
+    setValue,
+    setOrderId
   };
 };
 

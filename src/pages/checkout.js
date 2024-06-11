@@ -28,7 +28,7 @@ import { SidebarContext } from "@context/SidebarContext";
 
 const Checkout = () => {
   const router = useRouter();
-  const { emptyCart, addItem } = useCart();
+  const { emptyCart, setItems } = useCart();
   const [searchParams] = useSearchParams();
 
   const {
@@ -53,6 +53,7 @@ const Checkout = () => {
     isCheckoutSubmit,
     ccAvenueForm,
     setValue,
+    setOrderId
   } = useCheckoutSubmit();
 
   const { t } = useTranslation();
@@ -66,10 +67,7 @@ const Checkout = () => {
       if (res.paymentStatus !== "Success") {
         if (reorder) {
           emptyCart();
-          res.cart.map((el) => {
-            addItem(el);
-          });
-          
+          setItems(res.cart)
           const {
             name,
             address,
@@ -88,6 +86,7 @@ const Checkout = () => {
           setValue("state", state);
           setValue("country", country);
           setValue("zipCode", zipCode);
+          res?.orderId && setOrderId(res.orderId)
         } else {
           notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
           Cookies.set("isPaymentNotified", true);
@@ -118,6 +117,8 @@ const Checkout = () => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  console
 
   return (
     <>
