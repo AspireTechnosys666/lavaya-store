@@ -7,7 +7,7 @@ const OrderHistory = ({ order }) => {
     <>
       <td className="px-5 py-3 leading-6 whitespace-nowrap">
         <span className="uppercase text-sm font-medium">
-          {order?._id?.substring(20, 24)}
+          {order?.orderId || '-'}
         </span>
       </td>
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
