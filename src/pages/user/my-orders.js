@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/link-passhref */
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoBagHandle } from "react-icons/io5";
 import { Pagination, Windmill } from "@windmill/react-ui";
+import { FaCartArrowDown } from "react-icons/fa6";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
 import LoadingBar from "react-top-loading-bar";
 
 //internal import
@@ -55,7 +58,9 @@ const MyOrders = () => {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
+      {isLoading && (
+        <LoadingBar color="#20b7dc" style={{ height: "3px" }} progress={80} />
+      )}
       <Dashboard
         title={showingTranslateValue(
           storeCustomizationSetting?.dashboard?.my_order
@@ -93,7 +98,7 @@ const MyOrders = () => {
                             scope="col"
                             className="text-left text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            ID
+                            Order ID
                           </th>
                           <th
                             scope="col"
@@ -106,13 +111,13 @@ const MyOrders = () => {
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Payment Detail
+                            Order Status
                           </th>
                           <th
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Order Status
+                            Payment Status
                           </th>
                           <th
                             scope="col"
@@ -124,7 +129,7 @@ const MyOrders = () => {
                             scope="col"
                             className="text-right text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Action
+                            Invoice / Reorder
                           </th>
                         </tr>
                       </thead>
@@ -132,13 +137,28 @@ const MyOrders = () => {
                         {data?.orders?.map((order) => (
                           <tr key={order._id}>
                             <OrderHistory order={order} />
-                            <td className="px-5 py-3 whitespace-nowrap text-right text-sm">
-                              <Link
-                                className="px-3 py-1 bg-[#e0015e36] text-xs text-[#e0015e] hover:bg-[#e0015e52] hover:text-white transition-all font-semibold rounded-full"
-                                href={`/order/${order._id}`}
-                              >
-                                Details
-                              </Link>
+                            <td className="px-5 py-3 whitespace-nowrap text-right text-sm flex justify-end gap-x-2">
+                              {order?.status && (
+                                <Link href={`/order/${order._id}`} className="flex flex-col items-center">
+                                  <LiaFileInvoiceSolid
+                                    className="w-5 h-5 drop-shadow-xl text-[#e0015e]"
+                                    title="View Invoice"
+                                  />
+                                </Link>
+                              )}
+                              {order?.paymentStatus !== "Success" && (
+                                <Link
+                                  href={`/checkout?id=${
+                                    order._id
+                                  }&showPaymentStatus=${false}`}
+                                  className="flex flex-col items-center"
+                                >
+                                  <FaCartArrowDown
+                                    className="w-5 h-5 drop-shadow-xl text-[#e0015e]"
+                                    title="Re Order"
+                                  />
+                                </Link>
+                              )}
                             </td>
                           </tr>
                         ))}
