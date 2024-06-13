@@ -465,9 +465,9 @@ const InvoiceForDownload = ({ data }) => {
                   <Text style={styles.tableCell}>
                     <Text style={styles.quantity}>
                       {getCsGstPrice(
-                        item.price * item.quantity,
+                        (item?.price || 0) * item.quantity,
                         getRatePrice({
-                          price: item.price,
+                          price: item?.price || 0,
                           gst: item.gst,
                         }) * item.quantity
                       )}{" "}
@@ -479,10 +479,10 @@ const InvoiceForDownload = ({ data }) => {
                   <Text style={styles.tableCell}>
                     <Text style={styles.quantity}>
                       {getCsGstPrice(
-                        item.price * item.quantity,
+                        item?.price || 0 * item.quantity,
                         getRatePrice({
-                          price: item.price,
-                          gst: item.gst,
+                          price: item?.price || 0,
+                          gst: item.gst || 0,
                         }) * item.quantity
                       )}{" "}
                     </Text>
@@ -492,7 +492,7 @@ const InvoiceForDownload = ({ data }) => {
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
                     <Text style={styles.quantity}>
-                      {Math.round(item.price * item.quantity * 100) / 100}{" "}
+                      {Math.round(item?.price || 0 * item?.quantity || 0 * 100) / 100}{" "}
                     </Text>
                   </Text>
                 </View>
