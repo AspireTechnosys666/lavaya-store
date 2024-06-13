@@ -466,7 +466,7 @@ const InvoiceTable = ({ invoiceData }) => {
                               className="border-right-invoice"
                             >
                               {" "}
-                              {item.title}
+                              {item?.title?.en ? item.title.en : item.title}
                             </td>
                             <td
                               align="right"
@@ -475,8 +475,8 @@ const InvoiceTable = ({ invoiceData }) => {
                             >
                               {" "}
                               {getRatePrice({
-                                price: item.price,
-                                gst: item.gst,
+                                price: item.price || 0,
+                                gst: item?.gst || 0,
                               })}{" "}
                             </td>
                             <td
@@ -502,10 +502,10 @@ const InvoiceTable = ({ invoiceData }) => {
                             >
                               {" "}
                               {getCsGstPrice(
-                                item.price * item.quantity,
+                                (item?.price || 0) * item.quantity,
                                 getRatePrice({
-                                  price: item.price,
-                                  gst: item.gst,
+                                  price: item?.price || 0,
+                                gst: item?.gst || 0,
                                 }) * item.quantity
                               )}{" "}
                             </td>
@@ -516,10 +516,10 @@ const InvoiceTable = ({ invoiceData }) => {
                             >
                               {" "}
                               {getCsGstPrice(
-                                item.price * item.quantity,
+                                (item?.price || 0) * item.quantity,
                                 getRatePrice({
-                                  price: item.price,
-                                  gst: item.gst,
+                                  price: item?.price || 0,
+                                  gst: item?.gst || 0,
                                 }) * item.quantity
                               )}{" "}
                             </td>

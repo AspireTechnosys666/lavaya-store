@@ -436,7 +436,7 @@ const InvoiceForDownload = ({ data }) => {
                   <Text style={styles.tableCell}>{i + 1}</Text>
                 </View>
                 <View style={styles.tableCol2}>
-                  <Text style={styles.tableCell}>{item.title} </Text>
+                  <Text style={styles.tableCell}>{item?.title?.en ? item.title.en : item.title} </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
