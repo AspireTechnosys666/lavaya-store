@@ -8,7 +8,7 @@ import {
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 
-const getRatePrice = ({ price, gst = 0 }) => {
+const getRatePrice = ({ price=0, gst = 0 }) => {
   return Math.round((100 / (100 + Number(gst))) * price * 100) / 100;
 };
 
