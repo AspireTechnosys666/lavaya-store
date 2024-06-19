@@ -14,7 +14,7 @@ const InvoiceTable = ({ invoiceData }) => {
     0
   );
   const totalDiscount = invoiceData.cart.reduce(
-    (total, el) => total + el.prices.discount * el.quantity,
+    (total, el) => total + (el?.prices?.originalPrice - el?.prices?.price) * el.quantity,
     0
   );
   const totalCsGstPrice = invoiceData.cart.reduce(
@@ -30,7 +30,6 @@ const InvoiceTable = ({ invoiceData }) => {
     0
   );
 
-  console.log(invoiceData, totalQuantity, "ddddfdfddfd");
   return (
     <table
       className="border-[2px] border-[#000] w-[350px] text-xs"

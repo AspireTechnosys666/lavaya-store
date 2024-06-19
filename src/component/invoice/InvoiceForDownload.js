@@ -295,13 +295,6 @@ const InvoiceForDownload = ({ data }) => {
         <Page size="A4" style={styles.page} className="grid grid-cols-2">
           <View style={styles.invoiceFirst} className="col-span-1">
             <View>
-              <Image
-                  src="/logo/logo.png"
-                  alt="Invoice"
-                  style={{ width: 100 }}
-                />
-            </View>
-            <View>
               <Text>Lavaya World Private Limited</Text>
             </View>
             <View style={styles.topAddress}>
