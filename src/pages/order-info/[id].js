@@ -1,44 +1,30 @@
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import LoadingBar from "react-top-loading-bar";
 
 import Layout from "@layout/Layout";
 import useGetSetting from "@hooks/useGetSetting";
+import { UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
 import InvoiceForDownload from "@component/invoice/InvoiceForDownload";
 
-const Order = ({ params }) => {
-  const orderId = params.id;
-  console.log(orderId)
+const Order = ({ data, loading }) => {
   const divToPrintRef = useRef(null);
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-
+  const {
+    state: { userInfo },
+  } = useContext(UserContext);
   const { showingTranslateValue } = useUtilsFunction();
   const { storeCustomizationSetting } = useGetSetting();
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await OrderServices.getOrderInfoById(orderId);
-      setData(res);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      console.log("err", err.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  if (!userInfo) {
+    return <p>Redirecting...</p>; // Handle case where user info is not available
+  }
 
   return (
-    <>
+    <Layout title="Invoice" description="Order confirmation page">
       {loading && !data?.user_info?.name && (
         <LoadingBar color="#530022" progress={80} />
       )}
@@ -56,19 +42,19 @@ const Order = ({ params }) => {
             )}
           </label>
         </div>
-        <div className="py-5 px-0 bg-white flex flex-col items-center">
-          <div className="w-full flex items-center justify-center">
+        <div className="py-5 bg-white flex flex-col items-center">
+          <div className=" flex items-center justify-center">
             <div
               id="divToPrint"
               ref={divToPrintRef}
-              className="w-full md:w-full max-md:overflow-x-auto"
+              className="w-[300px] md:w-full max-md:overflow-x-auto"
             >
               {data?.user_info?.name && <InvoiceTable invoiceData={data} />}
             </div>
           </div>
           <div className="w-full flex justify-end mx-10">
             <PDFDownloadLink
-              document={<InvoiceForDownload data={data} />}
+              document={<InvoiceForDownload invoiceData={data} />}
               fileName="Invoice"
             >
               <button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-end bg-[#e0015e]  text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md mr-5">
@@ -83,14 +69,29 @@ const Order = ({ params }) => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
 
-export const getServerSideProps = ({ params }) => {
-  return {
-    props: { params },
-  };
+export const getServerSideProps = async ({ params }) => {
+  try {
+    const orderId = params.id;
+    const res = await OrderServices.getOrderInfoById(orderId);
+    return {
+      props: {
+        data: res,
+        loading: false,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return {
+      props: {
+        data: {},
+        loading: false,
+      },
+    };
+  }
 };
 
-export default dynamic(() => Promise.resolve(Order), { ssr: false });
+export default Order;

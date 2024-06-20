@@ -94,7 +94,7 @@ const InvoiceTable = ({ invoiceData }) => {
         </tr>
         {invoiceData.cart.map((item) => (
           <tr key={item._id} className="">
-            <td className="!py-0.5">
+            <td className="!py-0.5 text-breakall">
               {item?.title?.en ? item.title.en : item.title}
             </td>
             <td className="!py-0.5">{item?.quantity}</td>

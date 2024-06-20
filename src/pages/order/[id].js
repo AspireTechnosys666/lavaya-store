@@ -1,6 +1,4 @@
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import LoadingBar from "react-top-loading-bar";
@@ -13,41 +11,20 @@ import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
 import InvoiceForDownload from "@component/invoice/InvoiceForDownload";
 
-const Order = ({ params }) => {
-  const orderId = params.id;
+const Order = ({ data, loading }) => {
   const divToPrintRef = useRef(null);
-  const router = useRouter();
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-
   const {
     state: { userInfo },
   } = useContext(UserContext);
   const { showingTranslateValue } = useUtilsFunction();
   const { storeCustomizationSetting } = useGetSetting();
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await OrderServices.getOrderById(orderId);
-      setData(res);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      console.log("err", err.message);
-    }
-  };
-
-  useEffect(() => {
-    if (!userInfo) {
-      router.push("/");
-      return;
-    }
-    fetchData();
-  }, []);
+  if (!userInfo) {
+    return <p>Redirecting...</p>; // Handle case where user info is not available
+  }
 
   return (
-    <Layout title="Invoice" description="order confirmation page">
+    <Layout title="Invoice" description="Order confirmation page">
       {loading && !data?.user_info?.name && (
         <LoadingBar color="#530022" progress={80} />
       )}
@@ -77,7 +54,7 @@ const Order = ({ params }) => {
           </div>
           <div className="w-full flex justify-end mx-10">
             <PDFDownloadLink
-              document={<InvoiceForDownload data={data} />}
+              document={<InvoiceForDownload invoiceData={data} />}
               fileName="Invoice"
             >
               <button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-end bg-[#e0015e]  text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md mr-5">
@@ -96,10 +73,25 @@ const Order = ({ params }) => {
   );
 };
 
-export const getServerSideProps = ({ params }) => {
-  return {
-    props: { params },
-  };
+export const getServerSideProps = async ({ params }) => {
+  try {
+    const orderId = params.id;
+    const res = await OrderServices.getOrderInfoById(orderId);
+    return {
+      props: {
+        data: res,
+        loading: false,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return {
+      props: {
+        data: {},
+        loading: false,
+      },
+    };
+  }
 };
 
-export default dynamic(() => Promise.resolve(Order), { ssr: false });
+export default Order;
