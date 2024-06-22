@@ -6,8 +6,6 @@ import useTranslation from "next-translate/useTranslation";
 import {
   FacebookIcon,
   LinkedinIcon,
-  PinterestIcon,
-  TwitterIcon,
   WhatsappIcon,
 } from "react-share";
 
@@ -105,6 +103,22 @@ const Footer = () => {
                       loading={loading}
                       data={
                         storeCustomizationSetting?.footer?.block1_sub_title4
+                      }
+                    />
+                  </Link>
+                </li>
+                <li className="flex items-baseline">
+                  <Link
+                    href={`${storeCustomizationSetting?.footer?.block1_sub_link5}`}
+                    className="text-gray-600 inline-block w-full hover:text-[#e0015e]"
+                  >
+                    <CMSkeleton
+                      count={1}
+                      height={10}
+                      // error={error}
+                      loading={loading}
+                      data={
+                        storeCustomizationSetting?.footer?.block1_sub_title5
                       }
                     />
                   </Link>
@@ -316,17 +330,17 @@ const Footer = () => {
                   data={storeCustomizationSetting?.footer?.block4_address}
                 />
                 <a href="tel:+918440003030">
-                <span>
-                  {" "}
-                  Tel :{storeCustomizationSetting?.footer?.block4_phone}
-                </span>
+                  <span>
+                    {" "}
+                    Tel :{storeCustomizationSetting?.footer?.block4_phone}
+                  </span>
                 </a>
                 <br />
                 <a href="mailto:info@lavaya.store">
-                <span>
-                  {" "}
-                  Email : {storeCustomizationSetting?.footer?.block4_email}
-                </span>
+                  <span>
+                    {" "}
+                    Email : {storeCustomizationSetting?.footer?.block4_email}
+                  </span>
                 </a>
               </p>
             </div>
@@ -342,7 +356,7 @@ const Footer = () => {
                 <div>
                   {(storeCustomizationSetting?.footer?.social_facebook ||
                     storeCustomizationSetting?.footer?.social_twitter ||
-                   // storeCustomizationSetting?.footer?.social_pinterest ||
+                    // storeCustomizationSetting?.footer?.social_pinterest ||
                     storeCustomizationSetting?.footer?.social_linkedin ||
                     storeCustomizationSetting?.footer?.social_whatsapp) && (
                     <span className="text-base leading-7 font-medium block mb-2 pb-0.5">
@@ -372,7 +386,14 @@ const Footer = () => {
                           target="_blank"
                           className="block text-center mx-auto text-gray-500 hover:text-white"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={32}
+                            height={32}
+                            viewBox="0 0 512 512"
+                          >
+                            <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                          </svg>
                         </Link>
                       </li>
                     )}
@@ -426,10 +447,10 @@ const Footer = () => {
                     {t("common:footer-call-us")}
                   </p>
                   <a href="tel:+918440003030">
-                  <h5 className="text-2xl font-bold text-[#e0015e] leading-7">
-                    {/* +012345-67900 */}
-                    {storeCustomizationSetting?.footer?.bottom_contact}
-                  </h5>
+                    <h5 className="text-2xl font-bold text-[#e0015e] leading-7">
+                      {/* +012345-67900 */}
+                      {storeCustomizationSetting?.footer?.bottom_contact}
+                    </h5>
                   </a>
                 </div>
               )}
@@ -464,7 +485,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="text-[#e0015e] hover:text-[#000]"
           >
-            Lavaya 
+            Lavaya
           </Link>
           , All rights reserved.
         </p>
