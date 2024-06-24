@@ -29,7 +29,7 @@ class MyDocument extends Document {
             property="og:description"
             content={
               setting?.meta_description ||
-              "React Grocery & Organic Food Store e-commerce Template"
+              "Lavaya - Online Shopping Store"
             }
           />
           <meta
@@ -46,7 +46,7 @@ class MyDocument extends Document {
             property="og:image"
             content={
               setting?.meta_img ||
-              "https://res.cloudinary.com/ahossain/image/upload/v1636729752/facebook-page_j7alju.png"
+              "/favicon.png"
             }
           />
         </Head>

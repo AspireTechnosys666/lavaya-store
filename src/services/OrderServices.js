@@ -15,6 +15,9 @@ const OrderServices = {
   getOrderById: async (id, body) => {
     return requests.get(`/order/${id}`, body);
   },
+  getOrderInfoById: async (id, body) => {
+    return requests.get(`/order-info/${id}`, body);
+  },
 };
 
 export default OrderServices;

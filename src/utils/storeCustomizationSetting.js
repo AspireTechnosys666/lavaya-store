@@ -844,14 +844,14 @@ const storeCustomization = {
     },
     seo: {
       favicon:
-        "https://res.cloudinary.com/ahossain/image/upload/v1700903173/undefined/favicon.png",
+        "/favicon.png",
       meta_description:
-        "React Grocery & Organic Food Store e-commerce Template",
+        "Lavaya - Online Shopping Store",
       meta_img:
-        "https://res.cloudinary.com/ahossain/image/upload/v1636729752/facebook-page_j7alju.png",
+        "/favicon.png",
       meta_keywords: "e-commerce, online store",
       meta_title:
-        "lavaya - React Grocery & Organic Food Store e-commerce Template",
+        "Lavaya - Online Shopping Store",
       meta_url: "https://lavaya.store/",
     },
   },

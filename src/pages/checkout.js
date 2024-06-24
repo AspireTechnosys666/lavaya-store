@@ -28,7 +28,7 @@ import { SidebarContext } from "@context/SidebarContext";
 
 const Checkout = () => {
   const router = useRouter();
-  const { emptyCart } = useCart();
+  const { emptyCart, setItems } = useCart();
   const [searchParams] = useSearchParams();
 
   const {
@@ -52,6 +52,8 @@ const Checkout = () => {
     currency,
     isCheckoutSubmit,
     ccAvenueForm,
+    setValue,
+    setOrderId
   } = useCheckoutSubmit();
 
   const { t } = useTranslation();
@@ -59,12 +61,36 @@ const Checkout = () => {
   const { showingTranslateValue } = useUtilsFunction();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
 
-  const fetchData = async (orderId) => {
+  const fetchData = async (orderId, reorder) => {
     try {
       const res = await OrderServices.getOrderById(orderId);
       if (res.paymentStatus !== "Success") {
-        notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
-        Cookies.set("isPaymentNotified", true);
+        if (reorder) {
+          emptyCart();
+          setItems(res.cart)
+          const {
+            name,
+            address,
+            contact,
+            email,
+            city,
+            state,
+            country,
+            zipCode,
+          } = res?.user_info;
+          setValue("firstName", name);
+          setValue("address", address);
+          setValue("contact", contact);
+          setValue("email", email);
+          setValue("city", city);
+          setValue("state", state);
+          setValue("country", country);
+          setValue("zipCode", zipCode);
+          res?.orderId && setOrderId(res.orderId)
+        } else {
+          notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
+          Cookies.set("isPaymentNotified", true);
+        }
       } else {
         emptyCart();
         router.push(`/order/${orderId}`);
@@ -78,7 +104,8 @@ const Checkout = () => {
     const isPaymentNotified = Cookies.get("isPaymentNotified") === "true";
     if (searchParams?.length > 0 && !isPaymentNotified) {
       const orderId = searchParams[1];
-      fetchData(orderId);
+      const reorder = searchParams?.[1];
+      fetchData(orderId, reorder);
     } else {
       Cookies.set("isPaymentNotified", false);
     }
@@ -91,9 +118,13 @@ const Checkout = () => {
     setIsLoading(false);
   }, []);
 
+  console
+
   return (
     <>
-      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
+      {isLoading && (
+        <LoadingBar color="#20b7dc" style={{ height: "3px" }} progress={80} />
+      )}
       <Layout title="Checkout" description="this is checkout page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
