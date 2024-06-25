@@ -36,6 +36,8 @@ const requests = {
     instance.post(url, body, headers).then(responseBody),
 
   put: (url, body) => instance.put(url, body).then(responseBody),
+
+  patch: (url, body) => instance.patch(url, body).then(responseBody),
 };
 
 export default requests;

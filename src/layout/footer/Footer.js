@@ -485,7 +485,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="text-[#e0015e] hover:text-[#000]"
           >
-            Lavaya
+            Lavaya World Private Limited
           </Link>
           , All rights reserved.
         </p>

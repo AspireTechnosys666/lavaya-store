@@ -5,6 +5,10 @@ const OrderServices = {
     return requests.post("/order/add", body, headers);
   },
 
+  updateOrder: async (id, body ) => {
+    return requests.patch(`/order/update/${id}`, body);
+  },
+
   createPaymentIntent: async (body) => {
     return requests.post("/order/create-payment-intent", body);
   },

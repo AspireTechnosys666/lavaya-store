@@ -21,7 +21,6 @@ import InputArea from "@component/form/InputArea";
 import useGetSetting from "@hooks/useGetSetting";
 import useCheckoutSubmit from "@hooks/useCheckoutSubmit";
 import useUtilsFunction from "@hooks/useUtilsFunction";
-import CCAvenuePayment from "@component/payment/CCAvenuePayment";
 import OrderServices from "@services/OrderServices";
 import { notifyError } from "@utils/toast";
 import { SidebarContext } from "@context/SidebarContext";
@@ -41,7 +40,6 @@ const Checkout = () => {
     promoRef,
     promoCode,
     handlePromoCode,
-    ccRevenueRef,
     handleCouponCode,
     discountAmount,
     shippingCost,
@@ -51,9 +49,8 @@ const Checkout = () => {
     cartTotal,
     currency,
     isCheckoutSubmit,
-    ccAvenueForm,
     setValue,
-    setOrderId
+    setOrderId,
   } = useCheckoutSubmit();
 
   const { t } = useTranslation();
@@ -67,7 +64,7 @@ const Checkout = () => {
       if (res.paymentStatus !== "Success") {
         if (reorder) {
           emptyCart();
-          setItems(res.cart)
+          setItems(res.cart);
           const {
             name,
             address,
@@ -86,7 +83,7 @@ const Checkout = () => {
           setValue("state", state);
           setValue("country", country);
           setValue("zipCode", zipCode);
-          res?.orderId && setOrderId(res.orderId)
+          res?.orderId && setOrderId(res.orderId);
         } else {
           notifyError(`Payment ${res?.paymentStatus || "failed"}!`);
           Cookies.set("isPaymentNotified", true);
@@ -118,8 +115,6 @@ const Checkout = () => {
     setIsLoading(false);
   }, []);
 
-  console
-
   return (
     <>
       {isLoading && (
@@ -129,12 +124,6 @@ const Checkout = () => {
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
             <div className="md:w-full lg:w-3/5 flex h-full flex-col order-2 sm:order-1 lg:order-1">
-              <div className="hidden">
-                <CCAvenuePayment
-                  formRef={ccRevenueRef}
-                  ccAvenueForm={ccAvenueForm}
-                />
-              </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <form onSubmit={handleSubmit(submitHandler)}>
                   <div className="form-group">

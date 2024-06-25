@@ -35,20 +35,163 @@ const useCheckoutSubmit = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
-  const [ccAvenueForm, setccAvenueForm] = useState(null);
   const [couponCode, setCouponCode] = useState(null);
-  const [promoCode, setPromoCode] = useState(null)
-  const [orderId, setOrderId] = useState(null)
+  const [promoCode, setPromoCode] = useState(null);
+  const [orderId, setOrderId] = useState(null);
 
   const router = useRouter();
   const couponRef = useRef("");
   const promoRef = useRef("");
   const ccRevenueRef = useRef(null);
-  const { isEmpty, items, cartTotal } = useCart();
+  const { isEmpty, items, cartTotal, emptyCart } = useCart();
 
   const { data } = useAsync(CouponServices.getAllCoupons);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
   const currency = globalSetting?.default_currency || "₹";
+
+  const submitHandler = async (data) => {
+    try {
+      if (isEmpty) {
+        notifyError(`Cart is Empty!`);
+        return;
+      }
+      dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: data });
+      Cookies.set("shippingAddress", JSON.stringify(data));
+      setIsCheckoutSubmit(true);
+      setError("");
+
+      const userDetails = {
+        name: `${data.firstName}`,
+        contact: data.contact,
+        email: data.email,
+        address: data.address,
+        country: data?.country || "India",
+        city: data.city,
+        state: data.state,
+        zipCode: data.zipCode,
+      };
+
+      let orderInfo = {
+        user_info: userDetails,
+        shippingOption: data.shippingOption,
+        paymentMethod: data.paymentMethod,
+        status: "Pending",
+        cart: items,
+        subTotal: cartTotal,
+        shippingCost: shippingCost,
+        discount: discountAmount,
+        total: total,
+        couponCode,
+        promoCode,
+        orderId,
+      };
+
+      const res = await OrderServices.addOrder(orderInfo);
+
+      if (res._id) {
+        if (!orderId) {
+          setOrderId(res.orderId);
+        }
+
+        const options = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+          amount: total * 100,
+          name: "Lavaya Store",
+          description: "Lavaya - Online Shopping Portal",
+          image: "https://manager.lavaya.store/@/assets/logo-BIzwMFPV.png",
+          handler: async (response) => {
+            if (response.razorpay_payment_id) {
+              const payload = {
+                paymentTrackingId: response.razorpay_payment_id,
+              };
+              await OrderServices.updateOrder(res._id, payload);
+              Cookies.remove("couponInfo");
+              sessionStorage.removeItem("products");
+              notifySuccess("Your Order Confirmed!");
+              emptyCart();
+              setOrderId(null);
+              router.push(`/order/${res._id}`);
+            } else {
+              console.log(response);
+            }
+          },
+          prefill: {
+            name: userDetails.name,
+            contact: userDetails.contact,
+            email: userDetails.email,
+          },
+          notes: {
+            address: "Jaipur, Rajasthan",
+          },
+          theme: {
+            color: "#e0015e",
+            hide_topbar: false,
+          },
+        };
+
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open("payment.failed", () => {});
+      }
+      setIsCheckoutSubmit(false);
+    } catch (err) {
+      notifyError(err.message);
+      setIsCheckoutSubmit(false);
+    }
+  };
+
+  const handleShippingCost = (value) => {
+    setShippingCost(value);
+  };
+
+  const handleCouponCode = (e) => {
+    e.preventDefault();
+
+    if (!couponRef.current.value) {
+      notifyError("Please Input a Coupon Code!");
+      return;
+    }
+    const result = data.filter(
+      (coupon) => coupon.couponCode === couponRef.current.value
+    );
+
+    if (result.length < 1) {
+      notifyError("Please Input a Valid Coupon!");
+      return;
+    }
+
+    if (dayjs().isAfter(dayjs(result[0]?.endTime))) {
+      notifyError("This coupon is not valid!");
+      return;
+    }
+
+    if (total < result[0]?.minimumAmount) {
+      notifyError(
+        `Minimum ₹${result[0].minimumAmount} required for Apply this coupon!`
+      );
+      return;
+    } else {
+      notifySuccess(
+        `Your Coupon ${result[0].couponCode} is Applied on ${result[0].productType}!`
+      );
+      setIsCouponApplied(true);
+      setMinimumAmount(result[0]?.minimumAmount);
+      setDiscountPercentage(result[0].discountType);
+      dispatch({ type: "SAVE_COUPON", payload: result[0] });
+      Cookies.set("couponInfo", JSON.stringify(result[0]));
+      setCouponCode(couponRef.current.value);
+    }
+  };
+
+  const handlePromoCode = (e) => {
+    e.preventDefault();
+
+    if (!promoRef.current.value) {
+      notifyError("Please Input a Promo Code!");
+      return;
+    }
+
+    setPromoCode(promoRef.current.value);
+  };
 
   useEffect(() => {
     if (Cookies.get("couponInfo")) {
@@ -107,112 +250,12 @@ const useCheckoutSubmit = () => {
     setValue("zipCode", shippingAddress.zipCode);
   }, []);
 
-  const submitHandler = async (data) => {
-    try {
-      if (isEmpty) {
-        notifyError(`Cart is Empty!`);
-        return
-      }
-      dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: data });
-      Cookies.set("shippingAddress", JSON.stringify(data));
-      setIsCheckoutSubmit(true);
-      setError("");
-
-      const userDetails = {
-        name: `${data.firstName}`,
-        contact: data.contact,
-        email: data.email,
-        address: data.address,
-        country: data?.country || "India",
-        city: data.city,
-        state: data.state,
-        zipCode: data.zipCode,
-      };
-
-      let orderInfo = {
-        user_info: userDetails,
-        shippingOption: data.shippingOption,
-        paymentMethod: data.paymentMethod,
-        status: "Pending",
-        cart: items,
-        subTotal: cartTotal,
-        shippingCost: shippingCost,
-        discount: discountAmount,
-        total: total,
-        couponCode,
-        promoCode,
-        orderId
-      };
-
-      const res = await OrderServices.addOrder(orderInfo);
-      
-      if (res._id) {
-        setccAvenueForm(res)
-      }
-      // router.push(`/order/${res._id}`);
-      // notifySuccess("Your Order Confirmed!");
-      Cookies.remove("couponInfo");
-      sessionStorage.removeItem("products");
-      setIsCheckoutSubmit(false);
-    } catch (err) {
-      notifyError(err.message);
-      setIsCheckoutSubmit(false);
-    }
-  };
-
-  const handleShippingCost = (value) => {
-    setShippingCost(value);
-  };
-
-  const handleCouponCode = (e) => {
-    e.preventDefault();
-
-    if (!couponRef.current.value) {
-      notifyError("Please Input a Coupon Code!");
-      return;
-    }
-    const result = data.filter(
-      (coupon) => coupon.couponCode === couponRef.current.value
-    );
-
-    if (result.length < 1) {
-      notifyError("Please Input a Valid Coupon!");
-      return;
-    }
-
-    if (dayjs().isAfter(dayjs(result[0]?.endTime))) {
-      notifyError("This coupon is not valid!");
-      return;
-    }
-
-    if (total < result[0]?.minimumAmount) {
-      notifyError(
-        `Minimum ₹${result[0].minimumAmount} required for Apply this coupon!`
-      );
-      return;
-    } else {
-      notifySuccess(
-        `Your Coupon ${result[0].couponCode} is Applied on ${result[0].productType}!`
-      );
-      setIsCouponApplied(true);
-      setMinimumAmount(result[0]?.minimumAmount);
-      setDiscountPercentage(result[0].discountType);
-      dispatch({ type: "SAVE_COUPON", payload: result[0] });
-      Cookies.set("couponInfo", JSON.stringify(result[0]));
-      setCouponCode(couponRef.current.value)
-    }
-  };
-
-  const handlePromoCode = (e) => {
-    e.preventDefault();
-
-    if (!promoRef.current.value) {
-      notifyError("Please Input a Promo Code!");
-      return;
-    }
-
-    setPromoCode(promoRef.current.value)
-  }
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   return {
     handleSubmit,
@@ -240,9 +283,8 @@ const useCheckoutSubmit = () => {
     currency,
     isCheckoutSubmit,
     isCouponApplied,
-    ccAvenueForm,
     setValue,
-    setOrderId
+    setOrderId,
   };
 };
 
