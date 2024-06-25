@@ -1,27 +1,24 @@
-import { useContext, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import LoadingBar from "react-top-loading-bar";
 
 import Layout from "@layout/Layout";
 import useGetSetting from "@hooks/useGetSetting";
-import { UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
 import InvoiceForDownload from "@component/invoice/InvoiceForDownload";
+import { notifySuccess } from "@utils/toast";
 
 const Order = ({ data, loading }) => {
   const divToPrintRef = useRef(null);
-  const {
-    state: { userInfo },
-  } = useContext(UserContext);
   const { showingTranslateValue } = useUtilsFunction();
   const { storeCustomizationSetting } = useGetSetting();
 
-  if (!userInfo) {
-    return <p>Redirecting...</p>; // Handle case where user info is not available
-  }
+  useEffect(() => {
+    notifySuccess("Your Order Confirmed!");
+  }, [])
 
   return (
     <Layout title="Invoice" description="Order confirmation page">

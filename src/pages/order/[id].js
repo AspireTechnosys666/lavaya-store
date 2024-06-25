@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import LoadingBar from "react-top-loading-bar";
@@ -10,8 +10,11 @@ import OrderServices from "@services/OrderServices";
 import useUtilsFunction from "@hooks/useUtilsFunction";
 import InvoiceTable from "@component/invoice/InvoiceTable";
 import InvoiceForDownload from "@component/invoice/InvoiceForDownload";
+import { notifySuccess } from "@utils/toast";
+import { useRouter } from "next/router";
 
 const Order = ({ data, loading }) => {
+  const router = useRouter();
   const divToPrintRef = useRef(null);
   const {
     state: { userInfo },
@@ -19,8 +22,16 @@ const Order = ({ data, loading }) => {
   const { showingTranslateValue } = useUtilsFunction();
   const { storeCustomizationSetting } = useGetSetting();
 
+  useEffect(() => {
+    if (!userInfo) {
+      router.push("/");
+      return;
+    }
+    notifySuccess("Your Order Confirmed!");
+  }, []);
+
   if (!userInfo) {
-    return <p>Redirecting...</p>; // Handle case where user info is not available
+    return <p>Redirecting...</p>;
   }
 
   return (

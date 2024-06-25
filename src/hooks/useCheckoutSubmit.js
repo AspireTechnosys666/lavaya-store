@@ -107,12 +107,11 @@ const useCheckoutSubmit = () => {
               await OrderServices.updateOrder(res._id, payload);
               Cookies.remove("couponInfo");
               sessionStorage.removeItem("products");
-              notifySuccess("Your Order Confirmed!");
               emptyCart();
               setOrderId(null);
               router.push(`/order/${res._id}`);
             } else {
-              console.log(response);
+              notifyError("Payment Failed")
             }
           },
           prefill: {
@@ -130,7 +129,9 @@ const useCheckoutSubmit = () => {
         };
 
         var rzp1 = new window.Razorpay(options);
-        rzp1.open("payment.failed", () => {});
+        rzp1.open("payment.failed", () => {
+          notifyError("Payment Failed")
+        });
       }
       setIsCheckoutSubmit(false);
     } catch (err) {
@@ -202,7 +203,6 @@ const useCheckoutSubmit = () => {
     }
   }, [isCouponApplied]);
 
-  //remove coupon if total value less then minimum amount of coupon
   useEffect(() => {
     if (minimumAmount - discountAmount > total || isEmpty) {
       setDiscountPercentage(0);
@@ -210,8 +210,6 @@ const useCheckoutSubmit = () => {
     }
   }, [minimumAmount, total]);
 
-  //calculate total and discount value
-  //calculate total and discount value
   useEffect(() => {
     const discountProductTotal = items?.reduce(
       (preValue, currentValue) => preValue + currentValue.itemTotal,
@@ -234,7 +232,6 @@ const useCheckoutSubmit = () => {
     setTotal(totalValue);
   }, [cartTotal, shippingCost, discountPercentage]);
 
-  //if not login then push user to home page
   useEffect(() => {
     if (!userInfo) {
       router.push("/");
