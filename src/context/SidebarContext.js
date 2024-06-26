@@ -10,6 +10,10 @@ export const SidebarProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [address, setAddress] = useState({
+    state: '',
+    pinCode: ''
+  });
 
   // const { socket } = useNotification();
 
@@ -25,6 +29,13 @@ export const SidebarProvider = ({ children }) => {
   const handleChangePage = (p) => {
     setCurrentPage(p);
   };
+
+  const changeAddress = ({ state, pinCode }) => {
+    setAddress({
+      state,
+      pinCode
+    })
+  }
 
   const value = useMemo(
     () => ({
@@ -43,9 +54,11 @@ export const SidebarProvider = ({ children }) => {
       handleChangePage,
       isLoading,
       setIsLoading,
+      address,
+      changeAddress
     }),
 
-    [cartDrawerOpen, categoryDrawerOpen, isModalOpen, currentPage, isLoading]
+    [cartDrawerOpen, categoryDrawerOpen, isModalOpen, currentPage, isLoading, address]
   );
 
   return (
