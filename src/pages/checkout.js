@@ -42,7 +42,7 @@ const Checkout = () => {
     handlePromoCode,
     handleCouponCode,
     discountAmount,
-    shippingCost,
+    // shippingCost,
     total,
     isEmpty,
     items,
@@ -391,13 +391,21 @@ const Checkout = () => {
                     {cartTotal?.toFixed(2)}
                   </span>
                 </div>
-                <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
+                {/* <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
                   {showingTranslateValue(
                     storeCustomizationSetting?.checkout?.shipping_cost
                   )}
                   <span className="ml-auto flex-shrink-0 text-gray-800 font-bold">
                     {currency}
                     {shippingCost.toFixed(2)}
+                  </span>
+                </div> */}
+                
+                <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
+                  Delivery Charges
+                  <span className="ml-auto flex-shrink-0 text-gray-800 font-bold">
+                    {currency}
+                    {parseFloat(total).toFixed(2) > 399 ? parseFloat(0).toFixed(2) : parseFloat(49).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
@@ -416,7 +424,7 @@ const Checkout = () => {
                     )}
                     <span className="font-serif font-extrabold text-lg">
                       {currency}
-                      {parseFloat(total).toFixed(2)}
+                      {parseFloat(total).toFixed(2) > 399 ? parseFloat(total).toFixed(2) : parseFloat(total + 49).toFixed(2) }
                     </span>
                   </div>
                 </div>
