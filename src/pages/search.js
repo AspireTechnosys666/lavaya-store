@@ -2,27 +2,35 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import useTranslation from "next-translate/useTranslation";
 import LoadingBar from "react-top-loading-bar";
-//internal import
+import { useRouter } from "next/router";
+
 import Layout from "@layout/Layout";
 import useFilter from "@hooks/useFilter";
-// import Card from "@component/cta-card/Card";
 import ProductServices from "@services/ProductServices";
 import ProductCard from "@component/product/ProductCard";
 import CategoryCarousel from "@component/carousel/CategoryCarousel";
-import { SidebarContext } from "@context/SidebarContext";
-import Loading from "@component/preloader/Loading";
 import AttributeServices from "@services/AttributeServices";
+import Loading from "@component/preloader/Loading";
+import { SidebarContext } from "@context/SidebarContext";
+import { useStore } from "src/store/useStore";
 
-const Search = ({ products, attributes }) => {
+const Search = ({ productsData, attributes }) => {
   const { t } = useTranslation();
+  const { query } = useRouter();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const [visibleProduct, setVisibleProduct] = useState(18);
+  const {
+    products,
+    fetchProducts,
+    pinCode
+  } = useStore((state) => state);
 
   useEffect(() => {
     setIsLoading(false);
-  }, [products]);
+    fetchProducts({ pinCode, title: query?.query, category: query?._id })
+  }, [query?.query, query?._id]);
 
-  const { setSortedField, productData } = useFilter(products);
+  const { setSortedField, productData } = useFilter(products || productsData);
 
   return (
     <div>
@@ -132,40 +140,9 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      products: data?.products,
+      productsData: data?.products,
       attributes,
     },
   };
 };
 
-// export const getServerSideProps = async (context) => {
-//   const { query } = context.query;
-//   const { Category } = context.query;
-//   const { category } = context.query;
-//   const data = await ProductServices.getShowingProducts();
-
-//   let products = [];
-//   //service filter with parent category
-//   if (Category) {
-//     products = data.filter(
-//       (product) => product.parent.toLowerCase().replace("&", "").split(" ").join("-") === Category
-//     );
-//   }
-//   //service filter with child category
-//   if (category) {
-//     products = data.filter(
-//       (product) => product.children.toLowerCase().replace("&", "").split(" ").join("-") === category
-//     );
-//   }
-
-//   //search result
-//   if (query) {
-//     products = data.filter((product) => product.title.toLowerCase().includes(query.toLowerCase()));
-//   }
-
-//   return {
-//     props: {
-//       products,
-//     },
-//   };
-// };

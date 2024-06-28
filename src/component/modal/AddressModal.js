@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import MainModal from "@component/modal/MainModal";
-import { SidebarContext } from "@context/SidebarContext";
+import { useStore } from "src/store/useStore";
 
 const AddressModal = ({ modalOpen, setModalOpen  }) => {
   const [locationError, setLocationError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { address, changeAddress } = useContext(SidebarContext);
+  const {pinCode, changeAddress, fetchProducts } = useStore((state) => state)
 
   const setCoordinates = async (position) => {
     setIsLoading(true);
@@ -16,11 +16,12 @@ const AddressModal = ({ modalOpen, setModalOpen  }) => {
       `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
     );
     changeAddress({
-      state: getPinCode?.data?.address?.city,
+      stateAddress: getPinCode?.data?.address?.city,
       pinCode: getPinCode?.data?.address?.postcode,
     });
     setModalOpen(false);
     setIsLoading(false);
+    fetchProducts({ pinCode: getPinCode?.data?.address?.postcode })
   };
 
   const getLocation = () => {
@@ -64,7 +65,7 @@ const AddressModal = ({ modalOpen, setModalOpen  }) => {
 
   return (
     <MainModal
-      modalOpen={address?.pinCode?.length < 1 ? true : modalOpen}
+      modalOpen={pinCode?.length < 1 ? true : modalOpen}
       setModalOpen={setModalOpen}
       isCrossCloseReq={false}
     >
@@ -106,6 +107,8 @@ const AddressModal = ({ modalOpen, setModalOpen  }) => {
                     pinCode: value,
                   });
                   setModalOpen(false);
+                  fetchProducts({ pinCode: value })
+
                 }
               }}
             />

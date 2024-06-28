@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 import { useCart } from "react-use-cart";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
-import useTranslation from "next-translate/useTranslation";
 import { useDebouncedCallback } from "use-debounce";
+import useTranslation from "next-translate/useTranslation";
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -19,6 +19,7 @@ import { SidebarContext } from "@context/SidebarContext";
 import useGetSetting from "@hooks/useGetSetting";
 import { handleLogEvent } from "@utils/analytics";
 import AddressModal from "@component/modal/AddressModal";
+import { useStore } from "src/store/useStore";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -26,9 +27,9 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [addressModalOpen, setAddressModalOpen] = useState(false);
+  const { stateAddress, pinCode } = useStore((state) => state);
 
-  const { toggleCartDrawer, setIsLoading, address } =
-    useContext(SidebarContext);
+  const { toggleCartDrawer, setIsLoading } = useContext(SidebarContext);
   const { totalItems } = useCart();
   const router = useRouter();
 
@@ -38,10 +39,8 @@ const Navbar = () => {
   } = useContext(UserContext);
 
   const handleSubmit = (searchText) => {
-    // return;
     if (searchText) {
       router.push(`/search?query=${searchText}`, null, { scroll: false });
-      // setSearchText("");
       handleLogEvent("search", `searched ${searchText}`);
     } else {
       router.push(`/ `, null, { scroll: false });
@@ -107,7 +106,7 @@ const Navbar = () => {
               <h3 className="w-full py-1 px-4 text-[14px] text-left font-medium  rounded-[150px] hover:bg-[#e0015e] hover:text-white block">
                 Deliver to{" "}
                 <span className="font-semibold">
-                  {address?.state} {address.pinCode}
+                  {stateAddress} {pinCode}
                 </span>
               </h3>
               {/* <div className="flex relative">

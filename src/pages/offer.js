@@ -16,9 +16,12 @@ const Offer = () => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
   return (
     <>
-      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
+      {isLoading && (
+        <LoadingBar color="#20b7dc" style={{ height: "3px" }} progress={80} />
+      )}
       <Layout title="Offer" description="this is discount page">
         <PageHeader
           headerBg={data?.offer?.header_bg}

@@ -15,13 +15,21 @@ import FeatureCategory from "@component/category/FeatureCategory";
 import AttributeServices from "@services/AttributeServices";
 import CMSkeleton from "@component/preloader/CMSkeleton";
 import { SidebarContext } from "@context/SidebarContext";
+import { useStore } from "src/store/useStore";
 
-const Home = ({ popularProducts, discountProducts, attributes }) => {
+const Home = ({ popularProductsData, discountedProductsData, attributes }) => {
   const router = useRouter();
+  const { query } = router;
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { loading, error, storeCustomizationSetting } = useGetSetting();
-
-  // console.log("storeCustomizationSetting", storeCustomizationSetting);
+  const {
+    popularProducts,
+    setPopularProducts,
+    discountedProducts,
+    setDiscountedProducts,
+    fetchProducts,
+    pinCode
+  } = useStore((state) => state);
 
   useEffect(() => {
     if (router.asPath === "/") {
@@ -31,9 +39,17 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
     }
   }, [router]);
 
+  useEffect(() => {
+    setPopularProducts(popularProductsData);
+    setDiscountedProducts(discountedProductsData);
+    fetchProducts({ pinCode, title: query?.query, category: query?._id })
+  }, []);
+
   return (
     <>
-      {isLoading && <LoadingBar color="#20b7dc" style={{ height: "3px"}} progress={80} />}
+      {isLoading && (
+        <LoadingBar color="#20b7dc" style={{ height: "3px" }} progress={80} />
+      )}
       <Layout>
         <div className="min-h-screen">
           <StickyCart />
@@ -154,7 +170,7 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
 
           {/* discounted products */}
           {storeCustomizationSetting?.home?.discount_product_status &&
-            discountProducts?.length > 0 && (
+            discountedProducts?.length > 0 && (
               <div
                 id="discount"
                 className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
@@ -197,7 +213,7 @@ const Home = ({ popularProducts, discountProducts, attributes }) => {
                       />
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                        {discountProducts.map((product) => (
+                        {discountedProducts.map((product) => (
                           <ProductCard
                             key={product._id}
                             product={product}
@@ -231,8 +247,8 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      popularProducts: data.popularProducts,
-      discountProducts: data.discountedProducts,
+      popularProductsData: data.popularProducts,
+      discountedProductsData: data.discountedProducts,
       cookies: cookies,
       attributes,
     },
