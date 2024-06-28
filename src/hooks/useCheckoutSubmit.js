@@ -78,7 +78,7 @@ const useCheckoutSubmit = () => {
         status: "Pending",
         cart: items,
         subTotal: cartTotal,
-        shippingCost: total > 399 ? total : total + 49,
+        shippingCost: total > 399 ? 0 : 49,
         discount: discountAmount,
         total: total,
         couponCode,
