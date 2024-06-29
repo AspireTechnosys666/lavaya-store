@@ -277,7 +277,7 @@ const Checkout = () => {
                         <InputPayment
                           register={register}
                           name={t("common:payOnline")}
-                          value="online"
+                          value="Online"
                           Icon={SiRazorpay}
                         />
                         <Error errorName={errors.paymentMethod} />
