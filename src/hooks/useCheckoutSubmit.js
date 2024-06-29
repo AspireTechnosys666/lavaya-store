@@ -55,13 +55,14 @@ const useCheckoutSubmit = () => {
         notifyError(`Cart is Empty!`);
         return;
       }
+
       dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: data });
       Cookies.set("shippingAddress", JSON.stringify(data));
       setIsCheckoutSubmit(true);
       setError("");
 
       const userDetails = {
-        name: `${data.firstName}`,
+        name: data.firstName,
         contact: data.contact,
         email: data.email,
         address: data.address,
@@ -71,7 +72,7 @@ const useCheckoutSubmit = () => {
         zipCode: data.zipCode,
       };
 
-      let orderInfo = {
+      const orderInfo = {
         user_info: userDetails,
         shippingOption: data.shippingOption,
         paymentMethod: data.paymentMethod,
@@ -80,7 +81,7 @@ const useCheckoutSubmit = () => {
         subTotal: cartTotal,
         shippingCost: total > 399 ? 0 : 49,
         discount: discountAmount,
-        total: total,
+        total: total > 399 ? total : total + 40,
         couponCode,
         promoCode,
         orderId,
@@ -93,49 +94,55 @@ const useCheckoutSubmit = () => {
           setOrderId(res.orderId);
         }
 
-        const options = {
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-          amount: total * 100,
-          name: "Lavaya Store",
-          description: "Lavaya - Online Shopping Portal",
-          image: "https://manager.lavaya.store/@/assets/logo-BIzwMFPV.png",
-          handler: async (response) => {
-            if (response.razorpay_payment_id) {
-              const payload = {
-                paymentTrackingId: response.razorpay_payment_id,
-              };
-              await OrderServices.updateOrder(res._id, payload);
-              Cookies.remove("couponInfo");
-              sessionStorage.removeItem("products");
-              emptyCart();
-              setOrderId(null);
-              router.push(`/order/${res._id}`);
-            } else {
-              notifyError("Payment Failed")
-            }
-          },
-          prefill: {
-            name: userDetails.name,
-            contact: userDetails.contact,
-            email: userDetails.email,
-          },
-          notes: {
-            address: "Jaipur, Rajasthan",
-          },
-          theme: {
-            color: "#e0015e",
-            hide_topbar: false,
-          },
-        };
+        if (data.paymentMethod === "Cash") {
+          Cookies.remove("couponInfo");
+          sessionStorage.removeItem("products");
+          emptyCart();
+          setOrderId(null);
+          router.push(`/order/${res._id}`);
+        } else {
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+            amount: total * 100,
+            name: "Lavaya Store",
+            description: "Lavaya - Online Shopping Portal",
+            image: "https://manager.lavaya.store/@/assets/logo-BIzwMFPV.png",
+            handler: async (response) => {
+              if (response.razorpay_payment_id) {
+                const payload = {
+                  paymentTrackingId: response.razorpay_payment_id,
+                };
+                await OrderServices.updateOrder(res._id, payload);
+                Cookies.remove("couponInfo");
+                sessionStorage.removeItem("products");
+                emptyCart();
+                setOrderId(null);
+                router.push(`/order/${res._id}`);
+              } else {
+                notifyError("Payment Failed");
+              }
+            },
+            prefill: {
+              name: userDetails.name,
+              contact: userDetails.contact,
+              email: userDetails.email,
+            },
+            notes: {
+              address: "Jaipur, Rajasthan",
+            },
+            theme: {
+              color: "#e0015e",
+              hide_topbar: false,
+            },
+          };
 
-        var rzp1 = new window.Razorpay(options);
-        rzp1.open("payment.failed", () => {
-          notifyError("Payment Failed")
-        });
+          const rzp1 = new window.Razorpay(options);
+          rzp1.open();
+        }
       }
-      setIsCheckoutSubmit(false);
     } catch (err) {
       notifyError(err.message);
+    } finally {
       setIsCheckoutSubmit(false);
     }
   };

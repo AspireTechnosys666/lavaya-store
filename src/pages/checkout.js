@@ -5,7 +5,9 @@ import {
   IoReturnUpBackOutline,
   IoArrowForward,
   IoBagHandle,
+  IoWalletSharp,
 } from "react-icons/io5";
+import { SiRazorpay } from "react-icons/si";
 import useTranslation from "next-translate/useTranslation";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
@@ -24,6 +26,8 @@ import useUtilsFunction from "@hooks/useUtilsFunction";
 import OrderServices from "@services/OrderServices";
 import { notifyError } from "@utils/toast";
 import { SidebarContext } from "@context/SidebarContext";
+import Image from "next/image";
+import InputPayment from "@component/form/InputPayment";
 
 const Checkout = () => {
   const router = useRouter();
@@ -245,6 +249,42 @@ const Checkout = () => {
                     </div>
                   </div>
 
+                  <div className="form-group mt-12">
+                    <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
+                      03.{" "}
+                      {showingTranslateValue(
+                        storeCustomizationSetting?.checkout?.payment_method
+                      )}
+                    </h2>
+                    {/* {showCard && (
+                      <div className="mb-3">
+                        <CardElement />{" "}
+                        <p className="text-red-400 text-sm mt-1">{error}</p>
+                      </div>
+                    )} */}
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-6 sm:col-span-3">
+                        <InputPayment
+                          register={register}
+                          name={t("common:cashOnDelivery")}
+                          value="Cash"
+                          Icon={IoWalletSharp}
+                        />
+                        <Error errorName={errors.paymentMethod} />
+                      </div>
+
+                      <div className="col-span-6 sm:col-span-3">
+                        <InputPayment
+                          register={register}
+                          name={t("common:payOnline")}
+                          value="online"
+                          Icon={SiRazorpay}
+                        />
+                        <Error errorName={errors.paymentMethod} />
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">
                     <div className="col-span-6 sm:col-span-3">
                       <Link
@@ -268,7 +308,7 @@ const Checkout = () => {
                         {isCheckoutSubmit ? (
                           <span className="flex justify-center text-center">
                             {" "}
-                            <img
+                            <Image
                               src="/loader/spinner.gif"
                               alt="Loading"
                               width={20}
@@ -400,12 +440,14 @@ const Checkout = () => {
                     {shippingCost.toFixed(2)}
                   </span>
                 </div> */}
-                
+
                 <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
                   Delivery Charges
                   <span className="ml-auto flex-shrink-0 text-gray-800 font-bold">
                     {currency}
-                    {parseFloat(total).toFixed(2) > 399 ? parseFloat(0).toFixed(2) : parseFloat(49).toFixed(2)}
+                    {parseFloat(total).toFixed(2) > 399
+                      ? parseFloat(0).toFixed(2)
+                      : parseFloat(49).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
@@ -424,7 +466,9 @@ const Checkout = () => {
                     )}
                     <span className="font-serif font-extrabold text-lg">
                       {currency}
-                      {parseFloat(total).toFixed(2) > 399 ? parseFloat(total).toFixed(2) : parseFloat(total + 49).toFixed(2) }
+                      {parseFloat(total).toFixed(2) > 399
+                        ? parseFloat(total).toFixed(2)
+                        : parseFloat(total + 49).toFixed(2)}
                     </span>
                   </div>
                 </div>

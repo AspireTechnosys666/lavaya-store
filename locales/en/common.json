@@ -231,6 +231,7 @@
   "paymentDetails": "Payment Method",
   "cashOnDelivery": "Cash On Delivery",
   "creditCard": "Credit Card",
+  "payOnline": "Pay Online",
   "payPal": "PayPal",
 
   "continueShoppingBtn": "Continue Shopping",
